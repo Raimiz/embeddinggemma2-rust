@@ -265,9 +265,12 @@ fn cmd_bench(model: &EmbeddingGemma2, m: &ArgMatches) -> Result<()> {
             f()?;
             ts.push(t.elapsed().as_secs_f64() * 1e3);
         }
-        let (med, min) = (median(ts.clone()), ts.iter().cloned().fold(f64::INFINITY, f64::min));
-        eprintln!("{name:<26} median {med:9.1} ms   min {min:9.1} ms");
-        res.insert(name.to_string(), serde_json::json!({ "median_ms": med, "min_ms": min }));
+        let (med, min, max) = (median(ts.clone()), ts.iter().cloned().fold(f64::INFINITY, f64::min), ts.iter().cloned().fold(0.0, f64::max));
+        let mut sorted = ts.clone();
+        sorted.sort_by(|a, b| a.total_cmp(b));
+        let p95 = sorted[((sorted.len() * 95).div_ceil(100)).saturating_sub(1)];
+        eprintln!("{name:<26} median {med:9.3} ms   min {min:9.3} ms   p95 {p95:9.3} ms");
+        res.insert(name.to_string(), serde_json::json!({ "median_ms": med, "min_ms": min, "max_ms": max, "p95_ms": p95, "samples_ms": ts }));
     }
     res.insert("_threads".into(), serde_json::json!(rayon::current_num_threads()));
     if let Some(p) = m.get_one::<PathBuf>("out") {

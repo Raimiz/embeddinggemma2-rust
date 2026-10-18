@@ -1,0 +1,272 @@
+{
+  "source": "CudaFunction Driver API attributes on the loaded module; occupancy probe uses launch-bound block sizes (d64/d256=128, d512=256) and FLASH_D512_SMEM=81920",
+  "modes": {
+    "compute_80": {
+      "kernels": {
+        "flash_attn_d256_bb": {
+          "active_blocks_per_sm_at_probe_config": 2,
+          "binary_version": 120,
+          "local_bytes_per_thread": 0,
+          "max_dynamic_shared_bytes": 0,
+          "max_threads_per_block": 128,
+          "occupancy_probe_block_threads": 128,
+          "occupancy_probe_dynamic_shared_bytes": 0,
+          "ptx_version": 80,
+          "registers_per_thread": 206,
+          "static_shared_bytes_per_block": 49152
+        },
+        "flash_attn_d256_packed_bb": {
+          "active_blocks_per_sm_at_probe_config": 2,
+          "binary_version": 120,
+          "local_bytes_per_thread": 0,
+          "max_dynamic_shared_bytes": 0,
+          "max_threads_per_block": 128,
+          "occupancy_probe_block_threads": 128,
+          "occupancy_probe_dynamic_shared_bytes": 0,
+          "ptx_version": 80,
+          "registers_per_thread": 208,
+          "static_shared_bytes_per_block": 49152
+        },
+        "flash_attn_d512_bb": {
+          "active_blocks_per_sm_at_probe_config": 1,
+          "binary_version": 120,
+          "local_bytes_per_thread": 168,
+          "max_dynamic_shared_bytes": 81920,
+          "max_threads_per_block": 256,
+          "occupancy_probe_block_threads": 256,
+          "occupancy_probe_dynamic_shared_bytes": 81920,
+          "ptx_version": 80,
+          "registers_per_thread": 255,
+          "static_shared_bytes_per_block": 0
+        },
+        "flash_attn_d64_bb": {
+          "active_blocks_per_sm_at_probe_config": 4,
+          "binary_version": 120,
+          "local_bytes_per_thread": 0,
+          "max_dynamic_shared_bytes": 32768,
+          "max_threads_per_block": 128,
+          "occupancy_probe_block_threads": 128,
+          "occupancy_probe_dynamic_shared_bytes": 0,
+          "ptx_version": 80,
+          "registers_per_thread": 128,
+          "static_shared_bytes_per_block": 16384
+        },
+        "qkv_post_w16r_bb": {
+          "active_blocks_per_sm_at_probe_config": 12,
+          "binary_version": 120,
+          "local_bytes_per_thread": 0,
+          "max_dynamic_shared_bytes": 49152,
+          "max_threads_per_block": 1024,
+          "occupancy_probe_block_threads": 128,
+          "occupancy_probe_dynamic_shared_bytes": 0,
+          "ptx_version": 80,
+          "registers_per_thread": 40,
+          "static_shared_bytes_per_block": 0
+        },
+        "qkv_post_w2p_bb": {
+          "active_blocks_per_sm_at_probe_config": 12,
+          "binary_version": 120,
+          "local_bytes_per_thread": 0,
+          "max_dynamic_shared_bytes": 49152,
+          "max_threads_per_block": 1024,
+          "occupancy_probe_block_threads": 128,
+          "occupancy_probe_dynamic_shared_bytes": 0,
+          "ptx_version": 80,
+          "registers_per_thread": 26,
+          "static_shared_bytes_per_block": 0
+        },
+        "qkv_post_w8r_bb": {
+          "active_blocks_per_sm_at_probe_config": 12,
+          "binary_version": 120,
+          "local_bytes_per_thread": 0,
+          "max_dynamic_shared_bytes": 49152,
+          "max_threads_per_block": 1024,
+          "occupancy_probe_block_threads": 128,
+          "occupancy_probe_dynamic_shared_bytes": 0,
+          "ptx_version": 80,
+          "registers_per_thread": 34,
+          "static_shared_bytes_per_block": 0
+        }
+      },
+      "target": "compute_80"
+    },
+    "compute_120": {
+      "kernels": {
+        "flash_attn_d256_bb": {
+          "active_blocks_per_sm_at_probe_config": 2,
+          "binary_version": 120,
+          "local_bytes_per_thread": 0,
+          "max_dynamic_shared_bytes": 0,
+          "max_threads_per_block": 128,
+          "occupancy_probe_block_threads": 128,
+          "occupancy_probe_dynamic_shared_bytes": 0,
+          "ptx_version": 120,
+          "registers_per_thread": 242,
+          "static_shared_bytes_per_block": 49152
+        },
+        "flash_attn_d256_packed_bb": {
+          "active_blocks_per_sm_at_probe_config": 2,
+          "binary_version": 120,
+          "local_bytes_per_thread": 0,
+          "max_dynamic_shared_bytes": 0,
+          "max_threads_per_block": 128,
+          "occupancy_probe_block_threads": 128,
+          "occupancy_probe_dynamic_shared_bytes": 0,
+          "ptx_version": 120,
+          "registers_per_thread": 240,
+          "static_shared_bytes_per_block": 49152
+        },
+        "flash_attn_d512_bb": {
+          "active_blocks_per_sm_at_probe_config": 1,
+          "binary_version": 120,
+          "local_bytes_per_thread": 48,
+          "max_dynamic_shared_bytes": 81920,
+          "max_threads_per_block": 256,
+          "occupancy_probe_block_threads": 256,
+          "occupancy_probe_dynamic_shared_bytes": 81920,
+          "ptx_version": 120,
+          "registers_per_thread": 255,
+          "static_shared_bytes_per_block": 0
+        },
+        "flash_attn_d64_bb": {
+          "active_blocks_per_sm_at_probe_config": 4,
+          "binary_version": 120,
+          "local_bytes_per_thread": 0,
+          "max_dynamic_shared_bytes": 32768,
+          "max_threads_per_block": 128,
+          "occupancy_probe_block_threads": 128,
+          "occupancy_probe_dynamic_shared_bytes": 0,
+          "ptx_version": 120,
+          "registers_per_thread": 128,
+          "static_shared_bytes_per_block": 16384
+        },
+        "qkv_post_w16r_bb": {
+          "active_blocks_per_sm_at_probe_config": 12,
+          "binary_version": 120,
+          "local_bytes_per_thread": 0,
+          "max_dynamic_shared_bytes": 49152,
+          "max_threads_per_block": 1024,
+          "occupancy_probe_block_threads": 128,
+          "occupancy_probe_dynamic_shared_bytes": 0,
+          "ptx_version": 120,
+          "registers_per_thread": 40,
+          "static_shared_bytes_per_block": 0
+        },
+        "qkv_post_w2p_bb": {
+          "active_blocks_per_sm_at_probe_config": 12,
+          "binary_version": 120,
+          "local_bytes_per_thread": 0,
+          "max_dynamic_shared_bytes": 49152,
+          "max_threads_per_block": 1024,
+          "occupancy_probe_block_threads": 128,
+          "occupancy_probe_dynamic_shared_bytes": 0,
+          "ptx_version": 120,
+          "registers_per_thread": 24,
+          "static_shared_bytes_per_block": 0
+        },
+        "qkv_post_w8r_bb": {
+          "active_blocks_per_sm_at_probe_config": 12,
+          "binary_version": 120,
+          "local_bytes_per_thread": 0,
+          "max_dynamic_shared_bytes": 49152,
+          "max_threads_per_block": 1024,
+          "occupancy_probe_block_threads": 128,
+          "occupancy_probe_dynamic_shared_bytes": 0,
+          "ptx_version": 120,
+          "registers_per_thread": 30,
+          "static_shared_bytes_per_block": 0
+        }
+      },
+      "target": "compute_120"
+    },
+    "sm_120": {
+      "kernels": {
+        "flash_attn_d256_bb": {
+          "active_blocks_per_sm_at_probe_config": 2,
+          "binary_version": 120,
+          "local_bytes_per_thread": 0,
+          "max_dynamic_shared_bytes": 0,
+          "max_threads_per_block": 128,
+          "occupancy_probe_block_threads": 128,
+          "occupancy_probe_dynamic_shared_bytes": 0,
+          "ptx_version": 120,
+          "registers_per_thread": 242,
+          "static_shared_bytes_per_block": 49152
+        },
+        "flash_attn_d256_packed_bb": {
+          "active_blocks_per_sm_at_probe_config": 2,
+          "binary_version": 120,
+          "local_bytes_per_thread": 0,
+          "max_dynamic_shared_bytes": 0,
+          "max_threads_per_block": 128,
+          "occupancy_probe_block_threads": 128,
+          "occupancy_probe_dynamic_shared_bytes": 0,
+          "ptx_version": 120,
+          "registers_per_thread": 240,
+          "static_shared_bytes_per_block": 49152
+        },
+        "flash_attn_d512_bb": {
+          "active_blocks_per_sm_at_probe_config": 1,
+          "binary_version": 120,
+          "local_bytes_per_thread": 48,
+          "max_dynamic_shared_bytes": 81920,
+          "max_threads_per_block": 256,
+          "occupancy_probe_block_threads": 256,
+          "occupancy_probe_dynamic_shared_bytes": 81920,
+          "ptx_version": 120,
+          "registers_per_thread": 255,
+          "static_shared_bytes_per_block": 0
+        },
+        "flash_attn_d64_bb": {
+          "active_blocks_per_sm_at_probe_config": 4,
+          "binary_version": 120,
+          "local_bytes_per_thread": 0,
+          "max_dynamic_shared_bytes": 32768,
+          "max_threads_per_block": 128,
+          "occupancy_probe_block_threads": 128,
+          "occupancy_probe_dynamic_shared_bytes": 0,
+          "ptx_version": 120,
+          "registers_per_thread": 128,
+          "static_shared_bytes_per_block": 16384
+        },
+        "qkv_post_w16r_bb": {
+          "active_blocks_per_sm_at_probe_config": 12,
+          "binary_version": 120,
+          "local_bytes_per_thread": 0,
+          "max_dynamic_shared_bytes": 49152,
+          "max_threads_per_block": 1024,
+          "occupancy_probe_block_threads": 128,
+          "occupancy_probe_dynamic_shared_bytes": 0,
+          "ptx_version": 120,
+          "registers_per_thread": 40,
+          "static_shared_bytes_per_block": 0
+        },
+        "qkv_post_w2p_bb": {
+          "active_blocks_per_sm_at_probe_config": 12,
+          "binary_version": 120,
+          "local_bytes_per_thread": 0,
+          "max_dynamic_shared_bytes": 49152,
+          "max_threads_per_block": 1024,
+          "occupancy_probe_block_threads": 128,
+          "occupancy_probe_dynamic_shared_bytes": 0,
+          "ptx_version": 120,
+          "registers_per_thread": 24,
+          "static_shared_bytes_per_block": 0
+        },
+        "qkv_post_w8r_bb": {
+          "active_blocks_per_sm_at_probe_config": 12,
+          "binary_version": 120,
+          "local_bytes_per_thread": 0,
+          "max_dynamic_shared_bytes": 49152,
+          "max_threads_per_block": 1024,
+          "occupancy_probe_block_threads": 128,
+          "occupancy_probe_dynamic_shared_bytes": 0,
+          "ptx_version": 120,
+          "registers_per_thread": 30,
+          "static_shared_bytes_per_block": 0
+        }
+      },
+      "target": "sm_120"
+    }
+  }
+}

@@ -1,0 +1,89 @@
+{
+  "kernels": {
+    "flash_attn_d256_bb": {
+      "active_blocks_per_sm_at_probe_config": 2,
+      "binary_version": 120,
+      "local_bytes_per_thread": 0,
+      "max_dynamic_shared_bytes": 0,
+      "max_threads_per_block": 128,
+      "occupancy_probe_block_threads": 128,
+      "occupancy_probe_dynamic_shared_bytes": 0,
+      "ptx_version": 80,
+      "registers_per_thread": 206,
+      "static_shared_bytes_per_block": 49152
+    },
+    "flash_attn_d256_packed_bb": {
+      "active_blocks_per_sm_at_probe_config": 2,
+      "binary_version": 120,
+      "local_bytes_per_thread": 0,
+      "max_dynamic_shared_bytes": 0,
+      "max_threads_per_block": 128,
+      "occupancy_probe_block_threads": 128,
+      "occupancy_probe_dynamic_shared_bytes": 0,
+      "ptx_version": 80,
+      "registers_per_thread": 208,
+      "static_shared_bytes_per_block": 49152
+    },
+    "flash_attn_d512_bb": {
+      "active_blocks_per_sm_at_probe_config": 1,
+      "binary_version": 120,
+      "local_bytes_per_thread": 168,
+      "max_dynamic_shared_bytes": 81920,
+      "max_threads_per_block": 256,
+      "occupancy_probe_block_threads": 256,
+      "occupancy_probe_dynamic_shared_bytes": 81920,
+      "ptx_version": 80,
+      "registers_per_thread": 255,
+      "static_shared_bytes_per_block": 0
+    },
+    "flash_attn_d64_bb": {
+      "active_blocks_per_sm_at_probe_config": 4,
+      "binary_version": 120,
+      "local_bytes_per_thread": 0,
+      "max_dynamic_shared_bytes": 32768,
+      "max_threads_per_block": 128,
+      "occupancy_probe_block_threads": 128,
+      "occupancy_probe_dynamic_shared_bytes": 0,
+      "ptx_version": 80,
+      "registers_per_thread": 128,
+      "static_shared_bytes_per_block": 16384
+    },
+    "qkv_post_w16r_bb": {
+      "active_blocks_per_sm_at_probe_config": 12,
+      "binary_version": 120,
+      "local_bytes_per_thread": 0,
+      "max_dynamic_shared_bytes": 49152,
+      "max_threads_per_block": 1024,
+      "occupancy_probe_block_threads": 128,
+      "occupancy_probe_dynamic_shared_bytes": 0,
+      "ptx_version": 80,
+      "registers_per_thread": 40,
+      "static_shared_bytes_per_block": 0
+    },
+    "qkv_post_w2p_bb": {
+      "active_blocks_per_sm_at_probe_config": 12,
+      "binary_version": 120,
+      "local_bytes_per_thread": 0,
+      "max_dynamic_shared_bytes": 49152,
+      "max_threads_per_block": 1024,
+      "occupancy_probe_block_threads": 128,
+      "occupancy_probe_dynamic_shared_bytes": 0,
+      "ptx_version": 80,
+      "registers_per_thread": 26,
+      "static_shared_bytes_per_block": 0
+    },
+    "qkv_post_w8r_bb": {
+      "active_blocks_per_sm_at_probe_config": 12,
+      "binary_version": 120,
+      "local_bytes_per_thread": 0,
+      "max_dynamic_shared_bytes": 49152,
+      "max_threads_per_block": 1024,
+      "occupancy_probe_block_threads": 128,
+      "occupancy_probe_dynamic_shared_bytes": 0,
+      "ptx_version": 80,
+      "registers_per_thread": 34,
+      "static_shared_bytes_per_block": 0
+    }
+  },
+  "target": "compute_80"
+}

@@ -1,0 +1,16 @@
+{
+  "artifact_bytes": 1298160,
+  "artifact_kind": "CUBIN",
+  "artifact_path": "/root/experiments/embeddinggemma2-sm120-compile/artifacts/runtime-bench/sm_120/kernels.cubin",
+  "compile_wall_ms": 129.141251,
+  "compiler_options": [
+    "--gpu-architecture=sm_120"
+  ],
+  "loader": "Ptx::from_binary -> CudaContext::load_module -> cuModuleLoadData",
+  "module_load_includes_driver_ptx_jit": false,
+  "module_load_ms": 0.728716,
+  "nvrtc_compile_call_ms": 123.768354,
+  "nvrtc_log": "",
+  "target": "sm_120",
+  "use_fast_math": false
+}

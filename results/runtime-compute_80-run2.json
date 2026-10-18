@@ -1,0 +1,16 @@
+{
+  "artifact_bytes": 1759289,
+  "artifact_kind": "PTX",
+  "artifact_path": "/root/experiments/embeddinggemma2-sm120-compile/artifacts/runtime-bench/compute_80/kernels.ptx",
+  "compile_wall_ms": 120.360936,
+  "compiler_options": [
+    "--gpu-architecture=compute_80"
+  ],
+  "loader": "compile_ptx_with_opts -> CudaContext::load_module -> cuModuleLoadData (PTX driver JIT)",
+  "module_load_includes_driver_ptx_jit": true,
+  "module_load_ms": 2.2493019999999997,
+  "nvrtc_compile_call_ms": null,
+  "nvrtc_log": "See standalone NVRTC diagnostic log; compile_ptx_with_opts does not expose successful logs.",
+  "target": "compute_80",
+  "use_fast_math": false
+}

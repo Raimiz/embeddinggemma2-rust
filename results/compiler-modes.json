@@ -1,0 +1,174 @@
+{
+  "source_sha256": "4e8e4d692e4a40bf6a7eef3f73501ce49bcbe7dab923815608960599c8c8e71d",
+  "runtime_path": "A/B call cudarc compile_ptx_with_opts with only arch changed; C calls nvrtcCompileProgram + nvrtcGetCUBINSize/GetCUBIN and passes Ptx::from_binary into CudaContext::load_module. Full NVRTC options, logs, bytes, and timings below.",
+  "modes": {
+    "compute_80": {
+      "nvrtc_target": "compute_80",
+      "artifact_kind": "PTX",
+      "artifact_target": "sm_80",
+      "options": [
+        "--gpu-architecture=compute_80"
+      ],
+      "use_fast_math": false,
+      "effective_fast_math_option_emitted": false,
+      "compiler_version": "NVRTC 13.4.92; NVVM noted in generated output",
+      "ptx_version": "9.4",
+      "nvvm_version": "7.0.1",
+      "source_sha256": "4e8e4d692e4a40bf6a7eef3f73501ce49bcbe7dab923815608960599c8c8e71d",
+      "probe_compile_call_ms": 2715.513266,
+      "probe_artifact": {
+        "path": "/root/experiments/embeddinggemma2-sm120-compile/artifacts/probe_compute_80/nvrtc-probe.ptx",
+        "size_bytes": 1759289,
+        "sha256": "c99077c69a7116d9ba907548edef4470d6a6d0ade8f5231cd62d251be0f110ee",
+        "nvrtc_log_path": "/root/experiments/embeddinggemma2-sm120-compile/artifacts/probe_compute_80/nvrtc-compilation.log",
+        "nvrtc_log_bytes": 0
+      },
+      "runtime_loaded_artifact": {
+        "path": "/root/experiments/embeddinggemma2-sm120-compile/artifacts/runtime_compute_80_verify_full/kernels.ptx",
+        "size_bytes": 1759289,
+        "sha256": "c99077c69a7116d9ba907548edef4470d6a6d0ade8f5231cd62d251be0f110ee",
+        "hash_matches_probe": true,
+        "load_path": "compile_ptx_with_opts -> CudaContext::load_module -> cuModuleLoadData (PTX driver JIT)",
+        "module_load_includes_driver_ptx_jit": true
+      },
+      "cold_first_runtime": {
+        "compile_wall_ms": 2700.143971,
+        "nvrtc_compile_call_ms": null,
+        "module_load_ms": 2918.814889,
+        "model_load_ms": 7058.0,
+        "cuda_cache_path": "/root/experiments/embeddinggemma2-sm120-compile/cache/compute_80",
+        "cache_note": "isolated per target, retained; global CUDA JIT cache was not cleared"
+      },
+      "warm_runtime_compile_wall_ms": [
+        118.231062,
+        120.360936,
+        118.575058
+      ],
+      "warm_nvrtc_compile_call_ms": [
+        null,
+        null,
+        null
+      ],
+      "warm_module_load_ms": [
+        2.0940149999999997,
+        2.2493019999999997,
+        2.231778
+      ],
+      "warm_compile_wall_median_ms": 118.575058,
+      "warm_module_load_median_ms": 2.231778,
+      "cold_runtime_log_note": "compute_80 first module load used a failed verify attempt due to wrong fixture root; compilation and module load completed, then full 90-check verify was rerun with corrected fixtures."
+    },
+    "compute_120": {
+      "nvrtc_target": "compute_120",
+      "artifact_kind": "PTX",
+      "artifact_target": "sm_120",
+      "options": [
+        "--gpu-architecture=compute_120"
+      ],
+      "use_fast_math": false,
+      "effective_fast_math_option_emitted": false,
+      "compiler_version": "NVRTC 13.4.92; NVVM noted in generated output",
+      "ptx_version": "9.4",
+      "nvvm_version": "23.0.0",
+      "source_sha256": "4e8e4d692e4a40bf6a7eef3f73501ce49bcbe7dab923815608960599c8c8e71d",
+      "probe_compile_call_ms": 3185.0265329999997,
+      "probe_artifact": {
+        "path": "/root/experiments/embeddinggemma2-sm120-compile/artifacts/probe_compute_120/nvrtc-probe.ptx",
+        "size_bytes": 1580161,
+        "sha256": "a0c12cff0821f60319212ece6dfd154b697dee9b8220666c4f553f565df953b0",
+        "nvrtc_log_path": "/root/experiments/embeddinggemma2-sm120-compile/artifacts/probe_compute_120/nvrtc-compilation.log",
+        "nvrtc_log_bytes": 0
+      },
+      "runtime_loaded_artifact": {
+        "path": "/root/experiments/embeddinggemma2-sm120-compile/artifacts/runtime_compute_120_verify/kernels.ptx",
+        "size_bytes": 1580161,
+        "sha256": "a0c12cff0821f60319212ece6dfd154b697dee9b8220666c4f553f565df953b0",
+        "hash_matches_probe": true,
+        "load_path": "compile_ptx_with_opts -> CudaContext::load_module -> cuModuleLoadData (PTX driver JIT)",
+        "module_load_includes_driver_ptx_jit": true
+      },
+      "cold_first_runtime": {
+        "compile_wall_ms": 2965.888212,
+        "nvrtc_compile_call_ms": null,
+        "module_load_ms": 2972.441668,
+        "model_load_ms": 7297.0,
+        "cuda_cache_path": "/root/experiments/embeddinggemma2-sm120-compile/cache/compute_120",
+        "cache_note": "isolated per target, retained; global CUDA JIT cache was not cleared"
+      },
+      "warm_runtime_compile_wall_ms": [
+        124.998932,
+        130.67536900000002,
+        128.02449099999998
+      ],
+      "warm_nvrtc_compile_call_ms": [
+        null,
+        null,
+        null
+      ],
+      "warm_module_load_ms": [
+        1.999521,
+        2.12384,
+        2.0918629999999996
+      ],
+      "warm_compile_wall_median_ms": 128.02449099999998,
+      "warm_module_load_median_ms": 2.0918629999999996,
+      "cold_runtime_log_note": null
+    },
+    "sm_120": {
+      "nvrtc_target": "sm_120",
+      "artifact_kind": "CUBIN",
+      "artifact_target": "sm=120",
+      "options": [
+        "--gpu-architecture=sm_120"
+      ],
+      "use_fast_math": false,
+      "effective_fast_math_option_emitted": false,
+      "compiler_version": "NVRTC 13.4.92; NVVM noted in generated output",
+      "ptx_version": null,
+      "nvvm_version": "23.0.0 (NVRTC 13.4.92; CUBIN has no printable NVVM-version header; same NVRTC backend as compute_120)",
+      "source_sha256": "4e8e4d692e4a40bf6a7eef3f73501ce49bcbe7dab923815608960599c8c8e71d",
+      "probe_compile_call_ms": 3445.649731,
+      "probe_artifact": {
+        "path": "/root/experiments/embeddinggemma2-sm120-compile/artifacts/probe_sm_120/nvrtc-probe.cubin",
+        "size_bytes": 1298160,
+        "sha256": "f9592a1fea68ca823510a1e9d6f986d7be212719d5a8359800d5295caabb805d",
+        "nvrtc_log_path": "/root/experiments/embeddinggemma2-sm120-compile/artifacts/probe_sm_120/nvrtc-compilation.log",
+        "nvrtc_log_bytes": 0
+      },
+      "runtime_loaded_artifact": {
+        "path": "/root/experiments/embeddinggemma2-sm120-compile/artifacts/runtime_sm_120_verify/kernels.cubin",
+        "size_bytes": 1298160,
+        "sha256": "f9592a1fea68ca823510a1e9d6f986d7be212719d5a8359800d5295caabb805d",
+        "hash_matches_probe": true,
+        "load_path": "Ptx::from_binary -> CudaContext::load_module -> cuModuleLoadData",
+        "module_load_includes_driver_ptx_jit": false
+      },
+      "cold_first_runtime": {
+        "compile_wall_ms": 5965.6955849999995,
+        "nvrtc_compile_call_ms": 5960.506635,
+        "module_load_ms": 0.733854,
+        "model_load_ms": 7288.0,
+        "cuda_cache_path": "/root/experiments/embeddinggemma2-sm120-compile/cache/sm_120",
+        "cache_note": "isolated per target, retained; global CUDA JIT cache was not cleared"
+      },
+      "warm_runtime_compile_wall_ms": [
+        126.63712,
+        129.489179,
+        129.141251
+      ],
+      "warm_nvrtc_compile_call_ms": [
+        121.25022200000001,
+        124.07179000000001,
+        123.768354
+      ],
+      "warm_module_load_ms": [
+        0.6893389999999999,
+        1.0890540000000002,
+        0.728716
+      ],
+      "warm_compile_wall_median_ms": 129.141251,
+      "warm_module_load_median_ms": 0.728716,
+      "cold_runtime_log_note": null
+    }
+  }
+}

@@ -1,0 +1,118 @@
+{
+  "compute_80": {
+    "checks": 90,
+    "failed": 0,
+    "passed": true,
+    "groups": {
+      "text": 26,
+      "image": 25,
+      "audio": 20,
+      "video": 13,
+      "extra": 6
+    },
+    "tolerance_profile": "bf16: embeddings <= 4e-3 & cos >= 0.99991, soft tokens <= 3.5e0 & cos >= 0.9996, patches <= 1e-6, log-mel <= 1e-5",
+    "log": "results/verify-compute_80.log"
+  },
+  "compute_120": {
+    "checks": 90,
+    "failed": 0,
+    "passed": true,
+    "groups": {
+      "text": 26,
+      "image": 25,
+      "audio": 20,
+      "video": 13,
+      "extra": 6
+    },
+    "tolerance_profile": "bf16: embeddings <= 4e-3 & cos >= 0.99991, soft tokens <= 3.5e0 & cos >= 0.9996, patches <= 1e-6, log-mel <= 1e-5",
+    "log": "results/verify-compute_120.log"
+  },
+  "sm_120": {
+    "checks": 90,
+    "failed": 0,
+    "passed": true,
+    "groups": {
+      "text": 26,
+      "image": 25,
+      "audio": 20,
+      "video": 13,
+      "extra": 6
+    },
+    "tolerance_profile": "bf16: embeddings <= 4e-3 & cos >= 0.99991, soft tokens <= 3.5e0 & cos >= 0.9996, patches <= 1e-6, log-mel <= 1e-5",
+    "log": "results/verify-sm_120.log"
+  },
+  "direct_embedding_comparison": {
+    "compute_120": {
+      "vs_compute_80": {
+        "short": {
+          "exact_equal": true,
+          "dimensions": 768,
+          "cosine": 1.0000000000000002,
+          "max_abs": 0.0
+        },
+        "long": {
+          "exact_equal": true,
+          "dimensions": 768,
+          "cosine": 1.0000000000000002,
+          "max_abs": 0.0
+        },
+        "image": {
+          "exact_equal": true,
+          "dimensions": 768,
+          "cosine": 1.0000000000000002,
+          "max_abs": 0.0
+        },
+        "audio": {
+          "exact_equal": true,
+          "dimensions": 768,
+          "cosine": 1.0,
+          "max_abs": 0.0
+        },
+        "batch64": {
+          "documents": 64,
+          "exact_documents": 64,
+          "cosine_mean": 1.0,
+          "cosine_min": 0.9999999999999998,
+          "max_abs_max": 0.0
+        }
+      },
+      "all_cases_exact": true
+    },
+    "sm_120": {
+      "vs_compute_80": {
+        "short": {
+          "exact_equal": true,
+          "dimensions": 768,
+          "cosine": 1.0000000000000002,
+          "max_abs": 0.0
+        },
+        "long": {
+          "exact_equal": true,
+          "dimensions": 768,
+          "cosine": 1.0000000000000002,
+          "max_abs": 0.0
+        },
+        "image": {
+          "exact_equal": true,
+          "dimensions": 768,
+          "cosine": 1.0000000000000002,
+          "max_abs": 0.0
+        },
+        "audio": {
+          "exact_equal": true,
+          "dimensions": 768,
+          "cosine": 1.0,
+          "max_abs": 0.0
+        },
+        "batch64": {
+          "documents": 64,
+          "exact_documents": 64,
+          "cosine_mean": 1.0,
+          "cosine_min": 0.9999999999999998,
+          "max_abs_max": 0.0
+        }
+      },
+      "all_cases_exact": true
+    }
+  }
+}

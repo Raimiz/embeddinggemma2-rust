@@ -1,0 +1,297 @@
+{
+  "profiling_enabled": true,
+  "cuda_graphs_enabled": false,
+  "warmups_per_case": 2,
+  "profiled_passes": 5,
+  "cases": [
+    {
+      "case": "long document (2208 tokens)",
+      "device_ms_per_pass": 29.3,
+      "ops": [
+        {
+          "operation": "to_bf16 (GEMM input)",
+          "device_ms_per_pass": 0.01,
+          "percent": 0.0
+        },
+        {
+          "operation": "GEMM ple_model 512->12288",
+          "device_ms_per_pass": 0.62,
+          "percent": 2.1
+        },
+        {
+          "operation": "norms (ple, first)",
+          "device_ms_per_pass": 0.55,
+          "percent": 1.9
+        },
+        {
+          "operation": "GEMM qkv",
+          "device_ms_per_pass": 2.69,
+          "percent": 9.2
+        },
+        {
+          "operation": "qkv_post (norms + RoPE)",
+          "device_ms_per_pass": 1.37,
+          "percent": 4.7
+        },
+        {
+          "operation": "attn: flash (d256)",
+          "device_ms_per_pass": 5.71,
+          "percent": 19.5
+        },
+        {
+          "operation": "GEMM o",
+          "device_ms_per_pass": 1.47,
+          "percent": 5.0
+        },
+        {
+          "operation": "add_norm",
+          "device_ms_per_pass": 1.81,
+          "percent": 6.2
+        },
+        {
+          "operation": "GEMM gate|up",
+          "device_ms_per_pass": 4.85,
+          "percent": 16.5
+        },
+        {
+          "operation": "gelu_mul",
+          "device_ms_per_pass": 1.14,
+          "percent": 3.9
+        },
+        {
+          "operation": "GEMM down",
+          "device_ms_per_pass": 2.4,
+          "percent": 8.2
+        },
+        {
+          "operation": "GEMM ple gate/proj",
+          "device_ms_per_pass": 1.42,
+          "percent": 4.8
+        },
+        {
+          "operation": "ple_gate",
+          "device_ms_per_pass": 0.55,
+          "percent": 1.9
+        },
+        {
+          "operation": "attn: flash (d512)",
+          "device_ms_per_pass": 4.73,
+          "percent": 16.1
+        },
+        {
+          "operation": "GEMM embed_proj",
+          "device_ms_per_pass": 0.04,
+          "percent": 0.1
+        }
+      ]
+    },
+    {
+      "case": "batch of 64 short documents",
+      "device_ms_per_pass": 26.3,
+      "ops": [
+        {
+          "operation": "to_bf16 (GEMM input)",
+          "device_ms_per_pass": 0.01,
+          "percent": 0.1
+        },
+        {
+          "operation": "GEMM ple_model 512->12288",
+          "device_ms_per_pass": 0.81,
+          "percent": 3.1
+        },
+        {
+          "operation": "norms (ple, first)",
+          "device_ms_per_pass": 0.67,
+          "percent": 2.6
+        },
+        {
+          "operation": "GEMM qkv",
+          "device_ms_per_pass": 3.58,
+          "percent": 13.6
+        },
+        {
+          "operation": "qkv_post (norms + RoPE)",
+          "device_ms_per_pass": 1.15,
+          "percent": 4.4
+        },
+        {
+          "operation": "attn: packed flash (d256)",
+          "device_ms_per_pass": 1.0,
+          "percent": 3.8
+        },
+        {
+          "operation": "GEMM o",
+          "device_ms_per_pass": 2.12,
+          "percent": 8.1
+        },
+        {
+          "operation": "add_norm",
+          "device_ms_per_pass": 2.34,
+          "percent": 8.9
+        },
+        {
+          "operation": "GEMM gate|up",
+          "device_ms_per_pass": 6.32,
+          "percent": 24.0
+        },
+        {
+          "operation": "gelu_mul",
+          "device_ms_per_pass": 1.55,
+          "percent": 5.9
+        },
+        {
+          "operation": "GEMM down",
+          "device_ms_per_pass": 3.36,
+          "percent": 12.8
+        },
+        {
+          "operation": "GEMM ple gate/proj",
+          "device_ms_per_pass": 2.12,
+          "percent": 8.0
+        },
+        {
+          "operation": "ple_gate",
+          "device_ms_per_pass": 0.8,
+          "percent": 3.0
+        },
+        {
+          "operation": "attn: packed flash (d512)",
+          "device_ms_per_pass": 0.43,
+          "percent": 1.6
+        },
+        {
+          "operation": "GEMM embed_proj",
+          "device_ms_per_pass": 0.06,
+          "percent": 0.2
+        }
+      ]
+    },
+    {
+      "case": "image 641x479 (vision tower + text)",
+      "device_ms_per_pass": 34.8,
+      "ops": [
+        {
+          "operation": "to_bf16 (GEMM input)",
+          "device_ms_per_pass": 1.24,
+          "percent": 3.6
+        },
+        {
+          "operation": "vision: input proj + first norm",
+          "device_ms_per_pass": 1.37,
+          "percent": 3.9
+        },
+        {
+          "operation": "vision: GEMM qkv",
+          "device_ms_per_pass": 2.92,
+          "percent": 8.4
+        },
+        {
+          "operation": "vision: qkv_post (norms + RoPE)",
+          "device_ms_per_pass": 1.18,
+          "percent": 3.4
+        },
+        {
+          "operation": "vision: attn: flash",
+          "device_ms_per_pass": 8.3,
+          "percent": 23.8
+        },
+        {
+          "operation": "vision: GEMM o",
+          "device_ms_per_pass": 1.05,
+          "percent": 3.0
+        },
+        {
+          "operation": "vision: add_norm",
+          "device_ms_per_pass": 1.32,
+          "percent": 3.8
+        },
+        {
+          "operation": "vision: GEMM gate|up",
+          "device_ms_per_pass": 7.62,
+          "percent": 21.9
+        },
+        {
+          "operation": "vision: gelu_mul",
+          "device_ms_per_pass": 1.79,
+          "percent": 5.1
+        },
+        {
+          "operation": "vision: GEMM down",
+          "device_ms_per_pass": 3.75,
+          "percent": 10.8
+        },
+        {
+          "operation": "GEMM ple_model 512->12288",
+          "device_ms_per_pass": 0.09,
+          "percent": 0.3
+        },
+        {
+          "operation": "norms (ple, first)",
+          "device_ms_per_pass": 0.03,
+          "percent": 0.1
+        },
+        {
+          "operation": "GEMM qkv",
+          "device_ms_per_pass": 0.48,
+          "percent": 1.4
+        },
+        {
+          "operation": "qkv_post (norms + RoPE)",
+          "device_ms_per_pass": 0.2,
+          "percent": 0.6
+        },
+        {
+          "operation": "attn: flash (d256)",
+          "device_ms_per_pass": 0.66,
+          "percent": 1.9
+        },
+        {
+          "operation": "GEMM o",
+          "device_ms_per_pass": 0.26,
+          "percent": 0.7
+        },
+        {
+          "operation": "add_norm",
+          "device_ms_per_pass": 0.49,
+          "percent": 1.4
+        },
+        {
+          "operation": "GEMM gate|up",
+          "device_ms_per_pass": 0.78,
+          "percent": 2.2
+        },
+        {
+          "operation": "gelu_mul",
+          "device_ms_per_pass": 0.21,
+          "percent": 0.6
+        },
+        {
+          "operation": "GEMM down",
+          "device_ms_per_pass": 0.4,
+          "percent": 1.1
+        },
+        {
+          "operation": "GEMM ple gate/proj",
+          "device_ms_per_pass": 0.39,
+          "percent": 1.1
+        },
+        {
+          "operation": "ple_gate",
+          "device_ms_per_pass": 0.13,
+          "percent": 0.4
+        },
+        {
+          "operation": "attn: flash (d512)",
+          "device_ms_per_pass": 0.18,
+          "percent": 0.5
+        },
+        {
+          "operation": "GEMM embed_proj",
+          "device_ms_per_pass": 0.01,
+          "percent": 0.0
+        }
+      ]
+    }
+  ],
+  "log": "results/profile-sm_120.log"
+}

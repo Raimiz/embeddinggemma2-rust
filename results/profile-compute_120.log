@@ -1,0 +1,63 @@
+    Finished `release` profile [optimized] target(s) in 0.06s
+     Running `target/release/examples/profile_passes bf16`
+device cuda:0 (bf16)
+
+long document (2208 tokens): 29.4 ms of device time per pass
+  to_bf16 (GEMM input)            0.01 ms    0.0%
+  GEMM ple_model 512->12288       0.63 ms    2.1%
+  norms (ple, first)              0.56 ms    1.9%
+  GEMM qkv                        2.69 ms    9.2%
+  qkv_post (norms + RoPE)         1.36 ms    4.6%
+  attn: flash (d256)              5.71 ms   19.5%
+  GEMM o                          1.47 ms    5.0%
+  add_norm                        1.81 ms    6.2%
+  GEMM gate|up                    4.85 ms   16.5%
+  gelu_mul                        1.14 ms    3.9%
+  GEMM down                       2.40 ms    8.2%
+  GEMM ple gate/proj              1.42 ms    4.8%
+  ple_gate                        0.55 ms    1.9%
+  attn: flash (d512)              4.72 ms   16.1%
+  GEMM embed_proj                 0.04 ms    0.1%
+
+batch of 64 short documents: 26.2 ms of device time per pass
+  to_bf16 (GEMM input)            0.01 ms    0.1%
+  GEMM ple_model 512->12288       0.81 ms    3.1%
+  norms (ple, first)              0.67 ms    2.6%
+  GEMM qkv                        3.56 ms   13.6%
+  qkv_post (norms + RoPE)         1.13 ms    4.3%
+  attn: packed flash (d256)       0.99 ms    3.8%
+  GEMM o                          2.12 ms    8.1%
+  add_norm                        2.33 ms    8.9%
+  GEMM gate|up                    6.31 ms   24.1%
+  gelu_mul                        1.55 ms    5.9%
+  GEMM down                       3.35 ms   12.8%
+  GEMM ple gate/proj              2.10 ms    8.0%
+  ple_gate                        0.79 ms    3.0%
+  attn: packed flash (d512)       0.43 ms    1.6%
+  GEMM embed_proj                 0.06 ms    0.2%
+
+image 641x479 (vision tower + text): 34.9 ms of device time per pass
+  to_bf16 (GEMM input)            1.26 ms    3.6%
+  vision: input proj + first norm    1.38 ms    4.0%
+  vision: GEMM qkv                2.92 ms    8.4%
+  vision: qkv_post (norms + RoPE)    1.18 ms    3.4%
+  vision: attn: flash             8.29 ms   23.8%
+  vision: GEMM o                  1.05 ms    3.0%
+  vision: add_norm                1.32 ms    3.8%
+  vision: GEMM gate|up            7.62 ms   21.8%
+  vision: gelu_mul                1.79 ms    5.1%
+  vision: GEMM down               3.75 ms   10.7%
+  GEMM ple_model 512->12288       0.09 ms    0.3%
+  norms (ple, first)              0.03 ms    0.1%
+  GEMM qkv                        0.48 ms    1.4%
+  qkv_post (norms + RoPE)         0.20 ms    0.6%
+  attn: flash (d256)              0.67 ms    1.9%
+  GEMM o                          0.26 ms    0.7%
+  add_norm                        0.50 ms    1.4%
+  GEMM gate|up                    0.78 ms    2.2%
+  gelu_mul                        0.21 ms    0.6%
+  GEMM down                       0.40 ms    1.1%
+  GEMM ple gate/proj              0.39 ms    1.1%
+  ple_gate                        0.13 ms    0.4%
+  attn: flash (d512)              0.18 ms    0.5%
+  GEMM embed_proj                 0.01 ms    0.0%

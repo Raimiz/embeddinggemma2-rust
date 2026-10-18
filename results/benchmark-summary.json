@@ -1,0 +1,1698 @@
+{
+  "benchmark": "bf16, CUDA Graphs enabled, 1 warmup + 20 timed calls/case, 3 independent processes/mode; variant order rotated per series",
+  "case_key_map": {
+    "short (17 tok)": "short",
+    "long (2208 tok)": "long",
+    "batch of 64 short docs": "batch64",
+    "image 641x479": "image",
+    "audio 9.3 s": "audio"
+  },
+  "target_order_by_run": {
+    "run1": [
+      "compute_80",
+      "compute_120",
+      "sm_120"
+    ],
+    "run2": [
+      "compute_120",
+      "sm_120",
+      "compute_80"
+    ],
+    "run3": [
+      "sm_120",
+      "compute_80",
+      "compute_120"
+    ]
+  },
+  "modes": {
+    "compute_80": {
+      "short": {
+        "runs": 3,
+        "samples_per_run": [
+          20,
+          20,
+          20
+        ],
+        "run_medians_ms": [
+          1.615238,
+          1.616579,
+          1.616744
+        ],
+        "median_of_run_medians_ms": 1.616579,
+        "run_median_range_ms": [
+          1.615238,
+          1.616744
+        ],
+        "min_all_samples_ms": 1.612247,
+        "max_all_samples_ms": 1.657776,
+        "p95_all_60_samples_ms": 1.644515,
+        "run_p95_ms": [
+          1.6297810000000001,
+          1.618211,
+          1.644515
+        ],
+        "run_min_ms": [
+          1.612247,
+          1.613577,
+          1.613612
+        ]
+      },
+      "long": {
+        "runs": 3,
+        "samples_per_run": [
+          20,
+          20,
+          20
+        ],
+        "run_medians_ms": [
+          33.755997,
+          34.118432,
+          33.999139
+        ],
+        "median_of_run_medians_ms": 33.999139,
+        "run_median_range_ms": [
+          33.755997,
+          34.118432
+        ],
+        "min_all_samples_ms": 33.523461999999995,
+        "max_all_samples_ms": 34.523994,
+        "p95_all_60_samples_ms": 34.210276,
+        "run_p95_ms": [
+          34.099692,
+          34.261337000000005,
+          34.149866
+        ],
+        "run_min_ms": [
+          33.523461999999995,
+          33.772279000000005,
+          33.7484
+        ]
+      },
+      "batch64": {
+        "runs": 3,
+        "samples_per_run": [
+          20,
+          20,
+          20
+        ],
+        "run_medians_ms": [
+          30.013523,
+          30.26985,
+          30.378978
+        ],
+        "median_of_run_medians_ms": 30.26985,
+        "run_median_range_ms": [
+          30.013523,
+          30.378978
+        ],
+        "min_all_samples_ms": 29.969339,
+        "max_all_samples_ms": 30.825968,
+        "p95_all_60_samples_ms": 30.582078,
+        "run_p95_ms": [
+          30.083161,
+          30.519531999999998,
+          30.796543
+        ],
+        "run_min_ms": [
+          29.969339,
+          30.115708,
+          30.053312
+        ]
+      },
+      "image": {
+        "runs": 3,
+        "samples_per_run": [
+          20,
+          20,
+          20
+        ],
+        "run_medians_ms": [
+          43.893417,
+          43.434309,
+          43.802572
+        ],
+        "median_of_run_medians_ms": 43.802572,
+        "run_median_range_ms": [
+          43.434309,
+          43.893417
+        ],
+        "min_all_samples_ms": 42.705115,
+        "max_all_samples_ms": 46.78567,
+        "p95_all_60_samples_ms": 45.888275,
+        "run_p95_ms": [
+          45.688549,
+          45.888275,
+          45.287755
+        ],
+        "run_min_ms": [
+          42.705115,
+          43.009631,
+          42.707422
+        ]
+      },
+      "audio": {
+        "runs": 3,
+        "samples_per_run": [
+          20,
+          20,
+          20
+        ],
+        "run_medians_ms": [
+          17.388822,
+          17.331143,
+          18.477479000000002
+        ],
+        "median_of_run_medians_ms": 17.388822,
+        "run_median_range_ms": [
+          17.331143,
+          18.477479000000002
+        ],
+        "min_all_samples_ms": 16.455777,
+        "max_all_samples_ms": 21.843619,
+        "p95_all_60_samples_ms": 19.148154,
+        "run_p95_ms": [
+          17.945968999999998,
+          18.078185,
+          19.968359000000003
+        ],
+        "run_min_ms": [
+          16.455777,
+          16.780446,
+          17.7145
+        ]
+      }
+    },
+    "compute_120": {
+      "short": {
+        "runs": 3,
+        "samples_per_run": [
+          20,
+          20,
+          20
+        ],
+        "run_medians_ms": [
+          1.6388049999999998,
+          1.640882,
+          1.640988
+        ],
+        "median_of_run_medians_ms": 1.640882,
+        "run_median_range_ms": [
+          1.6388049999999998,
+          1.640988
+        ],
+        "min_all_samples_ms": 1.628632,
+        "max_all_samples_ms": 1.678314,
+        "p95_all_60_samples_ms": 1.6471490000000002,
+        "run_p95_ms": [
+          1.642545,
+          1.6471490000000002,
+          1.6441430000000001
+        ],
+        "run_min_ms": [
+          1.628632,
+          1.638979,
+          1.6310230000000001
+        ],
+        "delta_vs_compute_80_ms": 0.024302999999999964,
+        "delta_vs_compute_80_percent": 1.5033598729168178
+      },
+      "long": {
+        "runs": 3,
+        "samples_per_run": [
+          20,
+          20,
+          20
+        ],
+        "run_medians_ms": [
+          33.341488000000005,
+          33.621744,
+          33.583687
+        ],
+        "median_of_run_medians_ms": 33.583687,
+        "run_median_range_ms": [
+          33.341488000000005,
+          33.621744
+        ],
+        "min_all_samples_ms": 33.19495,
+        "max_all_samples_ms": 34.440626,
+        "p95_all_60_samples_ms": 33.743919,
+        "run_p95_ms": [
+          33.591226,
+          33.743919,
+          33.807514
+        ],
+        "run_min_ms": [
+          33.19495,
+          33.341396,
+          33.322242
+        ],
+        "delta_vs_compute_80_ms": -0.41545200000000193,
+        "delta_vs_compute_80_percent": -1.221948591109916
+      },
+      "batch64": {
+        "runs": 3,
+        "samples_per_run": [
+          20,
+          20,
+          20
+        ],
+        "run_medians_ms": [
+          30.232742,
+          30.403117,
+          30.299339
+        ],
+        "median_of_run_medians_ms": 30.299339,
+        "run_median_range_ms": [
+          30.232742,
+          30.403117
+        ],
+        "min_all_samples_ms": 30.084373,
+        "max_all_samples_ms": 31.159841,
+        "p95_all_60_samples_ms": 30.6447,
+        "run_p95_ms": [
+          30.68362,
+          30.607974,
+          30.376802
+        ],
+        "run_min_ms": [
+          30.084373,
+          30.217767,
+          30.103754
+        ],
+        "delta_vs_compute_80_ms": 0.0294889999999981,
+        "delta_vs_compute_80_percent": 0.0974203704346011
+      },
+      "image": {
+        "runs": 3,
+        "samples_per_run": [
+          20,
+          20,
+          20
+        ],
+        "run_medians_ms": [
+          44.291063,
+          43.949591000000005,
+          44.087824
+        ],
+        "median_of_run_medians_ms": 44.087824,
+        "run_median_range_ms": [
+          43.949591000000005,
+          44.291063
+        ],
+        "min_all_samples_ms": 43.0313,
+        "max_all_samples_ms": 49.933569,
+        "p95_all_60_samples_ms": 45.969217,
+        "run_p95_ms": [
+          45.969217,
+          46.048923,
+          45.608196
+        ],
+        "run_min_ms": [
+          43.0313,
+          43.053993,
+          43.215638
+        ],
+        "delta_vs_compute_80_ms": 0.28525199999999984,
+        "delta_vs_compute_80_percent": 0.6512220332632519
+      },
+      "audio": {
+        "runs": 3,
+        "samples_per_run": [
+          20,
+          20,
+          20
+        ],
+        "run_medians_ms": [
+          17.409757000000003,
+          17.092192,
+          17.039174
+        ],
+        "median_of_run_medians_ms": 17.092192,
+        "run_median_range_ms": [
+          17.039174,
+          17.409757000000003
+        ],
+        "min_all_samples_ms": 16.285432,
+        "max_all_samples_ms": 21.674467,
+        "p95_all_60_samples_ms": 18.960001000000002,
+        "run_p95_ms": [
+          17.805771,
+          19.593372000000002,
+          18.422674999999998
+        ],
+        "run_min_ms": [
+          16.696276,
+          16.506693,
+          16.285432
+        ],
+        "delta_vs_compute_80_ms": -0.2966300000000004,
+        "delta_vs_compute_80_percent": -1.7058659867816255
+      }
+    },
+    "sm_120": {
+      "short": {
+        "runs": 3,
+        "samples_per_run": [
+          20,
+          20,
+          20
+        ],
+        "run_medians_ms": [
+          1.640366,
+          1.640303,
+          1.640947
+        ],
+        "median_of_run_medians_ms": 1.640366,
+        "run_median_range_ms": [
+          1.640303,
+          1.640947
+        ],
+        "min_all_samples_ms": 1.633029,
+        "max_all_samples_ms": 1.677054,
+        "p95_all_60_samples_ms": 1.649006,
+        "run_p95_ms": [
+          1.644814,
+          1.649006,
+          1.6485560000000001
+        ],
+        "run_min_ms": [
+          1.633029,
+          1.637318,
+          1.638595
+        ],
+        "delta_vs_compute_80_ms": 0.023787000000000003,
+        "delta_vs_compute_80_percent": 1.471440616264346
+      },
+      "long": {
+        "runs": 3,
+        "samples_per_run": [
+          20,
+          20,
+          20
+        ],
+        "run_medians_ms": [
+          33.424318,
+          33.630241,
+          33.630853
+        ],
+        "median_of_run_medians_ms": 33.630241,
+        "run_median_range_ms": [
+          33.424318,
+          33.630853
+        ],
+        "min_all_samples_ms": 33.194407000000005,
+        "max_all_samples_ms": 33.873115000000006,
+        "p95_all_60_samples_ms": 33.732555,
+        "run_p95_ms": [
+          33.637930000000004,
+          33.782004,
+          33.717746
+        ],
+        "run_min_ms": [
+          33.194407000000005,
+          33.316708,
+          33.418575
+        ],
+        "delta_vs_compute_80_ms": -0.3688980000000015,
+        "delta_vs_compute_80_percent": -1.085021594223317
+      },
+      "batch64": {
+        "runs": 3,
+        "samples_per_run": [
+          20,
+          20,
+          20
+        ],
+        "run_medians_ms": [
+          30.326344000000002,
+          30.248573,
+          30.422647
+        ],
+        "median_of_run_medians_ms": 30.326344000000002,
+        "run_median_range_ms": [
+          30.248573,
+          30.422647
+        ],
+        "min_all_samples_ms": 30.057366,
+        "max_all_samples_ms": 31.413138,
+        "p95_all_60_samples_ms": 30.698346,
+        "run_p95_ms": [
+          30.707822999999998,
+          30.371927,
+          30.565640000000002
+        ],
+        "run_min_ms": [
+          30.057366,
+          30.107218000000003,
+          30.19485
+        ],
+        "delta_vs_compute_80_ms": 0.05649400000000071,
+        "delta_vs_compute_80_percent": 0.18663455550655422
+      },
+      "image": {
+        "runs": 3,
+        "samples_per_run": [
+          20,
+          20,
+          20
+        ],
+        "run_medians_ms": [
+          43.659264,
+          43.759256,
+          43.577635
+        ],
+        "median_of_run_medians_ms": 43.659264,
+        "run_median_range_ms": [
+          43.577635,
+          43.759256
+        ],
+        "min_all_samples_ms": 42.742929,
+        "max_all_samples_ms": 48.282435,
+        "p95_all_60_samples_ms": 45.911124,
+        "run_p95_ms": [
+          47.739951000000005,
+          45.322091,
+          45.911124
+        ],
+        "run_min_ms": [
+          42.742929,
+          42.983644,
+          42.790961
+        ],
+        "delta_vs_compute_80_ms": -0.14330799999999755,
+        "delta_vs_compute_80_percent": -0.32716800282868674
+      },
+      "audio": {
+        "runs": 3,
+        "samples_per_run": [
+          20,
+          20,
+          20
+        ],
+        "run_medians_ms": [
+          17.004279,
+          17.416047,
+          17.152387
+        ],
+        "median_of_run_medians_ms": 17.152387,
+        "run_median_range_ms": [
+          17.004279,
+          17.416047
+        ],
+        "min_all_samples_ms": 16.455457,
+        "max_all_samples_ms": 25.598602000000003,
+        "p95_all_60_samples_ms": 18.123333,
+        "run_p95_ms": [
+          17.599618,
+          18.211477,
+          18.123333
+        ],
+        "run_min_ms": [
+          16.455457,
+          16.651239,
+          16.654948
+        ],
+        "delta_vs_compute_80_ms": -0.23643500000000017,
+        "delta_vs_compute_80_percent": -1.3596953261123736
+      }
+    }
+  },
+  "model_load": {
+    "compute_80": {
+      "model_load_ms_per_run": [
+        1540.0,
+        1451.0,
+        1414.0
+      ],
+      "median_ms": 1451.0
+    },
+    "compute_120": {
+      "model_load_ms_per_run": [
+        1413.0,
+        1448.0,
+        1425.0
+      ],
+      "median_ms": 1425.0
+    },
+    "sm_120": {
+      "model_load_ms_per_run": [
+        1441.0,
+        1427.0,
+        1443.0
+      ],
+      "median_ms": 1441.0
+    }
+  },
+  "gpu_telemetry": {
+    "compute_80": {
+      "run1": {
+        "samples": [
+          {
+            "timestamp": "2026/10/18 15:24:44.076",
+            "temperature_c": 40.0,
+            "sm_clock_mhz": 180.0,
+            "memory_clock_mhz": 405.0,
+            "power_w": 4.84,
+            "pstate": "P8",
+            "utilization_percent": 0.0,
+            "global_vram_mib": 2.0
+          },
+          {
+            "timestamp": "2026/10/18 15:24:44.583",
+            "temperature_c": 40.0,
+            "sm_clock_mhz": 180.0,
+            "memory_clock_mhz": 405.0,
+            "power_w": 4.84,
+            "pstate": "P8",
+            "utilization_percent": 0.0,
+            "global_vram_mib": 2.0
+          },
+          {
+            "timestamp": "2026/10/18 15:24:45.083",
+            "temperature_c": 40.0,
+            "sm_clock_mhz": 180.0,
+            "memory_clock_mhz": 405.0,
+            "power_w": 4.88,
+            "pstate": "P8",
+            "utilization_percent": 0.0,
+            "global_vram_mib": 2.0
+          },
+          {
+            "timestamp": "2026/10/18 15:24:45.644",
+            "temperature_c": 42.0,
+            "sm_clock_mhz": 2625.0,
+            "memory_clock_mhz": 13801.0,
+            "power_w": 10.13,
+            "pstate": "P1",
+            "utilization_percent": 25.0,
+            "global_vram_mib": 496.0
+          },
+          {
+            "timestamp": "2026/10/18 15:24:46.145",
+            "temperature_c": 57.0,
+            "sm_clock_mhz": 2790.0,
+            "memory_clock_mhz": 13801.0,
+            "power_w": 33.42,
+            "pstate": "P1",
+            "utilization_percent": 91.0,
+            "global_vram_mib": 722.0
+          },
+          {
+            "timestamp": "2026/10/18 15:24:46.645",
+            "temperature_c": 55.0,
+            "sm_clock_mhz": 2805.0,
+            "memory_clock_mhz": 13801.0,
+            "power_w": 113.12,
+            "pstate": "P1",
+            "utilization_percent": 78.0,
+            "global_vram_mib": 722.0
+          },
+          {
+            "timestamp": "2026/10/18 15:24:47.145",
+            "temperature_c": 58.0,
+            "sm_clock_mhz": 2805.0,
+            "memory_clock_mhz": 13801.0,
+            "power_w": 141.79,
+            "pstate": "P1",
+            "utilization_percent": 91.0,
+            "global_vram_mib": 722.0
+          },
+          {
+            "timestamp": "2026/10/18 15:24:47.649",
+            "temperature_c": 55.0,
+            "sm_clock_mhz": 2850.0,
+            "memory_clock_mhz": 13801.0,
+            "power_w": 100.4,
+            "pstate": "P1",
+            "utilization_percent": 16.0,
+            "global_vram_mib": 914.0
+          },
+          {
+            "timestamp": "2026/10/18 15:24:48.149",
+            "temperature_c": 56.0,
+            "sm_clock_mhz": 2805.0,
+            "memory_clock_mhz": 13801.0,
+            "power_w": 94.22,
+            "pstate": "P1",
+            "utilization_percent": 78.0,
+            "global_vram_mib": 914.0
+          },
+          {
+            "timestamp": "2026/10/18 15:24:48.649",
+            "temperature_c": 46.0,
+            "sm_clock_mhz": 2805.0,
+            "memory_clock_mhz": 13801.0,
+            "power_w": 114.62,
+            "pstate": "P1",
+            "utilization_percent": 0.0,
+            "global_vram_mib": 914.0
+          },
+          {
+            "timestamp": "2026/10/18 15:24:49.149",
+            "temperature_c": 50.0,
+            "sm_clock_mhz": 2850.0,
+            "memory_clock_mhz": 13801.0,
+            "power_w": 72.51,
+            "pstate": "P1",
+            "utilization_percent": 54.0,
+            "global_vram_mib": 1426.0
+          }
+        ],
+        "sample_count": 11,
+        "temperature_range_c": [
+          40.0,
+          58.0
+        ],
+        "sm_clock_range_mhz": [
+          180.0,
+          2850.0
+        ],
+        "memory_clock_range_mhz": [
+          405.0,
+          13801.0
+        ]
+      },
+      "run2": {
+        "samples": [
+          {
+            "timestamp": "2026/10/18 15:25:22.111",
+            "temperature_c": 50.0,
+            "sm_clock_mhz": 2857.0,
+            "memory_clock_mhz": 14001.0,
+            "power_w": 28.25,
+            "pstate": "P3",
+            "utilization_percent": 0.0,
+            "global_vram_mib": 2.0
+          },
+          {
+            "timestamp": "2026/10/18 15:25:22.614",
+            "temperature_c": 48.0,
+            "sm_clock_mhz": 682.0,
+            "memory_clock_mhz": 7001.0,
+            "power_w": 18.84,
+            "pstate": "P3",
+            "utilization_percent": 0.0,
+            "global_vram_mib": 2.0
+          },
+          {
+            "timestamp": "2026/10/18 15:25:23.115",
+            "temperature_c": 48.0,
+            "sm_clock_mhz": 682.0,
+            "memory_clock_mhz": 7001.0,
+            "power_w": 18.84,
+            "pstate": "P3",
+            "utilization_percent": 0.0,
+            "global_vram_mib": 2.0
+          },
+          {
+            "timestamp": "2026/10/18 15:25:23.625",
+            "temperature_c": 48.0,
+            "sm_clock_mhz": 390.0,
+            "memory_clock_mhz": 7001.0,
+            "power_w": 7.81,
+            "pstate": "P0",
+            "utilization_percent": 0.0,
+            "global_vram_mib": 496.0
+          },
+          {
+            "timestamp": "2026/10/18 15:25:24.125",
+            "temperature_c": 49.0,
+            "sm_clock_mhz": 2647.0,
+            "memory_clock_mhz": 13801.0,
+            "power_w": 12.16,
+            "pstate": "P1",
+            "utilization_percent": 6.0,
+            "global_vram_mib": 722.0
+          },
+          {
+            "timestamp": "2026/10/18 15:25:24.625",
+            "temperature_c": 65.0,
+            "sm_clock_mhz": 2790.0,
+            "memory_clock_mhz": 13801.0,
+            "power_w": 78.69,
+            "pstate": "P1",
+            "utilization_percent": 91.0,
+            "global_vram_mib": 722.0
+          },
+          {
+            "timestamp": "2026/10/18 15:25:25.126",
+            "temperature_c": 65.0,
+            "sm_clock_mhz": 2775.0,
+            "memory_clock_mhz": 13801.0,
+            "power_w": 138.86,
+            "pstate": "P1",
+            "utilization_percent": 88.0,
+            "global_vram_mib": 722.0
+          },
+          {
+            "timestamp": "2026/10/18 15:25:25.626",
+            "temperature_c": 57.0,
+            "sm_clock_mhz": 2775.0,
+            "memory_clock_mhz": 13801.0,
+            "power_w": 135.07,
+            "pstate": "P1",
+            "utilization_percent": 0.0,
+            "global_vram_mib": 914.0
+          },
+          {
+            "timestamp": "2026/10/18 15:25:26.127",
+            "temperature_c": 65.0,
+            "sm_clock_mhz": 2835.0,
+            "memory_clock_mhz": 13801.0,
+            "power_w": 99.12,
+            "pstate": "P1",
+            "utilization_percent": 72.0,
+            "global_vram_mib": 914.0
+          },
+          {
+            "timestamp": "2026/10/18 15:25:26.627",
+            "temperature_c": 61.0,
+            "sm_clock_mhz": 2782.0,
+            "memory_clock_mhz": 13801.0,
+            "power_w": 101.25,
+            "pstate": "P1",
+            "utilization_percent": 80.0,
+            "global_vram_mib": 914.0
+          },
+          {
+            "timestamp": "2026/10/18 15:25:27.127",
+            "temperature_c": 53.0,
+            "sm_clock_mhz": 2820.0,
+            "memory_clock_mhz": 13801.0,
+            "power_w": 101.81,
+            "pstate": "P1",
+            "utilization_percent": 2.0,
+            "global_vram_mib": 1426.0
+          }
+        ],
+        "sample_count": 11,
+        "temperature_range_c": [
+          48.0,
+          65.0
+        ],
+        "sm_clock_range_mhz": [
+          390.0,
+          2857.0
+        ],
+        "memory_clock_range_mhz": [
+          7001.0,
+          14001.0
+        ]
+      },
+      "run3": {
+        "samples": [
+          {
+            "timestamp": "2026/10/18 15:25:37.316",
+            "temperature_c": 50.0,
+            "sm_clock_mhz": 660.0,
+            "memory_clock_mhz": 7001.0,
+            "power_w": 18.67,
+            "pstate": "P3",
+            "utilization_percent": 0.0,
+            "global_vram_mib": 2.0
+          },
+          {
+            "timestamp": "2026/10/18 15:25:37.820",
+            "temperature_c": 50.0,
+            "sm_clock_mhz": 660.0,
+            "memory_clock_mhz": 7001.0,
+            "power_w": 18.67,
+            "pstate": "P3",
+            "utilization_percent": 0.0,
+            "global_vram_mib": 2.0
+          },
+          {
+            "timestamp": "2026/10/18 15:25:38.320",
+            "temperature_c": 49.0,
+            "sm_clock_mhz": 420.0,
+            "memory_clock_mhz": 7001.0,
+            "power_w": 13.49,
+            "pstate": "P3",
+            "utilization_percent": 0.0,
+            "global_vram_mib": 4.0
+          },
+          {
+            "timestamp": "2026/10/18 15:25:38.820",
+            "temperature_c": 50.0,
+            "sm_clock_mhz": 2107.0,
+            "memory_clock_mhz": 13801.0,
+            "power_w": 11.51,
+            "pstate": "P1",
+            "utilization_percent": 18.0,
+            "global_vram_mib": 530.0
+          },
+          {
+            "timestamp": "2026/10/18 15:25:39.320",
+            "temperature_c": 66.0,
+            "sm_clock_mhz": 2760.0,
+            "memory_clock_mhz": 13801.0,
+            "power_w": 53.03,
+            "pstate": "P1",
+            "utilization_percent": 91.0,
+            "global_vram_mib": 722.0
+          },
+          {
+            "timestamp": "2026/10/18 15:25:39.820",
+            "temperature_c": 65.0,
+            "sm_clock_mhz": 2767.0,
+            "memory_clock_mhz": 13801.0,
+            "power_w": 110.83,
+            "pstate": "P1",
+            "utilization_percent": 87.0,
+            "global_vram_mib": 722.0
+          },
+          {
+            "timestamp": "2026/10/18 15:25:40.321",
+            "temperature_c": 67.0,
+            "sm_clock_mhz": 2782.0,
+            "memory_clock_mhz": 13801.0,
+            "power_w": 145.82,
+            "pstate": "P1",
+            "utilization_percent": 88.0,
+            "global_vram_mib": 722.0
+          },
+          {
+            "timestamp": "2026/10/18 15:25:40.821",
+            "temperature_c": 64.0,
+            "sm_clock_mhz": 2850.0,
+            "memory_clock_mhz": 13801.0,
+            "power_w": 105.15,
+            "pstate": "P1",
+            "utilization_percent": 35.0,
+            "global_vram_mib": 914.0
+          },
+          {
+            "timestamp": "2026/10/18 15:25:41.321",
+            "temperature_c": 65.0,
+            "sm_clock_mhz": 2782.0,
+            "memory_clock_mhz": 13801.0,
+            "power_w": 99.19,
+            "pstate": "P1",
+            "utilization_percent": 73.0,
+            "global_vram_mib": 914.0
+          },
+          {
+            "timestamp": "2026/10/18 15:25:41.821",
+            "temperature_c": 53.0,
+            "sm_clock_mhz": 2782.0,
+            "memory_clock_mhz": 13801.0,
+            "power_w": 110.01,
+            "pstate": "P1",
+            "utilization_percent": 0.0,
+            "global_vram_mib": 914.0
+          },
+          {
+            "timestamp": "2026/10/18 15:25:42.322",
+            "temperature_c": 56.0,
+            "sm_clock_mhz": 2850.0,
+            "memory_clock_mhz": 13801.0,
+            "power_w": 76.21,
+            "pstate": "P1",
+            "utilization_percent": 51.0,
+            "global_vram_mib": 1426.0
+          }
+        ],
+        "sample_count": 11,
+        "temperature_range_c": [
+          49.0,
+          67.0
+        ],
+        "sm_clock_range_mhz": [
+          420.0,
+          2850.0
+        ],
+        "memory_clock_range_mhz": [
+          7001.0,
+          13801.0
+        ]
+      }
+    },
+    "compute_120": {
+      "run1": {
+        "samples": [
+          {
+            "timestamp": "2026/10/18 15:24:51.733",
+            "temperature_c": 42.0,
+            "sm_clock_mhz": 555.0,
+            "memory_clock_mhz": 7001.0,
+            "power_w": 19.55,
+            "pstate": "P3",
+            "utilization_percent": 0.0,
+            "global_vram_mib": 2.0
+          },
+          {
+            "timestamp": "2026/10/18 15:24:52.236",
+            "temperature_c": 42.0,
+            "sm_clock_mhz": 555.0,
+            "memory_clock_mhz": 7001.0,
+            "power_w": 19.55,
+            "pstate": "P3",
+            "utilization_percent": 0.0,
+            "global_vram_mib": 2.0
+          },
+          {
+            "timestamp": "2026/10/18 15:24:52.737",
+            "temperature_c": 42.0,
+            "sm_clock_mhz": 352.0,
+            "memory_clock_mhz": 7001.0,
+            "power_w": 7.41,
+            "pstate": "P3",
+            "utilization_percent": 0.0,
+            "global_vram_mib": 4.0
+          },
+          {
+            "timestamp": "2026/10/18 15:24:53.237",
+            "temperature_c": 43.0,
+            "sm_clock_mhz": 2610.0,
+            "memory_clock_mhz": 13801.0,
+            "power_w": 11.43,
+            "pstate": "P1",
+            "utilization_percent": 28.0,
+            "global_vram_mib": 530.0
+          },
+          {
+            "timestamp": "2026/10/18 15:24:53.737",
+            "temperature_c": 59.0,
+            "sm_clock_mhz": 2797.0,
+            "memory_clock_mhz": 13801.0,
+            "power_w": 60.58,
+            "pstate": "P1",
+            "utilization_percent": 91.0,
+            "global_vram_mib": 722.0
+          },
+          {
+            "timestamp": "2026/10/18 15:24:54.237",
+            "temperature_c": 61.0,
+            "sm_clock_mhz": 2797.0,
+            "memory_clock_mhz": 13801.0,
+            "power_w": 125.67,
+            "pstate": "P1",
+            "utilization_percent": 86.0,
+            "global_vram_mib": 722.0
+          },
+          {
+            "timestamp": "2026/10/18 15:24:54.737",
+            "temperature_c": 59.0,
+            "sm_clock_mhz": 2797.0,
+            "memory_clock_mhz": 13801.0,
+            "power_w": 139.06,
+            "pstate": "P1",
+            "utilization_percent": 55.0,
+            "global_vram_mib": 722.0
+          },
+          {
+            "timestamp": "2026/10/18 15:24:55.238",
+            "temperature_c": 51.0,
+            "sm_clock_mhz": 2850.0,
+            "memory_clock_mhz": 13801.0,
+            "power_w": 98.37,
+            "pstate": "P1",
+            "utilization_percent": 14.0,
+            "global_vram_mib": 914.0
+          },
+          {
+            "timestamp": "2026/10/18 15:24:55.738",
+            "temperature_c": 61.0,
+            "sm_clock_mhz": 2797.0,
+            "memory_clock_mhz": 13801.0,
+            "power_w": 93.76,
+            "pstate": "P1",
+            "utilization_percent": 78.0,
+            "global_vram_mib": 914.0
+          },
+          {
+            "timestamp": "2026/10/18 15:24:56.238",
+            "temperature_c": 48.0,
+            "sm_clock_mhz": 2812.0,
+            "memory_clock_mhz": 13801.0,
+            "power_w": 105.98,
+            "pstate": "P1",
+            "utilization_percent": 7.0,
+            "global_vram_mib": 914.0
+          },
+          {
+            "timestamp": "2026/10/18 15:24:56.740",
+            "temperature_c": 51.0,
+            "sm_clock_mhz": 2850.0,
+            "memory_clock_mhz": 13801.0,
+            "power_w": 65.8,
+            "pstate": "P1",
+            "utilization_percent": 56.0,
+            "global_vram_mib": 1426.0
+          }
+        ],
+        "sample_count": 11,
+        "temperature_range_c": [
+          42.0,
+          61.0
+        ],
+        "sm_clock_range_mhz": [
+          352.0,
+          2850.0
+        ],
+        "memory_clock_range_mhz": [
+          7001.0,
+          13801.0
+        ]
+      },
+      "run2": {
+        "samples": [
+          {
+            "timestamp": "2026/10/18 15:25:06.919",
+            "temperature_c": 47.0,
+            "sm_clock_mhz": 2857.0,
+            "memory_clock_mhz": 14001.0,
+            "power_w": 17.45,
+            "pstate": "P3",
+            "utilization_percent": 0.0,
+            "global_vram_mib": 2.0
+          },
+          {
+            "timestamp": "2026/10/18 15:25:07.422",
+            "temperature_c": 45.0,
+            "sm_clock_mhz": 690.0,
+            "memory_clock_mhz": 7001.0,
+            "power_w": 17.45,
+            "pstate": "P3",
+            "utilization_percent": 0.0,
+            "global_vram_mib": 2.0
+          },
+          {
+            "timestamp": "2026/10/18 15:25:07.922",
+            "temperature_c": 45.0,
+            "sm_clock_mhz": 690.0,
+            "memory_clock_mhz": 7001.0,
+            "power_w": 12.53,
+            "pstate": "P3",
+            "utilization_percent": 0.0,
+            "global_vram_mib": 2.0
+          },
+          {
+            "timestamp": "2026/10/18 15:25:08.423",
+            "temperature_c": 46.0,
+            "sm_clock_mhz": 1065.0,
+            "memory_clock_mhz": 13801.0,
+            "power_w": 9.78,
+            "pstate": "P1",
+            "utilization_percent": 0.0,
+            "global_vram_mib": 496.0
+          },
+          {
+            "timestamp": "2026/10/18 15:25:08.923",
+            "temperature_c": 59.0,
+            "sm_clock_mhz": 2692.0,
+            "memory_clock_mhz": 13801.0,
+            "power_w": 37.97,
+            "pstate": "P1",
+            "utilization_percent": 91.0,
+            "global_vram_mib": 722.0
+          },
+          {
+            "timestamp": "2026/10/18 15:25:09.423",
+            "temperature_c": 63.0,
+            "sm_clock_mhz": 2775.0,
+            "memory_clock_mhz": 13801.0,
+            "power_w": 100.21,
+            "pstate": "P1",
+            "utilization_percent": 91.0,
+            "global_vram_mib": 722.0
+          },
+          {
+            "timestamp": "2026/10/18 15:25:09.923",
+            "temperature_c": 64.0,
+            "sm_clock_mhz": 2775.0,
+            "memory_clock_mhz": 13801.0,
+            "power_w": 141.6,
+            "pstate": "P1",
+            "utilization_percent": 89.0,
+            "global_vram_mib": 722.0
+          },
+          {
+            "timestamp": "2026/10/18 15:25:10.424",
+            "temperature_c": 49.0,
+            "sm_clock_mhz": 2812.0,
+            "memory_clock_mhz": 13801.0,
+            "power_w": 112.53,
+            "pstate": "P1",
+            "utilization_percent": 25.0,
+            "global_vram_mib": 914.0
+          },
+          {
+            "timestamp": "2026/10/18 15:25:10.924",
+            "temperature_c": 62.0,
+            "sm_clock_mhz": 2805.0,
+            "memory_clock_mhz": 13801.0,
+            "power_w": 89.7,
+            "pstate": "P1",
+            "utilization_percent": 75.0,
+            "global_vram_mib": 914.0
+          },
+          {
+            "timestamp": "2026/10/18 15:25:11.424",
+            "temperature_c": 62.0,
+            "sm_clock_mhz": 2782.0,
+            "memory_clock_mhz": 13801.0,
+            "power_w": 115.4,
+            "pstate": "P1",
+            "utilization_percent": 83.0,
+            "global_vram_mib": 914.0
+          },
+          {
+            "timestamp": "2026/10/18 15:25:11.924",
+            "temperature_c": 49.0,
+            "sm_clock_mhz": 2857.0,
+            "memory_clock_mhz": 13801.0,
+            "power_w": 81.32,
+            "pstate": "P1",
+            "utilization_percent": 39.0,
+            "global_vram_mib": 1426.0
+          }
+        ],
+        "sample_count": 11,
+        "temperature_range_c": [
+          45.0,
+          64.0
+        ],
+        "sm_clock_range_mhz": [
+          690.0,
+          2857.0
+        ],
+        "memory_clock_range_mhz": [
+          7001.0,
+          14001.0
+        ]
+      },
+      "run3": {
+        "samples": [
+          {
+            "timestamp": "2026/10/18 15:25:44.911",
+            "temperature_c": 48.0,
+            "sm_clock_mhz": 2857.0,
+            "memory_clock_mhz": 14001.0,
+            "power_w": 28.54,
+            "pstate": "P3",
+            "utilization_percent": 0.0,
+            "global_vram_mib": 2.0
+          },
+          {
+            "timestamp": "2026/10/18 15:25:45.414",
+            "temperature_c": 48.0,
+            "sm_clock_mhz": 652.0,
+            "memory_clock_mhz": 7001.0,
+            "power_w": 17.51,
+            "pstate": "P3",
+            "utilization_percent": 0.0,
+            "global_vram_mib": 2.0
+          },
+          {
+            "timestamp": "2026/10/18 15:25:45.914",
+            "temperature_c": 48.0,
+            "sm_clock_mhz": 652.0,
+            "memory_clock_mhz": 7001.0,
+            "power_w": 17.51,
+            "pstate": "P3",
+            "utilization_percent": 0.0,
+            "global_vram_mib": 4.0
+          },
+          {
+            "timestamp": "2026/10/18 15:25:46.414",
+            "temperature_c": 49.0,
+            "sm_clock_mhz": 1237.0,
+            "memory_clock_mhz": 13801.0,
+            "power_w": 10.62,
+            "pstate": "P1",
+            "utilization_percent": 0.0,
+            "global_vram_mib": 496.0
+          },
+          {
+            "timestamp": "2026/10/18 15:25:46.914",
+            "temperature_c": 64.0,
+            "sm_clock_mhz": 2700.0,
+            "memory_clock_mhz": 13801.0,
+            "power_w": 25.86,
+            "pstate": "P1",
+            "utilization_percent": 91.0,
+            "global_vram_mib": 722.0
+          },
+          {
+            "timestamp": "2026/10/18 15:25:47.415",
+            "temperature_c": 65.0,
+            "sm_clock_mhz": 2767.0,
+            "memory_clock_mhz": 13801.0,
+            "power_w": 104.05,
+            "pstate": "P1",
+            "utilization_percent": 91.0,
+            "global_vram_mib": 722.0
+          },
+          {
+            "timestamp": "2026/10/18 15:25:47.915",
+            "temperature_c": 65.0,
+            "sm_clock_mhz": 2760.0,
+            "memory_clock_mhz": 13801.0,
+            "power_w": 143.33,
+            "pstate": "P1",
+            "utilization_percent": 90.0,
+            "global_vram_mib": 722.0
+          },
+          {
+            "timestamp": "2026/10/18 15:25:48.415",
+            "temperature_c": 53.0,
+            "sm_clock_mhz": 2835.0,
+            "memory_clock_mhz": 13801.0,
+            "power_w": 112.22,
+            "pstate": "P1",
+            "utilization_percent": 43.0,
+            "global_vram_mib": 914.0
+          },
+          {
+            "timestamp": "2026/10/18 15:25:48.915",
+            "temperature_c": 60.0,
+            "sm_clock_mhz": 2790.0,
+            "memory_clock_mhz": 13801.0,
+            "power_w": 98.23,
+            "pstate": "P1",
+            "utilization_percent": 81.0,
+            "global_vram_mib": 914.0
+          },
+          {
+            "timestamp": "2026/10/18 15:25:49.416",
+            "temperature_c": 55.0,
+            "sm_clock_mhz": 2782.0,
+            "memory_clock_mhz": 13801.0,
+            "power_w": 112.16,
+            "pstate": "P1",
+            "utilization_percent": 60.0,
+            "global_vram_mib": 914.0
+          },
+          {
+            "timestamp": "2026/10/18 15:25:49.916",
+            "temperature_c": 56.0,
+            "sm_clock_mhz": 2850.0,
+            "memory_clock_mhz": 13801.0,
+            "power_w": 81.18,
+            "pstate": "P1",
+            "utilization_percent": 39.0,
+            "global_vram_mib": 1426.0
+          }
+        ],
+        "sample_count": 11,
+        "temperature_range_c": [
+          48.0,
+          65.0
+        ],
+        "sm_clock_range_mhz": [
+          652.0,
+          2857.0
+        ],
+        "memory_clock_range_mhz": [
+          7001.0,
+          14001.0
+        ]
+      }
+    },
+    "sm_120": {
+      "run1": {
+        "samples": [
+          {
+            "timestamp": "2026/10/18 15:24:59.327",
+            "temperature_c": 44.0,
+            "sm_clock_mhz": 630.0,
+            "memory_clock_mhz": 7001.0,
+            "power_w": 18.16,
+            "pstate": "P3",
+            "utilization_percent": 0.0,
+            "global_vram_mib": 2.0
+          },
+          {
+            "timestamp": "2026/10/18 15:24:59.830",
+            "temperature_c": 44.0,
+            "sm_clock_mhz": 630.0,
+            "memory_clock_mhz": 7001.0,
+            "power_w": 18.16,
+            "pstate": "P3",
+            "utilization_percent": 0.0,
+            "global_vram_mib": 2.0
+          },
+          {
+            "timestamp": "2026/10/18 15:25:00.330",
+            "temperature_c": 44.0,
+            "sm_clock_mhz": 397.0,
+            "memory_clock_mhz": 7001.0,
+            "power_w": 7.56,
+            "pstate": "P3",
+            "utilization_percent": 0.0,
+            "global_vram_mib": 2.0
+          },
+          {
+            "timestamp": "2026/10/18 15:25:00.831",
+            "temperature_c": 45.0,
+            "sm_clock_mhz": 1815.0,
+            "memory_clock_mhz": 13801.0,
+            "power_w": 10.29,
+            "pstate": "P1",
+            "utilization_percent": 4.0,
+            "global_vram_mib": 496.0
+          },
+          {
+            "timestamp": "2026/10/18 15:25:01.331",
+            "temperature_c": 60.0,
+            "sm_clock_mhz": 2737.0,
+            "memory_clock_mhz": 13801.0,
+            "power_w": 46.51,
+            "pstate": "P1",
+            "utilization_percent": 91.0,
+            "global_vram_mib": 722.0
+          },
+          {
+            "timestamp": "2026/10/18 15:25:01.831",
+            "temperature_c": 62.0,
+            "sm_clock_mhz": 2782.0,
+            "memory_clock_mhz": 13801.0,
+            "power_w": 103.36,
+            "pstate": "P1",
+            "utilization_percent": 87.0,
+            "global_vram_mib": 722.0
+          },
+          {
+            "timestamp": "2026/10/18 15:25:02.331",
+            "temperature_c": 61.0,
+            "sm_clock_mhz": 2790.0,
+            "memory_clock_mhz": 13801.0,
+            "power_w": 142.32,
+            "pstate": "P1",
+            "utilization_percent": 87.0,
+            "global_vram_mib": 722.0
+          },
+          {
+            "timestamp": "2026/10/18 15:25:02.831",
+            "temperature_c": 51.0,
+            "sm_clock_mhz": 2857.0,
+            "memory_clock_mhz": 13801.0,
+            "power_w": 102.1,
+            "pstate": "P1",
+            "utilization_percent": 11.0,
+            "global_vram_mib": 914.0
+          },
+          {
+            "timestamp": "2026/10/18 15:25:03.333",
+            "temperature_c": 62.0,
+            "sm_clock_mhz": 2797.0,
+            "memory_clock_mhz": 13801.0,
+            "power_w": 90.48,
+            "pstate": "P1",
+            "utilization_percent": 77.0,
+            "global_vram_mib": 914.0
+          },
+          {
+            "timestamp": "2026/10/18 15:25:03.833",
+            "temperature_c": 54.0,
+            "sm_clock_mhz": 2782.0,
+            "memory_clock_mhz": 13801.0,
+            "power_w": 109.26,
+            "pstate": "P1",
+            "utilization_percent": 0.0,
+            "global_vram_mib": 914.0
+          },
+          {
+            "timestamp": "2026/10/18 15:25:04.334",
+            "temperature_c": 48.0,
+            "sm_clock_mhz": 2857.0,
+            "memory_clock_mhz": 13801.0,
+            "power_w": 75.86,
+            "pstate": "P1",
+            "utilization_percent": 48.0,
+            "global_vram_mib": 1426.0
+          }
+        ],
+        "sample_count": 11,
+        "temperature_range_c": [
+          44.0,
+          62.0
+        ],
+        "sm_clock_range_mhz": [
+          397.0,
+          2857.0
+        ],
+        "memory_clock_range_mhz": [
+          7001.0,
+          13801.0
+        ]
+      },
+      "run2": {
+        "samples": [
+          {
+            "timestamp": "2026/10/18 15:25:14.518",
+            "temperature_c": 48.0,
+            "sm_clock_mhz": 2857.0,
+            "memory_clock_mhz": 14001.0,
+            "power_w": 27.91,
+            "pstate": "P3",
+            "utilization_percent": 0.0,
+            "global_vram_mib": 2.0
+          },
+          {
+            "timestamp": "2026/10/18 15:25:15.021",
+            "temperature_c": 47.0,
+            "sm_clock_mhz": 1702.0,
+            "memory_clock_mhz": 7001.0,
+            "power_w": 21.35,
+            "pstate": "P3",
+            "utilization_percent": 0.0,
+            "global_vram_mib": 2.0
+          },
+          {
+            "timestamp": "2026/10/18 15:25:15.522",
+            "temperature_c": 47.0,
+            "sm_clock_mhz": 1702.0,
+            "memory_clock_mhz": 7001.0,
+            "power_w": 21.35,
+            "pstate": "P3",
+            "utilization_percent": 0.0,
+            "global_vram_mib": 4.0
+          },
+          {
+            "timestamp": "2026/10/18 15:25:16.024",
+            "temperature_c": 47.0,
+            "sm_clock_mhz": 450.0,
+            "memory_clock_mhz": 13801.0,
+            "power_w": 9.42,
+            "pstate": "P1",
+            "utilization_percent": 2.0,
+            "global_vram_mib": 496.0
+          },
+          {
+            "timestamp": "2026/10/18 15:25:16.524",
+            "temperature_c": 55.0,
+            "sm_clock_mhz": 2662.0,
+            "memory_clock_mhz": 13801.0,
+            "power_w": 18.81,
+            "pstate": "P1",
+            "utilization_percent": 83.0,
+            "global_vram_mib": 722.0
+          },
+          {
+            "timestamp": "2026/10/18 15:25:17.025",
+            "temperature_c": 63.0,
+            "sm_clock_mhz": 2775.0,
+            "memory_clock_mhz": 13801.0,
+            "power_w": 91.09,
+            "pstate": "P1",
+            "utilization_percent": 91.0,
+            "global_vram_mib": 722.0
+          },
+          {
+            "timestamp": "2026/10/18 15:25:17.525",
+            "temperature_c": 63.0,
+            "sm_clock_mhz": 2790.0,
+            "memory_clock_mhz": 13801.0,
+            "power_w": 139.3,
+            "pstate": "P1",
+            "utilization_percent": 88.0,
+            "global_vram_mib": 722.0
+          },
+          {
+            "timestamp": "2026/10/18 15:25:18.025",
+            "temperature_c": 52.0,
+            "sm_clock_mhz": 2812.0,
+            "memory_clock_mhz": 13801.0,
+            "power_w": 119.58,
+            "pstate": "P1",
+            "utilization_percent": 22.0,
+            "global_vram_mib": 914.0
+          },
+          {
+            "timestamp": "2026/10/18 15:25:18.525",
+            "temperature_c": 62.0,
+            "sm_clock_mhz": 2820.0,
+            "memory_clock_mhz": 13801.0,
+            "power_w": 92.3,
+            "pstate": "P1",
+            "utilization_percent": 83.0,
+            "global_vram_mib": 914.0
+          },
+          {
+            "timestamp": "2026/10/18 15:25:19.025",
+            "temperature_c": 62.0,
+            "sm_clock_mhz": 2782.0,
+            "memory_clock_mhz": 13801.0,
+            "power_w": 102.33,
+            "pstate": "P1",
+            "utilization_percent": 83.0,
+            "global_vram_mib": 914.0
+          },
+          {
+            "timestamp": "2026/10/18 15:25:19.526",
+            "temperature_c": 51.0,
+            "sm_clock_mhz": 2842.0,
+            "memory_clock_mhz": 13801.0,
+            "power_w": 92.3,
+            "pstate": "P1",
+            "utilization_percent": 33.0,
+            "global_vram_mib": 1426.0
+          }
+        ],
+        "sample_count": 11,
+        "temperature_range_c": [
+          47.0,
+          63.0
+        ],
+        "sm_clock_range_mhz": [
+          450.0,
+          2857.0
+        ],
+        "memory_clock_range_mhz": [
+          7001.0,
+          14001.0
+        ]
+      },
+      "run3": {
+        "samples": [
+          {
+            "timestamp": "2026/10/18 15:25:29.719",
+            "temperature_c": 49.0,
+            "sm_clock_mhz": 1770.0,
+            "memory_clock_mhz": 7001.0,
+            "power_w": 21.72,
+            "pstate": "P3",
+            "utilization_percent": 0.0,
+            "global_vram_mib": 2.0
+          },
+          {
+            "timestamp": "2026/10/18 15:25:30.222",
+            "temperature_c": 49.0,
+            "sm_clock_mhz": 1770.0,
+            "memory_clock_mhz": 7001.0,
+            "power_w": 21.72,
+            "pstate": "P3",
+            "utilization_percent": 0.0,
+            "global_vram_mib": 2.0
+          },
+          {
+            "timestamp": "2026/10/18 15:25:30.722",
+            "temperature_c": 49.0,
+            "sm_clock_mhz": 472.0,
+            "memory_clock_mhz": 7001.0,
+            "power_w": 14.48,
+            "pstate": "P3",
+            "utilization_percent": 0.0,
+            "global_vram_mib": 2.0
+          },
+          {
+            "timestamp": "2026/10/18 15:25:31.222",
+            "temperature_c": 50.0,
+            "sm_clock_mhz": 2610.0,
+            "memory_clock_mhz": 13801.0,
+            "power_w": 11.77,
+            "pstate": "P1",
+            "utilization_percent": 33.0,
+            "global_vram_mib": 496.0
+          },
+          {
+            "timestamp": "2026/10/18 15:25:31.723",
+            "temperature_c": 67.0,
+            "sm_clock_mhz": 2775.0,
+            "memory_clock_mhz": 13801.0,
+            "power_w": 56.22,
+            "pstate": "P1",
+            "utilization_percent": 92.0,
+            "global_vram_mib": 722.0
+          },
+          {
+            "timestamp": "2026/10/18 15:25:32.223",
+            "temperature_c": 66.0,
+            "sm_clock_mhz": 2767.0,
+            "memory_clock_mhz": 13801.0,
+            "power_w": 126.1,
+            "pstate": "P1",
+            "utilization_percent": 87.0,
+            "global_vram_mib": 722.0
+          },
+          {
+            "timestamp": "2026/10/18 15:25:32.723",
+            "temperature_c": 57.0,
+            "sm_clock_mhz": 2775.0,
+            "memory_clock_mhz": 13801.0,
+            "power_w": 143.37,
+            "pstate": "P1",
+            "utilization_percent": 73.0,
+            "global_vram_mib": 722.0
+          },
+          {
+            "timestamp": "2026/10/18 15:25:33.223",
+            "temperature_c": 66.0,
+            "sm_clock_mhz": 2842.0,
+            "memory_clock_mhz": 13801.0,
+            "power_w": 104.3,
+            "pstate": "P1",
+            "utilization_percent": 71.0,
+            "global_vram_mib": 914.0
+          },
+          {
+            "timestamp": "2026/10/18 15:25:33.723",
+            "temperature_c": 64.0,
+            "sm_clock_mhz": 2782.0,
+            "memory_clock_mhz": 13801.0,
+            "power_w": 94.72,
+            "pstate": "P1",
+            "utilization_percent": 79.0,
+            "global_vram_mib": 914.0
+          },
+          {
+            "timestamp": "2026/10/18 15:25:34.224",
+            "temperature_c": 54.0,
+            "sm_clock_mhz": 2782.0,
+            "memory_clock_mhz": 13801.0,
+            "power_w": 109.77,
+            "pstate": "P1",
+            "utilization_percent": 1.0,
+            "global_vram_mib": 914.0
+          },
+          {
+            "timestamp": "2026/10/18 15:25:34.724",
+            "temperature_c": 59.0,
+            "sm_clock_mhz": 2842.0,
+            "memory_clock_mhz": 13801.0,
+            "power_w": 76.48,
+            "pstate": "P1",
+            "utilization_percent": 53.0,
+            "global_vram_mib": 1426.0
+          }
+        ],
+        "sample_count": 11,
+        "temperature_range_c": [
+          49.0,
+          67.0
+        ],
+        "sm_clock_range_mhz": [
+          472.0,
+          2842.0
+        ],
+        "memory_clock_range_mhz": [
+          7001.0,
+          13801.0
+        ]
+      }
+    }
+  },
+  "gpu_idle_before_bench": "40 C, 180 MHz core, 405 MHz memory, 4.87 W, P8, 0% util, 2 MiB used; no compute processes"
+}

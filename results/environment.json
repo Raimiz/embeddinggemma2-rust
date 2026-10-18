@@ -1,0 +1,87 @@
+{
+  "created_utc": "2026-10-18T15:36:15Z",
+  "experiment_root": "/root/experiments/embeddinggemma2-sm120-compile",
+  "worktree": "/root/experiments/embeddinggemma2-sm120-compile/worktree",
+  "worktree_branch": "exp/nvrtc-sm120-targets",
+  "baseline_commit": "f15131dc109b4b541f3585f15d7643cd65984d41",
+  "worktree_commit_before_experiment": "f15131dc109b4b541f3585f15d7643cd65984d41",
+  "baseline_branch_status": "## blackwell-sm120...origin/blackwell-sm120",
+  "source_repo": "https://github.com/Raimiz/embeddinggemma2-rust",
+  "cuda_container": "pytorch-dev (Incus)",
+  "gpu": "Command '['nvidia-smi', '--query-gpu=name,compute_cap,driver_version,memory.total --format=csv,noheader']' returned non-zero exit status 2.",
+  "driver": "615.71.09",
+  "cuda_toolkit": "13.4.92",
+  "nvrtc": "13.4.92",
+  "cublas": "13.8.0.4",
+  "nvvm_compute_80_ptx": "7.0.1",
+  "nvvm_compute_120_ptx": "23.0.0",
+  "nvvm_sm_120_cubin": "23.0.0 (same NVRTC 13.4.92 backend; CUBIN does not expose a printable NVVM version string)",
+  "cuobjdump": "cuobjdump: NVIDIA (R) fat binary listing tool\nCopyright (c) 2005-2026 NVIDIA Corporation\nBuilt on Tue_Sep_01_08:45:21_PDT_2026\nCuda compilation tools, release 13.4, V13.4.92\nBuild cuda_13.4.r13.4/compiler.38855100_0",
+  "nvdisasm": "nvdisasm: NVIDIA (R) CUDA disassembler\nCopyright (c) 2005-2026 NVIDIA Corporation\nBuilt on Tue_Sep_01_08:46:02_PDT_2026\nCuda compilation tools, release 13.4, V13.4.92\nBuild cuda_13.4.r13.4/compiler.38855100_0",
+  "rustc": "Command '['/root/experiments/embeddinggemma2-blackwell/.cargo/bin/rustc', '--version']' returned non-zero exit status 1.",
+  "cargo": "Command '['/root/experiments/embeddinggemma2-blackwell/.cargo/bin/cargo', '--version']' returned non-zero exit status 1.",
+  "cudarc": "0.19.10; dynamic-loading, nvrtc, driver, cublas, cuda-13020",
+  "model_repo": "google/embeddinggemma-2",
+  "model_revision": "914f7f89142e33e77833254d9c9b90c3cef7303b",
+  "model_directory": "/root/experiments/embeddinggemma2-blackwell/model",
+  "benchmark_input_file": "/root/experiments/embeddinggemma2-sm120-compile/data/bench_inputs.json",
+  "benchmark_inputs_sha256": "f9d065155604be4fcf634d8a5df6397538c5e3d291778fa0df9ef1146961b398",
+  "reference_directory": "/root/experiments/embeddinggemma2-blackwell/reference",
+  "kernel_source_files": {
+    "kernels.cu": "10e48778a08e3686e44fd0c268fe1be1036c6e06efe5a7fc1159d5d31a57e449",
+    "kernels_sm80.cu": "cbb413b3e01fed90efc4a3be3865aadc146a81103c002989de011d4d92978e31"
+  },
+  "benchmark": {
+    "precision": "BF16",
+    "warmups_per_case": 1,
+    "timed_calls_per_case": 20,
+    "independent_series_per_mode": 3,
+    "cuda_graphs_enabled": true,
+    "per_op_profiling_enabled": false,
+    "thread_pool_threads": 16,
+    "mode_order": {
+      "run1": [
+        "compute_80",
+        "compute_120",
+        "sm_120"
+      ],
+      "run2": [
+        "compute_120",
+        "sm_120",
+        "compute_80"
+      ],
+      "run3": [
+        "sm_120",
+        "compute_80",
+        "compute_120"
+      ]
+    },
+    "data_preprocessing": "unchanged baseline CLI benchmark path; fixture load outside timer, inference and model-side image/audio preprocessing within model.embed timer"
+  },
+  "per_op_profile": {
+    "precision": "BF16",
+    "warmups_per_case": 2,
+    "profiled_passes": 5,
+    "cuda_graphs_enabled": false,
+    "reason": "EGEMMA2_PROFILE=1 disables CUDA Graphs by design; do not compare per-op device-time directly with E2E short path"
+  },
+  "cuda_cache": {
+    "per_target_paths": {
+      "compute_80": "/root/experiments/embeddinggemma2-sm120-compile/cache/compute_80",
+      "compute_120": "/root/experiments/embeddinggemma2-sm120-compile/cache/compute_120",
+      "sm_120": "/root/experiments/embeddinggemma2-sm120-compile/cache/sm_120"
+    },
+    "global_cache_cleared": false,
+    "isolated_paths_retained": true,
+    "CUDA_CACHE_DISABLE": "not set"
+  },
+  "gpu_before_benchmark": "RTX 5060 Ti, 40 C, core 180 MHz, memory 405 MHz, power 4.87 W, P8, 0% GPU, 2 MiB used; no compute process",
+  "system_changes": {
+    "driver_or_toolkit_updated": false,
+    "pytorch_or_exllama_modified": false,
+    "baseline_branch_modified": false,
+    "kernel_sources_modified": false,
+    "cuBLAS_configuration_changed": false,
+    "system_cuda_settings_changed": false
+  }
+}

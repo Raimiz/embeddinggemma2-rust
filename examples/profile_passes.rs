@@ -2,7 +2,7 @@
 //! Run with: EGEMMA2_PROFILE=1 cargo run --release --example profile_passes -- [fp32|tf32|bf16]
 
 use embeddinggemma2::{Device, EmbeddingGemma2, Input, Precision, media};
-use std::path::Path;
+use std::path::{Path, PathBuf};
 
 type Run<'a> = Box<dyn Fn() -> anyhow::Result<()> + 'a>;
 
@@ -14,9 +14,10 @@ fn main() -> anyhow::Result<()> {
         _ => Precision::Bf16,
     };
     let root = Path::new(env!("CARGO_MANIFEST_DIR"));
-    let model = EmbeddingGemma2::load_on(root.join("models/embeddinggemma-2"), Device::Cuda { ordinal: 0, precision })?;
+    let model_dir = std::env::var_os("EGEMMA2_MODEL_DIR").map(PathBuf::from).unwrap_or_else(|| root.join("models/embeddinggemma-2"));
+    let model = EmbeddingGemma2::load_on(model_dir, Device::Cuda { ordinal: 0, precision })?;
     let g = model.gpu().expect("CUDA model");
-    let data = root.join("testdata");
+    let data = std::env::var_os("EGEMMA2_DATA_DIR").map(PathBuf::from).unwrap_or_else(|| root.join("testdata"));
     let inputs: serde_json::Value = serde_json::from_str(&std::fs::read_to_string(data.join("bench_inputs.json"))?)?;
     let long = inputs["long"].as_str().unwrap().to_string();
     let batch: Vec<String> = inputs["batch64"].as_array().unwrap().iter().map(|v| v.as_str().unwrap().to_string()).collect();

@@ -1,0 +1,109 @@
+    Finished `release` profile [optimized] target(s) in 0.06s
+     Running `target/release/egemma2 --device cuda --bf16 --model-dir /root/experiments/embeddinggemma2-blackwell/model verify --reference-dir /root/experiments/embeddinggemma2-blackwell/reference`
+model loaded on cuda:0 (bf16) in 7288 ms
+device cuda:0 (bf16), tolerance profile bf16: embeddings <= 4e-3 & cos >= 0.99991, soft tokens <= 3.5e0 & cos >= 0.9996, patches <= 1e-6, log-mel <= 1e-5
+[text] 26 checks in 0.2s
+[image] 25 checks in 1.3s
+[audio] 20 checks in 0.7s
+[video] 9 checks in 2.5s
+[video] 4 checks in 0.5s
+[extra] 6 checks in 0.7s
+PASS text packed batch (6 texts)        max|d|=9.66e-4  cos=0.99998642
+PASS text packed batch, short only (5)  max|d|=9.66e-4  cos=0.99998991
+PASS text[SearchQuery] 17 tok           max|d|=3.20e-4  cos=0.99999576  ids OK
+PASS text[SearchQuery] 17 tok @512d     max|d|=3.68e-4  cos=0.99999574
+PASS text[SearchQuery] 17 tok @256d     max|d|=4.55e-4  cos=0.99999622
+PASS text[SearchQuery] 17 tok @128d     max|d|=5.43e-4  cos=0.99999711
+PASS text[Document] 27 tok              max|d|=4.76e-4  cos=0.99999381  ids OK
+PASS text[Document] 27 tok @512d        max|d|=5.45e-4  cos=0.99999418
+PASS text[Document] 27 tok @256d        max|d|=6.92e-4  cos=0.99999461
+PASS text[Document] 27 tok @128d        max|d|=8.43e-4  cos=0.99999570
+PASS text[SearchQuery] 16 tok           max|d|=3.00e-4  cos=0.99999759  ids OK
+PASS text[SearchQuery] 16 tok @512d     max|d|=3.45e-4  cos=0.99999757
+PASS text[SearchQuery] 16 tok @256d     max|d|=4.41e-4  cos=0.99999778
+PASS text[SearchQuery] 16 tok @128d     max|d|=5.09e-4  cos=0.99999845
+PASS text[Document] 39 tok              max|d|=8.34e-4  cos=0.99997411  ids OK
+PASS text[Document] 39 tok @512d        max|d|=9.51e-4  cos=0.99997672
+PASS text[Document] 39 tok @256d        max|d|=1.22e-3  cos=0.99998075
+PASS text[Document] 39 tok @128d        max|d|=1.41e-3  cos=0.99998625
+PASS text[-] 3 tok                      max|d|=2.58e-4  cos=0.99999769  ids OK
+PASS text[-] 3 tok @512d                max|d|=2.91e-4  cos=0.99999784
+PASS text[-] 3 tok @256d                max|d|=3.45e-4  cos=0.99999825
+PASS text[-] 3 tok @128d                max|d|=3.85e-4  cos=0.99999880
+PASS text[Document] 2208 tok            max|d|=9.47e-4  cos=0.99996896  ids OK
+PASS text[Document] 2208 tok @512d      max|d|=1.02e-3  cos=0.99996987
+PASS text[Document] 2208 tok @256d      max|d|=1.27e-3  cos=0.99997423
+PASS text[Document] 2208 tok @128d      max|d|=1.42e-3  cos=0.99998355
+PASS image[a_641x479] patches           max|d|=5.96e-8  cos=1.00000000  ids OK
+PASS image[a_641x479] soft tokens       max|d|=2.58e-1  cos=0.99989578  266 tok
+PASS image[a_641x479] tower only        max|d|=4.18e-1  cos=0.99988179
+PASS image[a_641x479] emb_image         max|d|=7.22e-4  cos=0.99998500  ids OK
+PASS image[a_641x479] emb_text_image    max|d|=7.71e-4  cos=0.99997651  ids OK
+PASS image[a_641x479] emb_image_text    max|d|=9.70e-4  cos=0.99997333
+PASS image[b_96x64] patches             max|d|=5.96e-8  cos=1.00000000  ids OK
+PASS image[b_96x64] soft tokens         max|d|=1.86e-1  cos=0.99991854  260 tok
+PASS image[b_96x64] tower only          max|d|=2.14e-1  cos=0.99991638
+PASS image[b_96x64] emb_image           max|d|=5.00e-4  cos=0.99999148  ids OK
+PASS image[b_96x64] emb_text_image      max|d|=6.89e-4  cos=0.99998819  ids OK
+PASS image[b_96x64] emb_image_text      max|d|=5.91e-4  cos=0.99998870
+PASS image[c_1000x300] patches          max|d|=5.96e-8  cos=1.00000000  ids OK
+PASS image[c_1000x300] soft tokens      max|d|=4.05e-1  cos=0.99981914  270 tok
+PASS image[c_1000x300] tower only       max|d|=4.09e-1  cos=0.99981070
+PASS image[c_1000x300] emb_image        max|d|=6.26e-4  cos=0.99998622  ids OK
+PASS image[c_1000x300] emb_text_image   max|d|=9.34e-4  cos=0.99997536  ids OK
+PASS image[c_1000x300] emb_image_text   max|d|=8.77e-4  cos=0.99997530
+PASS image[d_48x48] patches             max|d|=5.96e-8  cos=1.00000000  ids OK
+PASS image[d_48x48] soft tokens         max|d|=2.41e-1  cos=0.99992144  256 tok
+PASS image[d_48x48] tower only          max|d|=1.35e-1  cos=0.99993128
+PASS image[d_48x48] emb_image           max|d|=6.00e-4  cos=0.99998580  ids OK
+PASS image[d_48x48] emb_text_image      max|d|=9.77e-4  cos=0.99998160  ids OK
+PASS image[d_48x48] emb_image_text      max|d|=7.59e-4  cos=0.99997440
+PASS image[two images + text]           max|d|=5.40e-4  cos=0.99998919  ids OK
+PASS audio[a_3p7s] log-mel              max|d|=4.77e-7  cos=1.00000000  ids OK  369 frames
+PASS audio[a_3p7s] soft tokens          max|d|=4.09e-1  cos=0.99992888  93 tok
+PASS audio[a_3p7s] tower only           max|d|=7.47e-1  cos=0.99983273
+PASS audio[a_3p7s] emb_audio            max|d|=7.18e-4  cos=0.99998332  ids OK
+PASS audio[a_3p7s] emb_text_audio       max|d|=3.38e-4  cos=0.99999476  ids OK
+PASS audio[b_12345] log-mel             max|d|=4.77e-7  cos=1.00000000  ids OK  77 frames
+PASS audio[b_12345] soft tokens         max|d|=5.95e-2  cos=0.99999015  20 tok
+PASS audio[b_12345] tower only          max|d|=4.16e-2  cos=0.99999535
+PASS audio[b_12345] emb_audio           max|d|=3.42e-4  cos=0.99999660  ids OK
+PASS audio[b_12345] emb_text_audio      max|d|=3.21e-4  cos=0.99999713  ids OK
+PASS audio[c_9p3s] log-mel              max|d|=4.77e-7  cos=1.00000000  ids OK  929 frames
+PASS audio[c_9p3s] soft tokens          max|d|=4.38e-1  cos=0.99996253  233 tok
+PASS audio[c_9p3s] tower only           max|d|=1.77e-1  cos=0.99997884
+PASS audio[c_9p3s] emb_audio            max|d|=7.16e-4  cos=0.99998189  ids OK
+PASS audio[c_9p3s] emb_text_audio       max|d|=6.59e-4  cos=0.99998460  ids OK
+PASS audio[d_0p5s] log-mel              max|d|=4.77e-7  cos=1.00000000  ids OK  49 frames
+PASS audio[d_0p5s] soft tokens          max|d|=6.55e-2  cos=0.99998801  13 tok
+PASS audio[d_0p5s] tower only           max|d|=1.31e-1  cos=0.99996566
+PASS audio[d_0p5s] emb_audio            max|d|=3.15e-4  cos=0.99999657  ids OK
+PASS audio[d_0p5s] emb_text_audio       max|d|=2.47e-4  cos=0.99999783  ids OK
+PASS video frame sampling (15 cases)    max|d|=0.00e0
+PASS video[v6_120x200] patches          max|d|=5.96e-8  cos=1.00000000  ids OK  6 frames
+PASS video[v6_120x200] soft tokens      max|d|=5.48e-1  cos=0.99981614  810 tok
+PASS video[v6_120x200] emb_video        max|d|=4.48e-4  cos=0.99999471  ids OK
+PASS video[v6_120x200] emb_text_video   max|d|=6.13e-4  cos=0.99998692  ids OK
+PASS video[v40_96x160] patches          max|d|=5.96e-8  cos=1.00000000  ids OK  32 frames
+PASS video[v40_96x160] soft tokens      max|d|=9.96e-1  cos=0.99983230  4320 tok
+PASS video[v40_96x160] emb_video        max|d|=2.16e-4  cos=0.99999817  ids OK
+PASS video[v40_96x160] emb_text_video   max|d|=4.81e-4  cos=0.99999379  ids OK
+PASS video file[vf40_10fps_rgb.mp4] decoded patches max|d|=5.96e-8  cos=1.00000000  ids OK  4 frames
+PASS video file[vf40_10fps_rgb.mp4] emb_video max|d|=4.35e-4  cos=0.99999330  ids OK
+PASS video file[vf40_30fps_yuv420.mp4] decoded patches max|d|=5.96e-8  cos=1.00000000  ids OK  1 frames
+PASS video file[vf40_30fps_yuv420.mp4] emb_video max|d|=4.24e-4  cos=0.99999317  ids OK
+PASS extra[prompt_image]                max|d|=5.10e-4  cos=0.99999078  ids OK  272 tokens
+PASS extra[prompt_text_image]           max|d|=7.53e-4  cos=0.99998376  ids OK  274 tokens
+PASS extra[prompt_image_text]           max|d|=5.18e-4  cos=0.99998886  ids OK  275 tokens
+PASS extra[audio_20s]                   max|d|=8.15e-4  cos=0.99997798  ids OK  504 tokens
+PASS extra[audio_40s]                   max|d|=1.47e-3  cos=0.99997287  ids OK  754 tokens
+PASS extra[video_05fps]                 max|d|=7.15e-4  cos=0.99998189  ids OK  3074 tokens
+
+worst case per quantity:
+  embeddings   n=59  worst max|d|=1.47e-3 (37% of its limit)  min cos=0.99996896 (floor 0.99991)
+  soft tokens  n=18  worst max|d|=9.96e-1 (28% of its limit)  min cos=0.99981070 (floor 0.9996)
+  patches      n=8   worst max|d|=5.96e-8 (6% of its limit)
+  log-mel      n=4   worst max|d|=4.77e-7 (5% of its limit)
+  other        n=1   worst max|d|=0.00e0 (0% of its limit)
+
+90 checks, 0 failed

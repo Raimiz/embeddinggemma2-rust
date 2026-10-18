@@ -16,6 +16,7 @@
 //! see `examples/profile_passes.rs`).
 
 pub mod audio;
+pub mod nvrtc_mode;
 pub mod text;
 pub mod vision;
 
@@ -23,7 +24,7 @@ use anyhow::{Context, Result, anyhow, bail, ensure};
 use cudarc::cublas::{CudaBlas, Gemm, GemmConfig, StridedBatchedConfig, sys as cublas_sys};
 use cudarc::driver::{CudaContext, CudaFunction, CudaSlice, CudaStream, CudaView, DevicePtr, DevicePtrMut, LaunchConfig, PushKernelArg};
 use cudarc::nvrtc::{CompileOptions, compile_ptx_with_opts};
-use std::sync::{Arc, Mutex, MutexGuard};
+use std::{sync::{Arc, Mutex, MutexGuard}, time::Instant};
 
 use crate::backend::Precision;
 use crate::ops::{ClippableLinear, Linear};
@@ -255,6 +256,43 @@ fn launch_1d(n: usize) -> LaunchConfig {
     LaunchConfig { grid_dim: ((n as u64).div_ceil(threads as u64) as u32, 1, 1), block_dim: (threads, 1, 1), shared_mem_bytes: 0 }
 }
 
+fn maybe_write_kernel_attributes(module: &Arc<cudarc::driver::CudaModule>) -> Result<()> {
+    let Some(path) = std::env::var_os("EGEMMA2_KERNEL_ATTRIBUTES_PATH") else { return Ok(()); };
+    use cudarc::driver::sys::CUfunction_attribute_enum as A;
+    let cases = [
+        ("flash_attn_d64_bb", 128u32, 0usize),
+        ("flash_attn_d256_bb", 128, 0),
+        ("flash_attn_d256_packed_bb", 128, 0),
+        ("flash_attn_d512_bb", 256, FLASH_D512_SMEM),
+        ("qkv_post_w2p_bb", 128, 0),
+        ("qkv_post_w8r_bb", 128, 0),
+        ("qkv_post_w16r_bb", 128, 0),
+    ];
+    let mut kernels = serde_json::Map::new();
+    for (name, block_threads, dynamic_smem_for_occupancy) in cases {
+        let f = module.load_function(name).with_context(|| format!("loading attribute probe {name}"))?;
+        let max_dynamic = f.get_attribute(A::CU_FUNC_ATTRIBUTE_MAX_DYNAMIC_SHARED_SIZE_BYTES).ok();
+        let attrs = serde_json::json!({
+            "registers_per_thread": f.num_regs().ok(),
+            "static_shared_bytes_per_block": f.shared_size_bytes().ok(),
+            "local_bytes_per_thread": f.local_size_bytes().ok(),
+            "max_threads_per_block": f.max_threads_per_block().ok(),
+            "ptx_version": f.ptx_version().ok(),
+            "binary_version": f.binary_version().ok(),
+            "max_dynamic_shared_bytes": max_dynamic,
+            "occupancy_probe_block_threads": block_threads,
+            "occupancy_probe_dynamic_shared_bytes": dynamic_smem_for_occupancy,
+            "active_blocks_per_sm_at_probe_config": f.occupancy_max_active_blocks_per_multiprocessor(block_threads, dynamic_smem_for_occupancy, None).ok(),
+        });
+        kernels.insert(name.to_string(), attrs);
+    }
+    let report = serde_json::json!({"target": std::env::var("EGEMMA2_NVRTC_TARGET").unwrap_or_else(|_| "compute_80".into()), "kernels": kernels});
+    let path = std::path::PathBuf::from(path);
+    if let Some(parent) = path.parent() { std::fs::create_dir_all(parent)?; }
+    std::fs::write(&path, serde_json::to_vec_pretty(&report)?).with_context(|| format!("writing {}", path.display()))?;
+    Ok(())
+}
+
 impl Gpu {
     /// Open CUDA device `ordinal` with the given GEMM [`Precision`].
     pub fn new(ordinal: usize, precision: Precision) -> Result<Self> {
@@ -275,14 +313,64 @@ impl Gpu {
         ensure!(st == cublas_sys::cublasStatus_t::CUBLAS_STATUS_SUCCESS, "cublasSetMathMode failed: {st:?}");
 
         let bf16 = precision == Precision::Bf16;
-        let ptx = if bf16 {
-            let src = format!("#define EG_BF16\n#define FLASH_D512_BK {FLASH_D512_BK}\n{KERNELS}\n{KERNELS_SM80}");
-            compile_ptx_with_opts(src, CompileOptions { use_fast_math: Some(false), arch: Some("compute_80"), ..Default::default() })
-        } else {
-            compile_ptx_with_opts(KERNELS, CompileOptions { use_fast_math: Some(false), ..Default::default() })
+        // Experimental target selection is BF16-only; default compute_80 preserves the historical
+        // PTX -> driver-JIT path. No kernel source, launch geometry, or cuBLAS setting changes.
+        let target = if bf16 { Some(nvrtc_mode::Target::from_env()?) } else { None };
+        let compile_started = Instant::now();
+        let (ptx, artifact_kind, artifact_bytes, compiler_options, nvrtc_compile_call_ms, nvrtc_log) = match target {
+            Some(nvrtc_mode::Target::Sm120) => {
+                let src = format!("#define EG_BF16
+#define FLASH_D512_BK {FLASH_D512_BK}
+{KERNELS}
+{KERNELS_SM80}");
+                let (ptx, bytes, log, call_ms) = nvrtc_mode::compile_cubin(&src)?;
+                (ptx, "CUBIN", bytes, vec!["--gpu-architecture=sm_120".to_string()], Some(call_ms), log)
+            }
+            Some(target) => {
+                let src = format!("#define EG_BF16
+#define FLASH_D512_BK {FLASH_D512_BK}
+{KERNELS}
+{KERNELS_SM80}");
+                let ptx = compile_ptx_with_opts(src, CompileOptions {
+                    use_fast_math: Some(false), arch: Some(target.as_str()), ..Default::default()
+                }).map_err(|e| anyhow!("NVRTC failed to compile {} PTX kernels: {e:?}", target.as_str()))?;
+                let raw = ptx.as_bytes().ok_or_else(|| anyhow!("NVRTC PTX did not expose its compiled image"))?;
+                let end = if raw.last() == Some(&0) { raw.len() - 1 } else { raw.len() };
+                let artifact_bytes = raw[..end].to_vec();
+                (ptx, "PTX", artifact_bytes, target.options(), None,
+                    "See standalone NVRTC diagnostic log; compile_ptx_with_opts does not expose successful logs.".to_string())
+            }
+            None => {
+                let ptx = compile_ptx_with_opts(KERNELS, CompileOptions { use_fast_math: Some(false), ..Default::default() })
+                    .map_err(|e| anyhow!("NVRTC failed to compile the kernels: {e:?}"))?;
+                (ptx, "PTX", Vec::new(), Vec::new(), None, String::new())
+            }
+        };
+        let compile_wall_ms = compile_started.elapsed().as_secs_f64() * 1000.0;
+        let artifact_path = if let (Some(target), Some(dir)) = (target, std::env::var_os("EGEMMA2_NVRTC_ARTIFACT_DIR")) {
+            let dir = std::path::PathBuf::from(dir);
+            std::fs::create_dir_all(&dir).with_context(|| format!("creating NVRTC artifact directory {}", dir.display()))?;
+            let path = dir.join(format!("kernels.{}", target.artifact_ext()));
+            std::fs::write(&path, &artifact_bytes).with_context(|| format!("writing {}", path.display()))?;
+            if target == nvrtc_mode::Target::Sm120 { std::fs::write(dir.join("nvrtc-runtime.log"), &nvrtc_log)?; }
+            Some(path)
+        } else { None };
+        let module_load_started = Instant::now();
+        let module = ctx.load_module(ptx).map_err(|e| anyhow!("loading {artifact_kind} kernels: {e:?}"))?;
+        let module_load_ms = module_load_started.elapsed().as_secs_f64() * 1000.0;
+        if let (Some(target), Some(path)) = (target, std::env::var_os("EGEMMA2_NVRTC_METADATA_PATH")) {
+            let metadata = serde_json::json!({
+                "target": target.as_str(), "artifact_kind": artifact_kind,
+                "compiler_options": compiler_options, "use_fast_math": false,
+                "compile_wall_ms": compile_wall_ms, "nvrtc_compile_call_ms": nvrtc_compile_call_ms,
+                "module_load_ms": module_load_ms,
+                "module_load_includes_driver_ptx_jit": target != nvrtc_mode::Target::Sm120,
+                "loader": if target == nvrtc_mode::Target::Sm120 { "Ptx::from_binary -> CudaContext::load_module -> cuModuleLoadData" } else { "compile_ptx_with_opts -> CudaContext::load_module -> cuModuleLoadData (PTX driver JIT)" },
+                "artifact_path": artifact_path.as_ref().map(|p| p.display().to_string()),
+                "artifact_bytes": artifact_bytes.len(), "nvrtc_log": nvrtc_log,
+            });
+            std::fs::write(path, serde_json::to_vec_pretty(&metadata)?).context("writing NVRTC timing metadata")?;
         }
-        .map_err(|e| anyhow!("NVRTC failed to compile the kernels: {e:?}"))?;
-        let module = ctx.load_module(ptx).map_err(|e| anyhow!("loading kernels: {e:?}"))?;
         let f = |name: &str| module.load_function(name).map_err(|e| anyhow!("kernel {name}: {e:?}"));
         let packed = |prefix: &str| -> Result<PackedKernels> {
             let mut v = Vec::new();
@@ -372,6 +460,7 @@ impl Gpu {
         } else {
             None
         };
+        maybe_write_kernel_attributes(&module)?;
         let dummy = stream.alloc_zeros::<f32>(1).map_err(|e| anyhow!("{e:?}"))?;
         let prof = std::env::var_os("EGEMMA2_PROFILE").map(|_| Mutex::new(Vec::new()));
         Ok(Self { ctx, stream, blas, k, lock: Mutex::new(()), dummy, name, precision, flash: std::env::var_os("EGEMMA2_NO_FLASH").is_none(), bf, prof })

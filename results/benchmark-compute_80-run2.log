@@ -1,0 +1,8 @@
+START run=2 target=compute_80 at 2026-10-18T15:25:22+00:00
+model loaded on cuda:0 (bf16) in 1451 ms
+short (17 tok)             median     1.617 ms   min     1.614 ms   p95     1.618 ms
+long (2208 tok)            median    34.118 ms   min    33.772 ms   p95    34.261 ms
+batch of 64 short docs     median    30.270 ms   min    30.116 ms   p95    30.520 ms
+image 641x479              median    43.434 ms   min    43.010 ms   p95    45.888 ms
+audio 9.3 s                median    17.331 ms   min    16.780 ms   p95    18.078 ms
+END run=2 target=compute_80 at 2026-10-18T15:25:27+00:00
