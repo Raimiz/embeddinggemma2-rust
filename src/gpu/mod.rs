@@ -177,6 +177,9 @@ pub struct Gpu {
     flash: bool,
     /// The bf16 kernels (tensor-core attention, bf16-activation variants); present exactly in bf16 mode.
     bf: Option<BfKernels>,
+    /// Experimental d512 tile parameters (defaults preserve the baseline BK=32 path).
+    flash_d512_bk: usize,
+    flash_d512_smem: usize,
     /// Per-op timing (`EGEMMA2_PROFILE`): events recorded between ops, see [`Gpu::mark`].
     prof: Option<Mutex<Marks>>,
 }
@@ -275,9 +278,23 @@ impl Gpu {
         ensure!(st == cublas_sys::cublasStatus_t::CUBLAS_STATUS_SUCCESS, "cublasSetMathMode failed: {st:?}");
 
         let bf16 = precision == Precision::Bf16;
+        let flash_d512_bk = if bf16 {
+            match std::env::var("EGEMMA2_D512_BK").as_deref().unwrap_or("32") {
+                "16" => 16,
+                "32" => 32,
+                other => bail!("EGEMMA2_D512_BK must be 16 or 32 (got {other:?})"),
+            }
+        } else { FLASH_D512_BK };
+        let flash_d512_smem = if flash_d512_bk == FLASH_D512_BK { FLASH_D512_SMEM } else { 2 * flash_d512_bk * 512 * 2 + 8 * 16 * flash_d512_bk * 4 };
         let ptx = if bf16 {
-            let src = format!("#define EG_BF16\n#define FLASH_D512_BK {FLASH_D512_BK}\n{KERNELS}\n{KERNELS_SM80}");
-            compile_ptx_with_opts(src, CompileOptions { use_fast_math: Some(false), arch: Some("compute_80"), ..Default::default() })
+            let target = std::env::var("EGEMMA2_NVRTC_TARGET").unwrap_or_else(|_| "compute_80".into());
+            let arch = match target.as_str() {
+                "compute_80" => "compute_80",
+                "compute_120" => "compute_120",
+                _ => bail!("EGEMMA2_NVRTC_TARGET must be compute_80 or compute_120"),
+            };
+            let src = format!("#define EG_BF16\n#define FLASH_D512_BK {flash_d512_bk}\n{KERNELS}\n{KERNELS_SM80}");
+            compile_ptx_with_opts(src, CompileOptions { use_fast_math: Some(false), arch: Some(arch), ..Default::default() })
         } else {
             compile_ptx_with_opts(KERNELS, CompileOptions { use_fast_math: Some(false), ..Default::default() })
         }
@@ -339,8 +356,8 @@ impl Gpu {
             let flash_d512_bb = f("flash_attn_d512_bb")?;
             // More than the 48 KB a launch gets by default: opt in (sm_86 allows up to 99 KB per block).
             flash_d512_bb
-                .set_attribute(cudarc::driver::sys::CUfunction_attribute_enum::CU_FUNC_ATTRIBUTE_MAX_DYNAMIC_SHARED_SIZE_BYTES, FLASH_D512_SMEM as i32)
-                .map_err(|e| anyhow!("flash_attn_d512_bb needs {FLASH_D512_SMEM} bytes of shared memory per block: {e:?}"))?;
+                .set_attribute(cudarc::driver::sys::CUfunction_attribute_enum::CU_FUNC_ATTRIBUTE_MAX_DYNAMIC_SHARED_SIZE_BYTES, flash_d512_smem as i32)
+                .map_err(|e| anyhow!("flash_attn_d512_bb needs {flash_d512_smem} bytes of shared memory per block: {e:?}"))?;
             Some(BfKernels {
                 rms_norm_fb: f("rms_norm_fb")?,
                 add_norm_fb: f("add_norm_fb")?,
@@ -374,7 +391,7 @@ impl Gpu {
         };
         let dummy = stream.alloc_zeros::<f32>(1).map_err(|e| anyhow!("{e:?}"))?;
         let prof = std::env::var_os("EGEMMA2_PROFILE").map(|_| Mutex::new(Vec::new()));
-        Ok(Self { ctx, stream, blas, k, lock: Mutex::new(()), dummy, name, precision, flash: std::env::var_os("EGEMMA2_NO_FLASH").is_none(), bf, prof })
+        Ok(Self { ctx, stream, blas, k, lock: Mutex::new(()), dummy, name, precision, flash: std::env::var_os("EGEMMA2_NO_FLASH").is_none(), bf, flash_d512_bk, flash_d512_smem, prof })
     }
 
     /// Whether activations that feed matrix products are stored as bf16 (bf16 mode), see [`Act`].
@@ -547,6 +564,22 @@ impl Gpu {
         use cublas_sys::cudaDataType::{CUDA_R_16BF, CUDA_R_32F};
         let (alpha, beta) = (1.0f32, 0.0f32);
         let wp = w.device_ptr(&self.stream).0;
+        // Optional shape-only trace used to inventory the exact production calls. This is disabled
+        // unless explicitly requested and is never enabled in latency measurements.
+        if let Some(path) = std::env::var_os("EGEMMA2_GEMM_TRACE_PATH") {
+            use std::io::Write;
+            let mut file = std::fs::OpenOptions::new().create(true).append(true).open(path)?;
+            writeln!(file, "{}", serde_json::json!({
+                "logical_m": m, "logical_n": n, "logical_k": k,
+                "cublas_op_a": "T", "cublas_op_b": "N",
+                "cublas_m": n, "cublas_n": m, "cublas_k": k,
+                "lda": k, "ldb": k, "ldc": n,
+                "a_type": "CUDA_R_16BF", "b_type": "CUDA_R_16BF",
+                "c_type": if y_bf16 { "CUDA_R_16BF" } else { "CUDA_R_32F" },
+                "compute_type": "CUBLAS_COMPUTE_32F", "algo": "CUBLAS_GEMM_DFALT",
+                "alpha": 1.0, "beta": 0.0
+            }))?;
+        }
         // Row-major Y = X W^T is column-major Y^T = W . X^T (see `matmul_nt`).
         unsafe {
             blas::gemm_ex(
@@ -1283,7 +1316,7 @@ impl Gpu {
     /// `grid_x` int triples {row0, len, q0} (one 64-query tile each; `row0` / `seq` are then ignored).
     #[allow(clippy::too_many_arguments)]
     fn flash_d512_launch(&self, ptrs: [u64; 4], tiles: u64, grid_x: usize, row0: usize, seq: usize, n_heads: usize, n_kv: usize, window: Option<usize>) -> Result<()> {
-        let cfg = LaunchConfig { grid_dim: (grid_x as u32, n_heads as u32, 1), block_dim: (256, 1, 1), shared_mem_bytes: FLASH_D512_SMEM as u32 };
+        let cfg = LaunchConfig { grid_dim: (grid_x as u32, n_heads as u32, 1), block_dim: (256, 1, 1), shared_mem_bytes: self.flash_d512_smem as u32 };
         let (r0, sq, nh, nkv, win, scale) = (row0 as i32, seq as i32, n_heads as i32, n_kv as i32, window.map(|w| w as i32).unwrap_or(-1), 1.0f32);
         let (qs, kvs) = ((n_heads * 512) as i32, (n_kv * 512) as i32);
         let mut b = self.stream.launch_builder(&self.bfk()?.flash_d512_bb);
@@ -1299,7 +1332,20 @@ impl Gpu {
         let f = &self.bfk()?.flash_d512_bb;
         let regs = f.num_regs().map_err(|e| anyhow!("{e:?}"))?;
         let local = f.local_size_bytes().map_err(|e| anyhow!("{e:?}"))?;
-        Ok((regs, local, FLASH_D512_SMEM))
+        Ok((regs, local, self.flash_d512_smem))
+    }
+
+    #[doc(hidden)]
+    pub fn flash_d512_runtime_config(&self) -> (usize, usize) { (self.flash_d512_bk, self.flash_d512_smem) }
+
+    #[doc(hidden)]
+    pub fn flash_d512_static_shared_bytes(&self) -> Result<i32> {
+        self.bfk()?.flash_d512_bb.shared_size_bytes().map_err(|e| anyhow!("{e:?}"))
+    }
+
+    #[doc(hidden)]
+    pub fn flash_d512_active_blocks_per_sm(&self) -> Result<u32> {
+        self.bfk()?.flash_d512_bb.occupancy_max_active_blocks_per_multiprocessor(256, self.flash_d512_smem, None).map_err(|e| anyhow!("{e:?}"))
     }
 
     /// Overwrite the start of `dst` with `x` (host -> existing device buffer).
