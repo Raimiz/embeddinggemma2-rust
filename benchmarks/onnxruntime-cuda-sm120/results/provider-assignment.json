@@ -1,0 +1,1494 @@
+{
+  "ort_version": "1.27.0",
+  "available_providers": [
+    "TensorrtExecutionProvider",
+    "CUDAExecutionProvider",
+    "CPUExecutionProvider"
+  ],
+  "model_revision": "daa72c51243991dfcaf9f9137d2c573d8f7790c0",
+  "formats": {
+    "fp16": {
+      "graph_loads": {
+        "model": {
+          "success": true,
+          "session_providers": [
+            "CUDAExecutionProvider",
+            "CPUExecutionProvider"
+          ],
+          "profiled_node_events": {
+            "CUDAExecutionProvider": 1057,
+            "CPUExecutionProvider": 16
+          },
+          "cuda_ops": {
+            "Cast": 10,
+            "ReduceSum": 2,
+            "Max": 2,
+            "Shape": 5,
+            "Gather": 2,
+            "Reshape": 245,
+            "Concat": 1,
+            "Size": 1,
+            "MemcpyFromHost": 3,
+            "Equal": 3,
+            "Where": 9,
+            "CumSum": 3,
+            "Add": 47,
+            "Range": 2,
+            "SimplifiedLayerNormalization": 98,
+            "MatMul": 194,
+            "Mul": 97,
+            "Split": 53,
+            "Unsqueeze": 5,
+            "Sin": 2,
+            "Cos": 2,
+            "RotaryEmbedding": 48,
+            "Transpose": 96,
+            "Sub": 1,
+            "Abs": 1,
+            "LessOrEqual": 1,
+            "And": 1,
+            "Softmax": 20,
+            "SkipSimplifiedLayerNormalization": 48,
+            "Gelu": 48,
+            "BiasSoftmax": 4,
+            "Div": 2,
+            "ReduceL2": 1
+          },
+          "cpu_fallback_nodes": [
+            {
+              "op": "Gather",
+              "name": "/model/shared_dims/attention_mask/Gather_1_kernel_time"
+            },
+            {
+              "op": "Unsqueeze",
+              "name": "/model/shared_dims/attention_mask_seq_len_1d_kernel_time"
+            },
+            {
+              "op": "Concat",
+              "name": "/model/attention_bias/scores_shape_4/Concat_kernel_time"
+            },
+            {
+              "op": "Concat",
+              "name": "/model/attention_bias/scores_shape_2/Concat_kernel_time"
+            },
+            {
+              "op": "Concat",
+              "name": "/model/multimodal_merge/Concat_shape_kernel_time"
+            },
+            {
+              "op": "Gather",
+              "name": "/model/multimodal_merge/video_features/num_tokens/Gather_0_kernel_time"
+            },
+            {
+              "op": "Gather",
+              "name": "/model/multimodal_merge/image_features/num_tokens/Gather_0_kernel_time"
+            },
+            {
+              "op": "Add",
+              "name": "/model/multimodal_merge/image_features/Add_count_kernel_time"
+            },
+            {
+              "op": "Add",
+              "name": "/model/multimodal_merge/video_features/Add_count_kernel_time"
+            },
+            {
+              "op": "Gather",
+              "name": "/model/shared_dims/root_input/Gather_1_kernel_time"
+            },
+            {
+              "op": "Cast",
+              "name": "/model/positions/Cast_kernel_time"
+            },
+            {
+              "op": "Gather",
+              "name": "/model/shared_dims/attention_mask/Gather_0_kernel_time"
+            },
+            {
+              "op": "Unsqueeze",
+              "name": "/model/shared_dims/attention_mask_batch_size_1d_kernel_time"
+            },
+            {
+              "op": "Gather",
+              "name": "/model/multimodal_merge/audio_features/num_tokens/Gather_0_kernel_time"
+            },
+            {
+              "op": "Add",
+              "name": "/model/multimodal_merge/audio_features/Add_count_kernel_time"
+            },
+            {
+              "op": "Gather",
+              "name": "/model/shared_dims/root_input/Gather_0_kernel_time"
+            }
+          ],
+          "cuda_critical_ops": {
+            "MatMul": 194,
+            "MatMulNBits": 0,
+            "MultiHeadAttention": 0,
+            "Softmax": 20,
+            "Conv": 0,
+            "Gemm": 0
+          }
+        },
+        "vision_encoder": {
+          "success": true,
+          "session_providers": [
+            "CUDAExecutionProvider",
+            "CPUExecutionProvider"
+          ],
+          "profiled_node_events": {
+            "CUDAExecutionProvider": 708,
+            "CPUExecutionProvider": 9
+          },
+          "cuda_ops": {
+            "Cast": 13,
+            "Sub": 1,
+            "FusedMatMul": 2,
+            "Clip": 1,
+            "Split": 5,
+            "Squeeze": 8,
+            "Gather": 34,
+            "Shape": 4,
+            "Expand": 5,
+            "Add": 69,
+            "Equal": 3,
+            "Where": 5,
+            "ReduceSum": 1,
+            "Unsqueeze": 7,
+            "SimplifiedLayerNormalization": 113,
+            "MatMul": 113,
+            "Reshape": 128,
+            "Sin": 1,
+            "Concat": 19,
+            "Neg": 2,
+            "Mul": 82,
+            "Cos": 1,
+            "Pad": 33,
+            "MultiHeadAttention": 16,
+            "Slice": 16,
+            "Gelu": 16,
+            "Div": 2,
+            "ReduceMax": 1,
+            "Range": 1,
+            "ScatterElements": 1,
+            "Greater": 1,
+            "NonZero": 1,
+            "Transpose": 1,
+            "GatherND": 1,
+            "Gemm": 1
+          },
+          "cpu_fallback_nodes": [
+            {
+              "op": "Concat",
+              "name": "node_Concat_18_kernel_time"
+            },
+            {
+              "op": "Concat",
+              "name": "node_Concat_225_kernel_time"
+            },
+            {
+              "op": "Concat",
+              "name": "node_Concat_271_kernel_time"
+            },
+            {
+              "op": "Concat",
+              "name": "node_Concat_287_kernel_time"
+            },
+            {
+              "op": "Squeeze",
+              "name": "node_sym_size_int_26_kernel_time"
+            },
+            {
+              "op": "Div",
+              "name": "node_floordiv_1_kernel_time"
+            },
+            {
+              "op": "Reshape",
+              "name": "_fix_range_scalar_0_kernel_time"
+            },
+            {
+              "op": "Reshape",
+              "name": "node_Reshape_1892_kernel_time"
+            },
+            {
+              "op": "Concat",
+              "name": "node_Concat_1893_kernel_time"
+            }
+          ],
+          "cuda_critical_ops": {
+            "MatMul": 113,
+            "MatMulNBits": 0,
+            "MultiHeadAttention": 16,
+            "Softmax": 0,
+            "Conv": 0,
+            "Gemm": 1
+          }
+        },
+        "audio_encoder": {
+          "success": true,
+          "session_providers": [
+            "CUDAExecutionProvider",
+            "CPUExecutionProvider"
+          ],
+          "profiled_node_events": {
+            "CUDAExecutionProvider": 1197,
+            "CPUExecutionProvider": 23
+          },
+          "cuda_ops": {
+            "Unsqueeze": 6,
+            "Cast": 54,
+            "Mul": 87,
+            "Conv": 14,
+            "Transpose": 102,
+            "LayerNormalization": 2,
+            "Relu": 2,
+            "Slice": 26,
+            "Shape": 2,
+            "Reshape": 109,
+            "MatMul": 159,
+            "Clip": 276,
+            "SimplifiedLayerNormalization": 109,
+            "QuickGelu": 36,
+            "Add": 62,
+            "Pad": 49,
+            "Range": 1,
+            "GatherND": 26,
+            "Div": 12,
+            "Tanh": 12,
+            "Greater": 1,
+            "And": 1,
+            "Where": 12,
+            "Softmax": 12,
+            "Split": 12,
+            "Sigmoid": 12,
+            "NonZero": 1
+          },
+          "cpu_fallback_nodes": [
+            {
+              "op": "Squeeze",
+              "name": "node_sym_size_int_143_kernel_time"
+            },
+            {
+              "op": "Add",
+              "name": "node_add_228_kernel_time"
+            },
+            {
+              "op": "Div",
+              "name": "node_floordiv_66_kernel_time"
+            },
+            {
+              "op": "Add",
+              "name": "node_add_229_kernel_time"
+            },
+            {
+              "op": "Reshape",
+              "name": "node_Reshape_107_kernel_time"
+            },
+            {
+              "op": "Concat",
+              "name": "node_Concat_109_kernel_time"
+            },
+            {
+              "op": "Concat",
+              "name": "node_Concat_202_kernel_time"
+            },
+            {
+              "op": "Add",
+              "name": "node_add_264_kernel_time"
+            },
+            {
+              "op": "Sub",
+              "name": "node_sub_62_kernel_time"
+            },
+            {
+              "op": "Div",
+              "name": "node_floordiv_67_kernel_time"
+            },
+            {
+              "op": "Mul",
+              "name": "node_mul_402_kernel_time"
+            },
+            {
+              "op": "Sub",
+              "name": "node_sub_202_kernel_time"
+            },
+            {
+              "op": "Reshape",
+              "name": "node_Reshape_228_kernel_time"
+            },
+            {
+              "op": "Concat",
+              "name": "node_Concat_230_kernel_time"
+            },
+            {
+              "op": "Reshape",
+              "name": "node_Reshape_233_kernel_time"
+            },
+            {
+              "op": "Concat",
+              "name": "node_Concat_237_kernel_time"
+            },
+            {
+              "op": "Reshape",
+              "name": "node_Reshape_285_kernel_time"
+            },
+            {
+              "op": "Concat",
+              "name": "node_Concat_287_kernel_time"
+            },
+            {
+              "op": "Concat",
+              "name": "node_Concat_294_kernel_time"
+            },
+            {
+              "op": "Concat",
+              "name": "node_Concat_301_kernel_time"
+            },
+            {
+              "op": "Concat",
+              "name": "node_Concat_320_kernel_time"
+            },
+            {
+              "op": "Reshape",
+              "name": "_fix_range_scalar_0_kernel_time"
+            },
+            {
+              "op": "Concat",
+              "name": "node_Concat_328_kernel_time"
+            }
+          ],
+          "cuda_critical_ops": {
+            "MatMul": 159,
+            "MatMulNBits": 0,
+            "MultiHeadAttention": 0,
+            "Softmax": 12,
+            "Conv": 14,
+            "Gemm": 0
+          }
+        }
+      },
+      "gpu_gate_passed": true,
+      "gpu_run_test_shapes": "text batch=1,seq=4; vision batch=1,patches=1; audio batch=1,frames=64; real-input encoder tests also succeeded",
+      "cpu_fallback_scope": "only scalar shape/dimension, mask-count and metadata/Concat/Reshape/Gather ops; no neural-network GEMM, MatMulNBits, attention or Conv node fell back",
+      "gpu_benchmark": true,
+      "storage_and_compute": {
+        "weight_files_bytes": 1464293120
+      }
+    },
+    "q8": {
+      "graph_loads": {
+        "model": {
+          "success": true,
+          "session_providers": [
+            "CUDAExecutionProvider",
+            "CPUExecutionProvider"
+          ],
+          "profiled_node_events": {
+            "CUDAExecutionProvider": 1049,
+            "CPUExecutionProvider": 16
+          },
+          "cuda_ops": {
+            "Cast": 2,
+            "ReduceSum": 2,
+            "Max": 2,
+            "Unsqueeze": 5,
+            "Shape": 5,
+            "GatherBlockQuantized": 1,
+            "Reshape": 245,
+            "Concat": 1,
+            "Size": 1,
+            "MemcpyFromHost": 3,
+            "Equal": 3,
+            "Where": 9,
+            "CumSum": 3,
+            "Add": 47,
+            "Range": 2,
+            "Gather": 1,
+            "SimplifiedLayerNormalization": 98,
+            "MatMulNBits": 146,
+            "Mul": 97,
+            "Split": 53,
+            "Sin": 2,
+            "Cos": 2,
+            "RotaryEmbedding": 48,
+            "Transpose": 96,
+            "MatMul": 48,
+            "Sub": 1,
+            "Abs": 1,
+            "LessOrEqual": 1,
+            "And": 1,
+            "Softmax": 20,
+            "SkipSimplifiedLayerNormalization": 48,
+            "Gelu": 48,
+            "BiasSoftmax": 4,
+            "Div": 2,
+            "ReduceL2": 1
+          },
+          "cpu_fallback_nodes": [
+            {
+              "op": "Gather",
+              "name": "/model/shared_dims/attention_mask/Gather_1_kernel_time"
+            },
+            {
+              "op": "Unsqueeze",
+              "name": "/model/shared_dims/attention_mask_seq_len_1d_kernel_time"
+            },
+            {
+              "op": "Concat",
+              "name": "/model/attention_bias/scores_shape_4/Concat_kernel_time"
+            },
+            {
+              "op": "Concat",
+              "name": "/model/attention_bias/scores_shape_2/Concat_kernel_time"
+            },
+            {
+              "op": "Concat",
+              "name": "/model/multimodal_merge/Concat_shape_kernel_time"
+            },
+            {
+              "op": "Gather",
+              "name": "/model/multimodal_merge/video_features/num_tokens/Gather_0_kernel_time"
+            },
+            {
+              "op": "Gather",
+              "name": "/model/multimodal_merge/image_features/num_tokens/Gather_0_kernel_time"
+            },
+            {
+              "op": "Add",
+              "name": "/model/multimodal_merge/image_features/Add_count_kernel_time"
+            },
+            {
+              "op": "Add",
+              "name": "/model/multimodal_merge/video_features/Add_count_kernel_time"
+            },
+            {
+              "op": "Gather",
+              "name": "/model/shared_dims/root_input/Gather_1_kernel_time"
+            },
+            {
+              "op": "Cast",
+              "name": "/model/positions/Cast_kernel_time"
+            },
+            {
+              "op": "Gather",
+              "name": "/model/shared_dims/attention_mask/Gather_0_kernel_time"
+            },
+            {
+              "op": "Unsqueeze",
+              "name": "/model/shared_dims/attention_mask_batch_size_1d_kernel_time"
+            },
+            {
+              "op": "Gather",
+              "name": "/model/multimodal_merge/audio_features/num_tokens/Gather_0_kernel_time"
+            },
+            {
+              "op": "Add",
+              "name": "/model/multimodal_merge/audio_features/Add_count_kernel_time"
+            },
+            {
+              "op": "Gather",
+              "name": "/model/shared_dims/root_input/Gather_0_kernel_time"
+            }
+          ],
+          "cuda_critical_ops": {
+            "MatMul": 48,
+            "MatMulNBits": 146,
+            "MultiHeadAttention": 0,
+            "Softmax": 20,
+            "Conv": 0,
+            "Gemm": 0
+          }
+        },
+        "vision_encoder": {
+          "success": true,
+          "session_providers": [
+            "CUDAExecutionProvider",
+            "CPUExecutionProvider"
+          ],
+          "profiled_node_events": {
+            "CUDAExecutionProvider": 698,
+            "CPUExecutionProvider": 9
+          },
+          "cuda_ops": {
+            "Clip": 1,
+            "Split": 5,
+            "Squeeze": 8,
+            "GatherBlockQuantized": 2,
+            "Shape": 4,
+            "Expand": 5,
+            "Add": 69,
+            "Equal": 3,
+            "Where": 4,
+            "ReduceSum": 1,
+            "Unsqueeze": 7,
+            "Sub": 1,
+            "Mul": 82,
+            "MatMulNBits": 113,
+            "SimplifiedLayerNormalization": 113,
+            "Reshape": 128,
+            "Gather": 32,
+            "Cast": 4,
+            "MatMul": 1,
+            "Sin": 1,
+            "Concat": 19,
+            "Neg": 2,
+            "Cos": 1,
+            "Pad": 33,
+            "MultiHeadAttention": 16,
+            "Slice": 16,
+            "Gelu": 16,
+            "Div": 2,
+            "ReduceMax": 1,
+            "Range": 1,
+            "FusedMatMul": 1,
+            "ScatterElements": 1,
+            "Greater": 1,
+            "NonZero": 1,
+            "Transpose": 1,
+            "GatherND": 1,
+            "Gemm": 1
+          },
+          "cpu_fallback_nodes": [
+            {
+              "op": "Concat",
+              "name": "node_Concat_18_kernel_time"
+            },
+            {
+              "op": "Concat",
+              "name": "node_Concat_225_kernel_time"
+            },
+            {
+              "op": "Concat",
+              "name": "node_Concat_271_kernel_time"
+            },
+            {
+              "op": "Concat",
+              "name": "node_Concat_287_kernel_time"
+            },
+            {
+              "op": "Squeeze",
+              "name": "node_sym_size_int_26_kernel_time"
+            },
+            {
+              "op": "Div",
+              "name": "node_floordiv_1_kernel_time"
+            },
+            {
+              "op": "Reshape",
+              "name": "_fix_range_scalar_0_kernel_time"
+            },
+            {
+              "op": "Reshape",
+              "name": "node_Reshape_1891_kernel_time"
+            },
+            {
+              "op": "Concat",
+              "name": "node_Concat_1892_kernel_time"
+            }
+          ],
+          "cuda_critical_ops": {
+            "MatMul": 1,
+            "MatMulNBits": 113,
+            "MultiHeadAttention": 16,
+            "Softmax": 0,
+            "Conv": 0,
+            "Gemm": 1
+          }
+        },
+        "audio_encoder": {
+          "success": true,
+          "session_providers": [
+            "CUDAExecutionProvider",
+            "CPUExecutionProvider"
+          ],
+          "profiled_node_events": {
+            "CUDAExecutionProvider": 1086,
+            "CPUExecutionProvider": 23
+          },
+          "cuda_ops": {
+            "Unsqueeze": 6,
+            "Cast": 3,
+            "Mul": 87,
+            "Conv": 14,
+            "Transpose": 102,
+            "LayerNormalization": 2,
+            "Relu": 2,
+            "Slice": 26,
+            "Shape": 2,
+            "Reshape": 109,
+            "MatMulNBits": 123,
+            "SimplifiedLayerNormalization": 109,
+            "Clip": 216,
+            "QuickGelu": 36,
+            "Add": 62,
+            "Pad": 49,
+            "MatMul": 36,
+            "Range": 1,
+            "GatherND": 26,
+            "Div": 12,
+            "Tanh": 12,
+            "Greater": 1,
+            "And": 1,
+            "Where": 12,
+            "Softmax": 12,
+            "Split": 12,
+            "Sigmoid": 12,
+            "NonZero": 1
+          },
+          "cpu_fallback_nodes": [
+            {
+              "op": "Squeeze",
+              "name": "node_sym_size_int_143_kernel_time"
+            },
+            {
+              "op": "Add",
+              "name": "node_add_235_kernel_time"
+            },
+            {
+              "op": "Div",
+              "name": "node_floordiv_72_kernel_time"
+            },
+            {
+              "op": "Add",
+              "name": "node_add_236_kernel_time"
+            },
+            {
+              "op": "Reshape",
+              "name": "node_Reshape_107_kernel_time"
+            },
+            {
+              "op": "Concat",
+              "name": "node_Concat_109_kernel_time"
+            },
+            {
+              "op": "Concat",
+              "name": "node_Concat_205_kernel_time"
+            },
+            {
+              "op": "Add",
+              "name": "node_add_271_kernel_time"
+            },
+            {
+              "op": "Sub",
+              "name": "node_sub_62_kernel_time"
+            },
+            {
+              "op": "Div",
+              "name": "node_floordiv_73_kernel_time"
+            },
+            {
+              "op": "Mul",
+              "name": "node_mul_384_kernel_time"
+            },
+            {
+              "op": "Sub",
+              "name": "node_sub_190_kernel_time"
+            },
+            {
+              "op": "Reshape",
+              "name": "node_Reshape_231_kernel_time"
+            },
+            {
+              "op": "Concat",
+              "name": "node_Concat_233_kernel_time"
+            },
+            {
+              "op": "Reshape",
+              "name": "node_Reshape_236_kernel_time"
+            },
+            {
+              "op": "Concat",
+              "name": "node_Concat_240_kernel_time"
+            },
+            {
+              "op": "Reshape",
+              "name": "node_Reshape_288_kernel_time"
+            },
+            {
+              "op": "Concat",
+              "name": "node_Concat_290_kernel_time"
+            },
+            {
+              "op": "Concat",
+              "name": "node_Concat_297_kernel_time"
+            },
+            {
+              "op": "Concat",
+              "name": "node_Concat_304_kernel_time"
+            },
+            {
+              "op": "Concat",
+              "name": "node_Concat_323_kernel_time"
+            },
+            {
+              "op": "Reshape",
+              "name": "_fix_range_scalar_0_kernel_time"
+            },
+            {
+              "op": "Concat",
+              "name": "node_Concat_331_kernel_time"
+            }
+          ],
+          "cuda_critical_ops": {
+            "MatMul": 36,
+            "MatMulNBits": 123,
+            "MultiHeadAttention": 0,
+            "Softmax": 12,
+            "Conv": 14,
+            "Gemm": 0
+          }
+        }
+      },
+      "gpu_gate_passed": true,
+      "gpu_run_test_shapes": "text batch=1,seq=4; vision batch=1,patches=1; audio batch=1,frames=64; real-input encoder tests also succeeded",
+      "cpu_fallback_scope": "only scalar shape/dimension, mask-count and metadata/Concat/Reshape/Gather ops; no neural-network GEMM, MatMulNBits, attention or Conv node fell back",
+      "gpu_benchmark": true,
+      "storage_and_compute": {
+        "weight_files_bytes": 849012224
+      }
+    },
+    "q4": {
+      "graph_loads": {
+        "model": {
+          "success": true,
+          "session_providers": [
+            "CUDAExecutionProvider",
+            "CPUExecutionProvider"
+          ],
+          "profiled_node_events": {
+            "CUDAExecutionProvider": 1049,
+            "CPUExecutionProvider": 16
+          },
+          "cuda_ops": {
+            "Cast": 2,
+            "ReduceSum": 2,
+            "Max": 2,
+            "Unsqueeze": 5,
+            "Shape": 5,
+            "GatherBlockQuantized": 1,
+            "Reshape": 245,
+            "Concat": 1,
+            "Size": 1,
+            "MemcpyFromHost": 3,
+            "Equal": 3,
+            "Where": 9,
+            "CumSum": 3,
+            "Add": 47,
+            "Range": 2,
+            "Gather": 1,
+            "SimplifiedLayerNormalization": 98,
+            "MatMulNBits": 146,
+            "Mul": 97,
+            "Split": 53,
+            "Sin": 2,
+            "Cos": 2,
+            "RotaryEmbedding": 48,
+            "Transpose": 96,
+            "MatMul": 48,
+            "Sub": 1,
+            "Abs": 1,
+            "LessOrEqual": 1,
+            "And": 1,
+            "Softmax": 20,
+            "SkipSimplifiedLayerNormalization": 48,
+            "Gelu": 48,
+            "BiasSoftmax": 4,
+            "Div": 2,
+            "ReduceL2": 1
+          },
+          "cpu_fallback_nodes": [
+            {
+              "op": "Gather",
+              "name": "/model/shared_dims/attention_mask/Gather_1_kernel_time"
+            },
+            {
+              "op": "Unsqueeze",
+              "name": "/model/shared_dims/attention_mask_seq_len_1d_kernel_time"
+            },
+            {
+              "op": "Concat",
+              "name": "/model/attention_bias/scores_shape_4/Concat_kernel_time"
+            },
+            {
+              "op": "Concat",
+              "name": "/model/attention_bias/scores_shape_2/Concat_kernel_time"
+            },
+            {
+              "op": "Concat",
+              "name": "/model/multimodal_merge/Concat_shape_kernel_time"
+            },
+            {
+              "op": "Gather",
+              "name": "/model/multimodal_merge/video_features/num_tokens/Gather_0_kernel_time"
+            },
+            {
+              "op": "Gather",
+              "name": "/model/multimodal_merge/image_features/num_tokens/Gather_0_kernel_time"
+            },
+            {
+              "op": "Add",
+              "name": "/model/multimodal_merge/image_features/Add_count_kernel_time"
+            },
+            {
+              "op": "Add",
+              "name": "/model/multimodal_merge/video_features/Add_count_kernel_time"
+            },
+            {
+              "op": "Gather",
+              "name": "/model/shared_dims/root_input/Gather_1_kernel_time"
+            },
+            {
+              "op": "Cast",
+              "name": "/model/positions/Cast_kernel_time"
+            },
+            {
+              "op": "Gather",
+              "name": "/model/shared_dims/attention_mask/Gather_0_kernel_time"
+            },
+            {
+              "op": "Unsqueeze",
+              "name": "/model/shared_dims/attention_mask_batch_size_1d_kernel_time"
+            },
+            {
+              "op": "Gather",
+              "name": "/model/multimodal_merge/audio_features/num_tokens/Gather_0_kernel_time"
+            },
+            {
+              "op": "Add",
+              "name": "/model/multimodal_merge/audio_features/Add_count_kernel_time"
+            },
+            {
+              "op": "Gather",
+              "name": "/model/shared_dims/root_input/Gather_0_kernel_time"
+            }
+          ],
+          "cuda_critical_ops": {
+            "MatMul": 48,
+            "MatMulNBits": 146,
+            "MultiHeadAttention": 0,
+            "Softmax": 20,
+            "Conv": 0,
+            "Gemm": 0
+          }
+        },
+        "vision_encoder": {
+          "success": true,
+          "session_providers": [
+            "CUDAExecutionProvider",
+            "CPUExecutionProvider"
+          ],
+          "profiled_node_events": {
+            "CUDAExecutionProvider": 698,
+            "CPUExecutionProvider": 9
+          },
+          "cuda_ops": {
+            "Clip": 1,
+            "Split": 5,
+            "Squeeze": 8,
+            "GatherBlockQuantized": 2,
+            "Shape": 4,
+            "Expand": 5,
+            "Add": 69,
+            "Equal": 3,
+            "Where": 4,
+            "ReduceSum": 1,
+            "Unsqueeze": 7,
+            "Sub": 1,
+            "Mul": 82,
+            "MatMulNBits": 113,
+            "SimplifiedLayerNormalization": 113,
+            "Reshape": 128,
+            "Gather": 32,
+            "Cast": 4,
+            "MatMul": 1,
+            "Sin": 1,
+            "Concat": 19,
+            "Neg": 2,
+            "Cos": 1,
+            "Pad": 33,
+            "MultiHeadAttention": 16,
+            "Slice": 16,
+            "Gelu": 16,
+            "Div": 2,
+            "ReduceMax": 1,
+            "Range": 1,
+            "FusedMatMul": 1,
+            "ScatterElements": 1,
+            "Greater": 1,
+            "NonZero": 1,
+            "Transpose": 1,
+            "GatherND": 1,
+            "Gemm": 1
+          },
+          "cpu_fallback_nodes": [
+            {
+              "op": "Concat",
+              "name": "node_Concat_18_kernel_time"
+            },
+            {
+              "op": "Concat",
+              "name": "node_Concat_225_kernel_time"
+            },
+            {
+              "op": "Concat",
+              "name": "node_Concat_271_kernel_time"
+            },
+            {
+              "op": "Concat",
+              "name": "node_Concat_287_kernel_time"
+            },
+            {
+              "op": "Squeeze",
+              "name": "node_sym_size_int_26_kernel_time"
+            },
+            {
+              "op": "Div",
+              "name": "node_floordiv_1_kernel_time"
+            },
+            {
+              "op": "Reshape",
+              "name": "_fix_range_scalar_0_kernel_time"
+            },
+            {
+              "op": "Reshape",
+              "name": "node_Reshape_1891_kernel_time"
+            },
+            {
+              "op": "Concat",
+              "name": "node_Concat_1892_kernel_time"
+            }
+          ],
+          "cuda_critical_ops": {
+            "MatMul": 1,
+            "MatMulNBits": 113,
+            "MultiHeadAttention": 16,
+            "Softmax": 0,
+            "Conv": 0,
+            "Gemm": 1
+          }
+        },
+        "audio_encoder": {
+          "success": true,
+          "session_providers": [
+            "CUDAExecutionProvider",
+            "CPUExecutionProvider"
+          ],
+          "profiled_node_events": {
+            "CUDAExecutionProvider": 1086,
+            "CPUExecutionProvider": 23
+          },
+          "cuda_ops": {
+            "Unsqueeze": 6,
+            "Cast": 3,
+            "Mul": 87,
+            "Conv": 14,
+            "Transpose": 102,
+            "LayerNormalization": 2,
+            "Relu": 2,
+            "Slice": 26,
+            "Shape": 2,
+            "Reshape": 109,
+            "MatMulNBits": 123,
+            "SimplifiedLayerNormalization": 109,
+            "Clip": 216,
+            "QuickGelu": 36,
+            "Add": 62,
+            "Pad": 49,
+            "MatMul": 36,
+            "Range": 1,
+            "GatherND": 26,
+            "Div": 12,
+            "Tanh": 12,
+            "Greater": 1,
+            "And": 1,
+            "Where": 12,
+            "Softmax": 12,
+            "Split": 12,
+            "Sigmoid": 12,
+            "NonZero": 1
+          },
+          "cpu_fallback_nodes": [
+            {
+              "op": "Squeeze",
+              "name": "node_sym_size_int_143_kernel_time"
+            },
+            {
+              "op": "Add",
+              "name": "node_add_235_kernel_time"
+            },
+            {
+              "op": "Div",
+              "name": "node_floordiv_72_kernel_time"
+            },
+            {
+              "op": "Add",
+              "name": "node_add_236_kernel_time"
+            },
+            {
+              "op": "Reshape",
+              "name": "node_Reshape_107_kernel_time"
+            },
+            {
+              "op": "Concat",
+              "name": "node_Concat_109_kernel_time"
+            },
+            {
+              "op": "Concat",
+              "name": "node_Concat_205_kernel_time"
+            },
+            {
+              "op": "Add",
+              "name": "node_add_271_kernel_time"
+            },
+            {
+              "op": "Sub",
+              "name": "node_sub_62_kernel_time"
+            },
+            {
+              "op": "Div",
+              "name": "node_floordiv_73_kernel_time"
+            },
+            {
+              "op": "Mul",
+              "name": "node_mul_384_kernel_time"
+            },
+            {
+              "op": "Sub",
+              "name": "node_sub_190_kernel_time"
+            },
+            {
+              "op": "Reshape",
+              "name": "node_Reshape_231_kernel_time"
+            },
+            {
+              "op": "Concat",
+              "name": "node_Concat_233_kernel_time"
+            },
+            {
+              "op": "Reshape",
+              "name": "node_Reshape_236_kernel_time"
+            },
+            {
+              "op": "Concat",
+              "name": "node_Concat_240_kernel_time"
+            },
+            {
+              "op": "Reshape",
+              "name": "node_Reshape_288_kernel_time"
+            },
+            {
+              "op": "Concat",
+              "name": "node_Concat_290_kernel_time"
+            },
+            {
+              "op": "Concat",
+              "name": "node_Concat_297_kernel_time"
+            },
+            {
+              "op": "Concat",
+              "name": "node_Concat_304_kernel_time"
+            },
+            {
+              "op": "Concat",
+              "name": "node_Concat_323_kernel_time"
+            },
+            {
+              "op": "Reshape",
+              "name": "_fix_range_scalar_0_kernel_time"
+            },
+            {
+              "op": "Concat",
+              "name": "node_Concat_331_kernel_time"
+            }
+          ],
+          "cuda_critical_ops": {
+            "MatMul": 36,
+            "MatMulNBits": 123,
+            "MultiHeadAttention": 0,
+            "Softmax": 12,
+            "Conv": 14,
+            "Gemm": 0
+          }
+        }
+      },
+      "gpu_gate_passed": true,
+      "gpu_run_test_shapes": "text batch=1,seq=4; vision batch=1,patches=1; audio batch=1,frames=64; real-input encoder tests also succeeded",
+      "cpu_fallback_scope": "only scalar shape/dimension, mask-count and metadata/Concat/Reshape/Gather ops; no neural-network GEMM, MatMulNBits, attention or Conv node fell back",
+      "gpu_benchmark": true,
+      "storage_and_compute": {
+        "weight_files_bytes": 472062464
+      }
+    },
+    "q4f16": {
+      "graph_loads": {
+        "model": {
+          "success": true,
+          "session_providers": [
+            "CUDAExecutionProvider",
+            "CPUExecutionProvider"
+          ],
+          "profiled_node_events": {
+            "CUDAExecutionProvider": 1057,
+            "CPUExecutionProvider": 16
+          },
+          "cuda_ops": {
+            "Cast": 10,
+            "ReduceSum": 2,
+            "Max": 2,
+            "Shape": 5,
+            "GatherBlockQuantized": 1,
+            "Reshape": 245,
+            "Concat": 1,
+            "Size": 1,
+            "MemcpyFromHost": 3,
+            "Equal": 3,
+            "Where": 9,
+            "CumSum": 3,
+            "Add": 47,
+            "Range": 2,
+            "Gather": 1,
+            "SimplifiedLayerNormalization": 98,
+            "MatMulNBits": 146,
+            "Mul": 97,
+            "Split": 53,
+            "Unsqueeze": 5,
+            "Sin": 2,
+            "Cos": 2,
+            "RotaryEmbedding": 48,
+            "Transpose": 96,
+            "MatMul": 48,
+            "Sub": 1,
+            "Abs": 1,
+            "LessOrEqual": 1,
+            "And": 1,
+            "Softmax": 20,
+            "SkipSimplifiedLayerNormalization": 48,
+            "Gelu": 48,
+            "BiasSoftmax": 4,
+            "Div": 2,
+            "ReduceL2": 1
+          },
+          "cpu_fallback_nodes": [
+            {
+              "op": "Gather",
+              "name": "/model/shared_dims/attention_mask/Gather_1_kernel_time"
+            },
+            {
+              "op": "Unsqueeze",
+              "name": "/model/shared_dims/attention_mask_seq_len_1d_kernel_time"
+            },
+            {
+              "op": "Concat",
+              "name": "/model/attention_bias/scores_shape_4/Concat_kernel_time"
+            },
+            {
+              "op": "Concat",
+              "name": "/model/attention_bias/scores_shape_2/Concat_kernel_time"
+            },
+            {
+              "op": "Concat",
+              "name": "/model/multimodal_merge/Concat_shape_kernel_time"
+            },
+            {
+              "op": "Gather",
+              "name": "/model/multimodal_merge/video_features/num_tokens/Gather_0_kernel_time"
+            },
+            {
+              "op": "Gather",
+              "name": "/model/multimodal_merge/image_features/num_tokens/Gather_0_kernel_time"
+            },
+            {
+              "op": "Add",
+              "name": "/model/multimodal_merge/image_features/Add_count_kernel_time"
+            },
+            {
+              "op": "Add",
+              "name": "/model/multimodal_merge/video_features/Add_count_kernel_time"
+            },
+            {
+              "op": "Gather",
+              "name": "/model/shared_dims/root_input/Gather_1_kernel_time"
+            },
+            {
+              "op": "Cast",
+              "name": "/model/positions/Cast_kernel_time"
+            },
+            {
+              "op": "Gather",
+              "name": "/model/shared_dims/attention_mask/Gather_0_kernel_time"
+            },
+            {
+              "op": "Unsqueeze",
+              "name": "/model/shared_dims/attention_mask_batch_size_1d_kernel_time"
+            },
+            {
+              "op": "Gather",
+              "name": "/model/multimodal_merge/audio_features/num_tokens/Gather_0_kernel_time"
+            },
+            {
+              "op": "Add",
+              "name": "/model/multimodal_merge/audio_features/Add_count_kernel_time"
+            },
+            {
+              "op": "Gather",
+              "name": "/model/shared_dims/root_input/Gather_0_kernel_time"
+            }
+          ],
+          "cuda_critical_ops": {
+            "MatMul": 48,
+            "MatMulNBits": 146,
+            "MultiHeadAttention": 0,
+            "Softmax": 20,
+            "Conv": 0,
+            "Gemm": 0
+          }
+        },
+        "vision_encoder": {
+          "success": true,
+          "session_providers": [
+            "CUDAExecutionProvider",
+            "CPUExecutionProvider"
+          ],
+          "profiled_node_events": {
+            "CUDAExecutionProvider": 709,
+            "CPUExecutionProvider": 9
+          },
+          "cuda_ops": {
+            "Clip": 1,
+            "Split": 5,
+            "Squeeze": 8,
+            "GatherBlockQuantized": 2,
+            "Shape": 4,
+            "Expand": 5,
+            "Add": 69,
+            "Equal": 3,
+            "Where": 5,
+            "ReduceSum": 1,
+            "Unsqueeze": 7,
+            "Cast": 13,
+            "Sub": 1,
+            "Mul": 83,
+            "MatMulNBits": 113,
+            "SimplifiedLayerNormalization": 113,
+            "Reshape": 128,
+            "Gather": 32,
+            "MatMul": 1,
+            "Sin": 1,
+            "Concat": 19,
+            "Neg": 2,
+            "Cos": 1,
+            "Pad": 33,
+            "MultiHeadAttention": 16,
+            "Slice": 16,
+            "Gelu": 16,
+            "Div": 2,
+            "ReduceMax": 1,
+            "Range": 1,
+            "FusedMatMul": 1,
+            "ScatterElements": 1,
+            "Greater": 1,
+            "NonZero": 1,
+            "Transpose": 1,
+            "GatherND": 1,
+            "Gemm": 1
+          },
+          "cpu_fallback_nodes": [
+            {
+              "op": "Concat",
+              "name": "node_Concat_18_kernel_time"
+            },
+            {
+              "op": "Concat",
+              "name": "node_Concat_225_kernel_time"
+            },
+            {
+              "op": "Concat",
+              "name": "node_Concat_271_kernel_time"
+            },
+            {
+              "op": "Concat",
+              "name": "node_Concat_287_kernel_time"
+            },
+            {
+              "op": "Squeeze",
+              "name": "node_sym_size_int_26_kernel_time"
+            },
+            {
+              "op": "Div",
+              "name": "node_floordiv_1_kernel_time"
+            },
+            {
+              "op": "Reshape",
+              "name": "_fix_range_scalar_0_kernel_time"
+            },
+            {
+              "op": "Reshape",
+              "name": "node_Reshape_1892_kernel_time"
+            },
+            {
+              "op": "Concat",
+              "name": "node_Concat_1893_kernel_time"
+            }
+          ],
+          "cuda_critical_ops": {
+            "MatMul": 1,
+            "MatMulNBits": 113,
+            "MultiHeadAttention": 16,
+            "Softmax": 0,
+            "Conv": 0,
+            "Gemm": 1
+          }
+        },
+        "audio_encoder": {
+          "success": true,
+          "session_providers": [
+            "CUDAExecutionProvider",
+            "CPUExecutionProvider"
+          ],
+          "profiled_node_events": {
+            "CUDAExecutionProvider": 1197,
+            "CPUExecutionProvider": 23
+          },
+          "cuda_ops": {
+            "Unsqueeze": 6,
+            "Cast": 54,
+            "Mul": 87,
+            "Conv": 14,
+            "Transpose": 102,
+            "LayerNormalization": 2,
+            "Relu": 2,
+            "Slice": 26,
+            "Shape": 2,
+            "Reshape": 109,
+            "MatMulNBits": 123,
+            "Clip": 276,
+            "SimplifiedLayerNormalization": 109,
+            "QuickGelu": 36,
+            "Add": 62,
+            "Pad": 49,
+            "MatMul": 36,
+            "Range": 1,
+            "GatherND": 26,
+            "Div": 12,
+            "Tanh": 12,
+            "Greater": 1,
+            "And": 1,
+            "Where": 12,
+            "Softmax": 12,
+            "Split": 12,
+            "Sigmoid": 12,
+            "NonZero": 1
+          },
+          "cpu_fallback_nodes": [
+            {
+              "op": "Squeeze",
+              "name": "node_sym_size_int_143_kernel_time"
+            },
+            {
+              "op": "Add",
+              "name": "node_add_228_kernel_time"
+            },
+            {
+              "op": "Div",
+              "name": "node_floordiv_66_kernel_time"
+            },
+            {
+              "op": "Add",
+              "name": "node_add_229_kernel_time"
+            },
+            {
+              "op": "Reshape",
+              "name": "node_Reshape_107_kernel_time"
+            },
+            {
+              "op": "Concat",
+              "name": "node_Concat_109_kernel_time"
+            },
+            {
+              "op": "Concat",
+              "name": "node_Concat_202_kernel_time"
+            },
+            {
+              "op": "Add",
+              "name": "node_add_264_kernel_time"
+            },
+            {
+              "op": "Sub",
+              "name": "node_sub_62_kernel_time"
+            },
+            {
+              "op": "Div",
+              "name": "node_floordiv_67_kernel_time"
+            },
+            {
+              "op": "Mul",
+              "name": "node_mul_402_kernel_time"
+            },
+            {
+              "op": "Sub",
+              "name": "node_sub_202_kernel_time"
+            },
+            {
+              "op": "Reshape",
+              "name": "node_Reshape_228_kernel_time"
+            },
+            {
+              "op": "Concat",
+              "name": "node_Concat_230_kernel_time"
+            },
+            {
+              "op": "Reshape",
+              "name": "node_Reshape_233_kernel_time"
+            },
+            {
+              "op": "Concat",
+              "name": "node_Concat_237_kernel_time"
+            },
+            {
+              "op": "Reshape",
+              "name": "node_Reshape_285_kernel_time"
+            },
+            {
+              "op": "Concat",
+              "name": "node_Concat_287_kernel_time"
+            },
+            {
+              "op": "Concat",
+              "name": "node_Concat_294_kernel_time"
+            },
+            {
+              "op": "Concat",
+              "name": "node_Concat_301_kernel_time"
+            },
+            {
+              "op": "Concat",
+              "name": "node_Concat_320_kernel_time"
+            },
+            {
+              "op": "Reshape",
+              "name": "_fix_range_scalar_0_kernel_time"
+            },
+            {
+              "op": "Concat",
+              "name": "node_Concat_328_kernel_time"
+            }
+          ],
+          "cuda_critical_ops": {
+            "MatMul": 36,
+            "MatMulNBits": 123,
+            "MultiHeadAttention": 0,
+            "Softmax": 12,
+            "Conv": 14,
+            "Gemm": 0
+          }
+        }
+      },
+      "gpu_gate_passed": true,
+      "gpu_run_test_shapes": "text batch=1,seq=4; vision batch=1,patches=1; audio batch=1,frames=64; real-input encoder tests also succeeded",
+      "cpu_fallback_scope": "only scalar shape/dimension, mask-count and metadata/Concat/Reshape/Gather ops; no neural-network GEMM, MatMulNBits, attention or Conv node fell back",
+      "gpu_benchmark": true,
+      "storage_and_compute": {
+        "weight_files_bytes": 424825600
+      }
+    }
+  }
+}

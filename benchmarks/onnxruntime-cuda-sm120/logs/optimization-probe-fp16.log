@@ -1,0 +1,3 @@
+fp16 io_binding OK 4.70753651461564
+[1;31m2026-10-18 01:39:21.154303064 [E:onnxruntime:, inference_session.cc:2601 Initialize] This session cannot use the graph capture feature as requested by the user  as all compute graph nodes have not been partitioned to the CUDAExecutionProvider[m
+fp16 cuda_graph FAIL Fail('[ONNXRuntimeError] : 1 : FAIL : This session cannot use the graph capture feature as requested by the user  as all compute graph nodes have not been partitioned to the CUDAExecutionProvider')

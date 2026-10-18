@@ -1,0 +1,32 @@
+{
+  "format": "q8",
+  "ort_version": "1.27.0",
+  "io_binding": {
+    "success": true,
+    "providers": [
+      "CUDAExecutionProvider",
+      "CPUExecutionProvider"
+    ],
+    "samples_ms": [
+      335.17508598743007,
+      5.8955069980584085,
+      5.712175043299794,
+      5.360232025850564,
+      5.320762982591987,
+      5.2759190439246595,
+      5.29998098500073,
+      5.288302025292069,
+      5.34741603769362,
+      5.240789032541215,
+      5.273777991533279,
+      5.275328003335744
+    ],
+    "median_ms": 5.294141505146399,
+    "embedding_norm": 1.0
+  },
+  "cuda_graph": {
+    "success": false,
+    "error": "Fail('[ONNXRuntimeError] : 1 : FAIL : This session cannot use the graph capture feature as requested by the user  as all compute graph nodes have not been partitioned to the CUDAExecutionProvider')",
+    "traceback": "Traceback (most recent call last):\n  File \"/root/experiments/embeddinggemma2-ort-cuda/scripts/io_binding_graph_probe.py\", line 14, in <module>\n    s=ort.InferenceSession(str(M/f\"model_{suffix}.onnx\"),sess_options=so,providers=[(\"CUDAExecutionProvider\",opts),\"CPUExecutionProvider\"])\n  File \"/root/experiments/embeddinggemma2-ort-cuda/.ort-venv/lib/python3.14/site-packages/onnxruntime/capi/onnxruntime_inference_collection.py\", line 528, in __init__\n    self._create_inference_session(providers, provider_options, disabled_optimizers)\n    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/root/experiments/embeddinggemma2-ort-cuda/.ort-venv/lib/python3.14/site-packages/onnxruntime/capi/onnxruntime_inference_collection.py\", line 634, in _create_inference_session\n    sess.initialize_session(providers, provider_options, disabled_optimizers)\n    ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nonnxruntime.capi.onnxruntime_pybind11_state.Fail: [ONNXRuntimeError] : 1 : FAIL : This session cannot use the graph capture feature as requested by the user  as all compute graph nodes have not been partitioned to the CUDAExecutionProvider\n"
+  }
+}

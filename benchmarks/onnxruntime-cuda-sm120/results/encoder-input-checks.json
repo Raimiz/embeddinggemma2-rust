@@ -1,0 +1,133 @@
+{
+  "ort": "1.27.0",
+  "providers": {
+    "fp16_vision_encoder": {
+      "shape": [
+        266,
+        512
+      ],
+      "expected_shape": [
+        266,
+        512
+      ],
+      "max_abs": 0.09960412979125977,
+      "cosine": 0.999985933303833,
+      "cuda": [
+        "CUDAExecutionProvider",
+        "CPUExecutionProvider"
+      ]
+    },
+    "fp16_audio_encoder": {
+      "shape": [
+        233,
+        512
+      ],
+      "expected_shape": [
+        233,
+        512
+      ],
+      "max_abs": 0.33293417096138,
+      "cosine": 0.9999648332595825,
+      "cuda": [
+        "CUDAExecutionProvider",
+        "CPUExecutionProvider"
+      ]
+    },
+    "q8_vision_encoder": {
+      "shape": [
+        266,
+        512
+      ],
+      "expected_shape": [
+        266,
+        512
+      ],
+      "max_abs": 2.346982479095459,
+      "cosine": 0.9878659248352051,
+      "cuda": [
+        "CUDAExecutionProvider",
+        "CPUExecutionProvider"
+      ]
+    },
+    "q8_audio_encoder": {
+      "shape": [
+        233,
+        512
+      ],
+      "expected_shape": [
+        233,
+        512
+      ],
+      "max_abs": 0.37694859504699707,
+      "cosine": 0.9999348521232605,
+      "cuda": [
+        "CUDAExecutionProvider",
+        "CPUExecutionProvider"
+      ]
+    },
+    "q4_vision_encoder": {
+      "shape": [
+        266,
+        512
+      ],
+      "expected_shape": [
+        266,
+        512
+      ],
+      "max_abs": 3.334296703338623,
+      "cosine": 0.9546407461166382,
+      "cuda": [
+        "CUDAExecutionProvider",
+        "CPUExecutionProvider"
+      ]
+    },
+    "q4_audio_encoder": {
+      "shape": [
+        233,
+        512
+      ],
+      "expected_shape": [
+        233,
+        512
+      ],
+      "max_abs": 6.197540760040283,
+      "cosine": 0.9745607972145081,
+      "cuda": [
+        "CUDAExecutionProvider",
+        "CPUExecutionProvider"
+      ]
+    },
+    "q4f16_vision_encoder": {
+      "shape": [
+        266,
+        512
+      ],
+      "expected_shape": [
+        266,
+        512
+      ],
+      "max_abs": 3.314103364944458,
+      "cosine": 0.9547505378723145,
+      "cuda": [
+        "CUDAExecutionProvider",
+        "CPUExecutionProvider"
+      ]
+    },
+    "q4f16_audio_encoder": {
+      "shape": [
+        233,
+        512
+      ],
+      "expected_shape": [
+        233,
+        512
+      ],
+      "max_abs": 6.192103862762451,
+      "cosine": 0.9748441576957703,
+      "cuda": [
+        "CUDAExecutionProvider",
+        "CPUExecutionProvider"
+      ]
+    }
+  }
+}

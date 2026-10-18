@@ -1,0 +1,6 @@
+q8 short median 5.375 min 5.321 p95 5.694
+q8 long median 100.618 min 100.562 p95 100.966
+q8 batch64 median 71.484 min 71.422 p95 71.551
+q8 image median 250.271 min 245.982 p95 254.987
+q8 audio median 37.363 min 35.331 p95 39.122
+saved /root/experiments/embeddinggemma2-ort-cuda/results/benchmark-q8-run3.json session init ms 754.5

@@ -1,0 +1,122 @@
+{
+  "fp16": {
+    "iobinding": {
+      "short": {
+        "baseline_ms": 4.792871011886746,
+        "iobinding_ms": 4.800244001671672,
+        "change_percent": 0.15383242667370567
+      },
+      "long": {
+        "baseline_ms": 51.928073982708156,
+        "iobinding_ms": 51.93190751015209,
+        "change_percent": 0.0073823794142890975
+      },
+      "batch64": {
+        "baseline_ms": 34.990093496162444,
+        "iobinding_ms": 35.12308152858168,
+        "change_percent": 0.38007338401031543
+      },
+      "image": {
+        "baseline_ms": 201.94902602816,
+        "iobinding_ms": 202.28508903528564,
+        "change_percent": 0.16640981822748646
+      },
+      "audio": {
+        "baseline_ms": 30.275108496425673,
+        "iobinding_ms": 30.2264720085077,
+        "change_percent": -0.16064843474868917
+      }
+    },
+    "cuda_graph": "unsupported: CUDA EP refuses graph capture because some graph nodes are assigned to CPUExecutionProvider"
+  },
+  "q8": {
+    "iobinding": {
+      "short": {
+        "baseline_ms": 5.37514197640121,
+        "iobinding_ms": 5.351312487618998,
+        "change_percent": -0.44332761603008697
+      },
+      "long": {
+        "baseline_ms": 100.61840098933317,
+        "iobinding_ms": 100.79122398747131,
+        "change_percent": 0.17176082748171506
+      },
+      "batch64": {
+        "baseline_ms": 71.38263201341033,
+        "iobinding_ms": 71.51219347724691,
+        "change_percent": 0.18150278321515945
+      },
+      "image": {
+        "baseline_ms": 250.27138300356455,
+        "iobinding_ms": 248.81728447508067,
+        "change_percent": -0.5810087078406245
+      },
+      "audio": {
+        "baseline_ms": 37.363078008638695,
+        "iobinding_ms": 36.89528800896369,
+        "change_percent": -1.252011409677889
+      }
+    },
+    "cuda_graph": "unsupported: CUDA EP refuses graph capture because some graph nodes are assigned to CPUExecutionProvider"
+  },
+  "q4": {
+    "iobinding": {
+      "short": {
+        "baseline_ms": 6.01571798324585,
+        "iobinding_ms": 6.040846987161785,
+        "change_percent": 0.41772243954789623
+      },
+      "long": {
+        "baseline_ms": 102.78988053323701,
+        "iobinding_ms": 102.8599975106772,
+        "change_percent": 0.06821389136406619
+      },
+      "batch64": {
+        "baseline_ms": 73.35445200442336,
+        "iobinding_ms": 73.3733615197707,
+        "change_percent": 0.025778279069132992
+      },
+      "image": {
+        "baseline_ms": 253.04783351020887,
+        "iobinding_ms": 254.3701634858735,
+        "change_percent": 0.5225612712512095
+      },
+      "audio": {
+        "baseline_ms": 42.46136749861762,
+        "iobinding_ms": 41.8055200134404,
+        "change_percent": -1.5445745716940684
+      }
+    },
+    "cuda_graph": "unsupported: CUDA EP refuses graph capture because some graph nodes are assigned to CPUExecutionProvider"
+  },
+  "q4f16": {
+    "iobinding": {
+      "short": {
+        "baseline_ms": 5.41052152402699,
+        "iobinding_ms": 5.373329535359517,
+        "change_percent": -0.6874011775447442
+      },
+      "long": {
+        "baseline_ms": 52.78351448941976,
+        "iobinding_ms": 52.82845100737177,
+        "change_percent": 0.08513362247035694
+      },
+      "batch64": {
+        "baseline_ms": 35.95451696310192,
+        "iobinding_ms": 36.07123548863456,
+        "change_percent": 0.3246282675759993
+      },
+      "image": {
+        "baseline_ms": 203.89536750735715,
+        "iobinding_ms": 204.39603849081323,
+        "change_percent": 0.24555289783030343
+      },
+      "audio": {
+        "baseline_ms": 32.88961498765275,
+        "iobinding_ms": 32.63295200304128,
+        "change_percent": -0.7803769813292782
+      }
+    },
+    "cuda_graph": "unsupported: CUDA EP refuses graph capture because some graph nodes are assigned to CPUExecutionProvider"
+  }
+}

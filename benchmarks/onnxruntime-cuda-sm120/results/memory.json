@@ -1,0 +1,149 @@
+{
+  "measurement": "nvidia-smi global used memory and compute-app PID memory sampled ~200ms; /proc/<pid>/status RSS; process isolated on otherwise idle GPU",
+  "baseline_rust_bf16": {
+    "nvidia_smi_peak_global_mib": 1426,
+    "source": "completed Rust BF16 baseline memory capture"
+  },
+  "formats": {
+    "fp16": {
+      "weights_bytes": 1464293120,
+      "session_initialization_ms_median": {
+        "model": 446.72303000697866,
+        "vision_encoder": 140.52238099975511,
+        "audio_encoder": 231.38512996956706,
+        "all_three_ms_median": 820.8617840427905
+      },
+      "phase_memory": {
+        "text-loaded-and-run": {
+          "global_gpu_used_mib": 830,
+          "process_rss_mib": 902.0
+        },
+        "after-text-run": {
+          "global_gpu_used_mib": 1490,
+          "process_rss_mib": 1325.8
+        },
+        "after-first-vision": {
+          "global_gpu_used_mib": 2516,
+          "process_rss_mib": 1444.5
+        },
+        "after-first-audio": {
+          "global_gpu_used_mib": 3684,
+          "process_rss_mib": 1677.4
+        },
+        "full-five-scenario-pass": {
+          "global_gpu_used_mib": 3684,
+          "process_rss_mib": 1677.9
+        }
+      },
+      "peak_global_gpu_used_mib": 3684,
+      "peak_process_gpu_used_mib": 3674,
+      "peak_process_rss_mib": 1677.9,
+      "ru_maxrss_mib": 1779.0
+    },
+    "q8": {
+      "weights_bytes": 849012224,
+      "session_initialization_ms_median": {
+        "model": 422.29116399539635,
+        "vision_encoder": 134.53291298355907,
+        "audio_encoder": 197.08220096072182,
+        "all_three_ms_median": 754.4733000104316
+      },
+      "phase_memory": {
+        "text-loaded-and-run": {
+          "global_gpu_used_mib": 798,
+          "process_rss_mib": 875.7
+        },
+        "after-text-run": {
+          "global_gpu_used_mib": 1126,
+          "process_rss_mib": 1069.4
+        },
+        "after-first-vision": {
+          "global_gpu_used_mib": 3138,
+          "process_rss_mib": 1232.8
+        },
+        "after-first-audio": {
+          "global_gpu_used_mib": 4676,
+          "process_rss_mib": 1584.6
+        },
+        "full-five-scenario-pass": {
+          "global_gpu_used_mib": 4676,
+          "process_rss_mib": 1535.4
+        }
+      },
+      "peak_global_gpu_used_mib": 4676,
+      "peak_process_gpu_used_mib": 4666,
+      "peak_process_rss_mib": 1584.6,
+      "ru_maxrss_mib": 1636.4
+    },
+    "q4": {
+      "weights_bytes": 472062464,
+      "session_initialization_ms_median": {
+        "model": 391.2435069796629,
+        "vision_encoder": 117.40279599325731,
+        "audio_encoder": 168.42489800183102,
+        "all_three_ms_median": 677.0846269791946
+      },
+      "phase_memory": {
+        "text-loaded-and-run": {
+          "global_gpu_used_mib": 572,
+          "process_rss_mib": 943.2
+        },
+        "after-text-run": {
+          "global_gpu_used_mib": 772,
+          "process_rss_mib": 1053.5
+        },
+        "after-first-vision": {
+          "global_gpu_used_mib": 2398,
+          "process_rss_mib": 1258.6
+        },
+        "after-first-audio": {
+          "global_gpu_used_mib": 3168,
+          "process_rss_mib": 1547.0
+        },
+        "full-five-scenario-pass": {
+          "global_gpu_used_mib": 3424,
+          "process_rss_mib": 1485.1
+        }
+      },
+      "peak_global_gpu_used_mib": 3424,
+      "peak_process_gpu_used_mib": 3414,
+      "peak_process_rss_mib": 1547.0,
+      "ru_maxrss_mib": 1586.2
+    },
+    "q4f16": {
+      "weights_bytes": 424825600,
+      "session_initialization_ms_median": {
+        "model": 398.9229050348513,
+        "vision_encoder": 113.80623298464343,
+        "audio_encoder": 175.37162295775488,
+        "all_three_ms_median": 688.1135819712654
+      },
+      "phase_memory": {
+        "text-loaded-and-run": {
+          "global_gpu_used_mib": 556,
+          "process_rss_mib": 956.3
+        },
+        "after-text-run": {
+          "global_gpu_used_mib": 1472,
+          "process_rss_mib": 1346.9
+        },
+        "after-first-vision": {
+          "global_gpu_used_mib": 1872,
+          "process_rss_mib": 1434.3
+        },
+        "after-first-audio": {
+          "global_gpu_used_mib": 2640,
+          "process_rss_mib": 1647.2
+        },
+        "full-five-scenario-pass": {
+          "global_gpu_used_mib": 2640,
+          "process_rss_mib": 1647.7
+        }
+      },
+      "peak_global_gpu_used_mib": 2640,
+      "peak_process_gpu_used_mib": 2630,
+      "peak_process_rss_mib": 1647.7,
+      "ru_maxrss_mib": 1748.7
+    }
+  }
+}

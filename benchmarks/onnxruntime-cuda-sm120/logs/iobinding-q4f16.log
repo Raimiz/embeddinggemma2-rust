@@ -1,0 +1,5 @@
+q4f16 short I/O Binding med 5.373 ms
+q4f16 long I/O Binding med 52.828 ms
+q4f16 batch64 I/O Binding med 36.071 ms
+q4f16 image I/O Binding med 204.396 ms
+q4f16 audio I/O Binding med 32.633 ms

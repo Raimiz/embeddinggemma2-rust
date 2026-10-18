@@ -1,0 +1,115 @@
+{
+  "format": "q8",
+  "ort_version": "1.27.0",
+  "session_providers": {
+    "model": [
+      "CUDAExecutionProvider",
+      "CPUExecutionProvider"
+    ],
+    "vision_encoder": [
+      "CUDAExecutionProvider",
+      "CPUExecutionProvider"
+    ],
+    "audio_encoder": [
+      "CUDAExecutionProvider",
+      "CPUExecutionProvider"
+    ]
+  },
+  "phase_samples": [
+    {
+      "t": 1792287685.330231,
+      "gpu_used_mib": 2,
+      "process_gpu_used_mib": 716,
+      "process_rss_kib": 788512,
+      "phase": "text-loaded-and-run"
+    },
+    {
+      "t": 1792287685.59816,
+      "gpu_used_mib": 726,
+      "process_gpu_used_mib": 716,
+      "process_rss_kib": 788520,
+      "phase": "text-loaded-and-run"
+    },
+    {
+      "t": 1792287685.8534257,
+      "gpu_used_mib": 798,
+      "process_gpu_used_mib": 788,
+      "process_rss_kib": 896684,
+      "phase": "text-loaded-and-run"
+    },
+    {
+      "t": 1792287686.1091228,
+      "gpu_used_mib": 798,
+      "process_gpu_used_mib": 788,
+      "process_rss_kib": 1076612,
+      "phase": "after-text-run"
+    },
+    {
+      "t": 1792287686.4768114,
+      "gpu_used_mib": 1126,
+      "process_gpu_used_mib": 1116,
+      "process_rss_kib": 1095104,
+      "phase": "after-text-run"
+    },
+    {
+      "t": 1792287686.7325501,
+      "gpu_used_mib": 2482,
+      "process_gpu_used_mib": 2472,
+      "process_rss_kib": 1201864,
+      "phase": "after-first-vision"
+    },
+    {
+      "t": 1792287686.9987404,
+      "gpu_used_mib": 2482,
+      "process_gpu_used_mib": 2472,
+      "process_rss_kib": 1207220,
+      "phase": "after-first-vision"
+    },
+    {
+      "t": 1792287687.3124974,
+      "gpu_used_mib": 3138,
+      "process_gpu_used_mib": 3128,
+      "process_rss_kib": 1262404,
+      "phase": "after-first-vision"
+    },
+    {
+      "t": 1792287687.5850613,
+      "gpu_used_mib": 3140,
+      "process_gpu_used_mib": 3130,
+      "process_rss_kib": 1445860,
+      "phase": "after-first-audio"
+    },
+    {
+      "t": 1792287687.861017,
+      "gpu_used_mib": 3140,
+      "process_gpu_used_mib": 3642,
+      "process_rss_kib": 1445868,
+      "phase": "after-first-audio"
+    },
+    {
+      "t": 1792287688.1226897,
+      "gpu_used_mib": 4676,
+      "process_gpu_used_mib": 4666,
+      "process_rss_kib": 1622584,
+      "phase": "after-first-audio"
+    },
+    {
+      "t": 1792287688.4178321,
+      "gpu_used_mib": 4676,
+      "process_gpu_used_mib": 4666,
+      "process_rss_kib": 1572272,
+      "phase": "full-five-scenario-pass"
+    },
+    {
+      "t": 1792287688.7264857,
+      "gpu_used_mib": 4676,
+      "process_gpu_used_mib": 4666,
+      "process_rss_kib": 1572272,
+      "phase": "full-five-scenario-pass"
+    }
+  ],
+  "peak_global_gpu_used_mib": 4676,
+  "peak_process_gpu_used_mib": 4666,
+  "peak_process_rss_mib": 1584.5546875,
+  "ru_maxrss_mib": 1636.3515625
+}

@@ -1,0 +1,58 @@
+{
+  "experiment": "EmbeddingGemma 2 published ONNX on ONNX Runtime CUDA EP",
+  "workspace": "/root/experiments/embeddinggemma2-ort-cuda",
+  "status": "complete",
+  "model": {
+    "repo": "onnx-community/embeddinggemma-2-ONNX",
+    "revision": "daa72c51243991dfcaf9f9137d2c573d8f7790c0",
+    "graph_count": 12,
+    "formats": [
+      "fp16",
+      "q8",
+      "q4",
+      "q4f16"
+    ],
+    "fp32_downloaded_or_benchmarked": false
+  },
+  "hardware": {
+    "gpu": "NVIDIA GeForce RTX 5060 Ti",
+    "compute_capability": "12.0 / SM120",
+    "vram_mib": 16311,
+    "driver": "615.71.09"
+  },
+  "software": {
+    "python": "3.14.4",
+    "isolated_venv": "/root/experiments/embeddinggemma2-ort-cuda/.ort-venv",
+    "onnxruntime_gpu": "1.27.0",
+    "onnx": "1.23.2",
+    "numpy": "2.5.4",
+    "tokenizers": "0.23.3",
+    "cuda_toolkit": "13.4 (nvcc build cuda_13.4.r13.4)",
+    "cudnn": "9.26.0 (cudnnGetVersion=92600)",
+    "cublas": "13.8.0.4",
+    "nvrtc": "13.4.92",
+    "providers_available": [
+      "TensorrtExecutionProvider",
+      "CUDAExecutionProvider",
+      "CPUExecutionProvider"
+    ],
+    "ld_library_path": "/opt/host-cuda/targets/x86_64-linux/lib plus existing isolated PyTorch venv CUDA 13/cuDNN 9 shared libraries; set only in run shell",
+    "dependency_lock": "results/requirements-lock.txt"
+  },
+  "isolation": {
+    "installed_onnxruntime_gpu": "1.27.0 only in experiment venv",
+    "existing_pytorch_venv_modified": false,
+    "exllama_environment_modified": false,
+    "system_cuda_or_driver_modified": false,
+    "rust_cuda_source_modified": false,
+    "model_exports_or_custom_quantizations": false,
+    "reason_python": "Python 3.14.4 selected because ORT GPU wheel was available for it; existing PyTorch venv is Python 3.15",
+    "existing_pytorch_runtime": "PyTorch 2.15.0.dev20261005+cu134, not imported or used for inference; only existing CUDA/cuDNN shared libraries referenced by LD_LIBRARY_PATH",
+    "onnxruntime_install_scope": "The ORT GPU package and Python dependencies reside only under this experiment workspace"
+  },
+  "reference": {
+    "backend": "Rust CUDA BF16",
+    "commit": "f15131dc109b4b541f3585f15d7643cd65984d41",
+    "workspace": "/root/experiments/embeddinggemma2-blackwell"
+  }
+}

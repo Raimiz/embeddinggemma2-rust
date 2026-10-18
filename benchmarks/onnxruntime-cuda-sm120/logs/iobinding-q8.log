@@ -1,0 +1,5 @@
+q8 short I/O Binding med 5.351 ms
+q8 long I/O Binding med 100.791 ms
+q8 batch64 I/O Binding med 71.512 ms
+q8 image I/O Binding med 248.817 ms
+q8 audio I/O Binding med 36.895 ms

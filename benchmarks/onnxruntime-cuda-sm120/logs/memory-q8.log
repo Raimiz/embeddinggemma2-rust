@@ -1,0 +1,9 @@
+text session ms 433.03330295020714
+text-loaded-and-run {'t': 1792287685.6114664, 'gpu_used_mib': 726, 'process_gpu_used_mib': 716, 'process_rss_kib': 788520}
+after-text-run {'t': 1792287686.279135, 'gpu_used_mib': 798, 'process_gpu_used_mib': 788, 'process_rss_kib': 1076620}
+vision session ms 141.840758966282
+after-first-vision {'t': 1792287687.029955, 'gpu_used_mib': 2482, 'process_gpu_used_mib': 2472, 'process_rss_kib': 1207220}
+audio session ms 207.90900598512962
+after-first-audio {'t': 1792287687.834388, 'gpu_used_mib': 3140, 'process_gpu_used_mib': 3130, 'process_rss_kib': 1445868}
+full-five-scenario-pass {'t': 1792287688.7229812, 'gpu_used_mib': 4676, 'process_gpu_used_mib': 4666, 'process_rss_kib': 1572272}
+PEAK 4676 MiB GPU; 1584.5546875 MiB RSS

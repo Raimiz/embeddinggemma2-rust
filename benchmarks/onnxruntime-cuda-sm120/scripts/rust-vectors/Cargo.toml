@@ -1,0 +1,9 @@
+[package]
+name = "egemma-rust-vectors"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+embeddinggemma2 = { path = "/root/experiments/embeddinggemma2-blackwell/embeddinggemma2-rust" }
+serde_json = "1"
+anyhow = "1"

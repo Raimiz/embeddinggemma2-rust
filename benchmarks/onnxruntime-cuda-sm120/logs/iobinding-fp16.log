@@ -1,0 +1,5 @@
+fp16 short I/O Binding med 4.8 ms
+fp16 long I/O Binding med 51.932 ms
+fp16 batch64 I/O Binding med 35.123 ms
+fp16 image I/O Binding med 202.285 ms
+fp16 audio I/O Binding med 30.226 ms

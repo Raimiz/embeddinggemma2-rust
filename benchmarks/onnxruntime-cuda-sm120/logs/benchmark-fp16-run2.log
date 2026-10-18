@@ -1,0 +1,6 @@
+fp16 short median 4.757 min 4.693 p95 4.937
+fp16 long median 51.928 min 51.551 p95 52.155
+fp16 batch64 median 34.97 min 34.876 p95 35.126
+fp16 image median 200.954 min 197.655 p95 204.676
+fp16 audio median 30.275 min 28.571 p95 31.911
+saved /root/experiments/embeddinggemma2-ort-cuda/results/benchmark-fp16-run2.json session init ms 814.2

@@ -1,0 +1,6 @@
+q4 short median 6.028 min 6.008 p95 6.272
+q4 long median 102.734 min 102.657 p95 102.975
+q4 batch64 median 73.184 min 73.075 p95 73.313
+q4 image median 253.048 min 250.002 p95 256.974
+q4 audio median 42.623 min 41.068 p95 44.022
+saved /root/experiments/embeddinggemma2-ort-cuda/results/benchmark-q4-run2.json session init ms 685.7

@@ -1,0 +1,32 @@
+{
+  "format": "fp16",
+  "ort_version": "1.27.0",
+  "io_binding": {
+    "success": true,
+    "providers": [
+      "CUDAExecutionProvider",
+      "CPUExecutionProvider"
+    ],
+    "samples_ms": [
+      382.8392249997705,
+      5.062344018369913,
+      4.76891896687448,
+      4.684851970523596,
+      4.7290350194089115,
+      4.847270960453898,
+      4.74540499271825,
+      4.624964029062539,
+      4.671955015510321,
+      4.780548973940313,
+      4.686038009822369,
+      4.649991053156555
+    ],
+    "median_ms": 4.70753651461564,
+    "embedding_norm": 0.9999999403953552
+  },
+  "cuda_graph": {
+    "success": false,
+    "error": "Fail('[ONNXRuntimeError] : 1 : FAIL : This session cannot use the graph capture feature as requested by the user  as all compute graph nodes have not been partitioned to the CUDAExecutionProvider')",
+    "traceback": "Traceback (most recent call last):\n  File \"/root/experiments/embeddinggemma2-ort-cuda/scripts/io_binding_graph_probe.py\", line 14, in <module>\n    s=ort.InferenceSession(str(M/f\"model_{suffix}.onnx\"),sess_options=so,providers=[(\"CUDAExecutionProvider\",opts),\"CPUExecutionProvider\"])\n  File \"/root/experiments/embeddinggemma2-ort-cuda/.ort-venv/lib/python3.14/site-packages/onnxruntime/capi/onnxruntime_inference_collection.py\", line 528, in __init__\n    self._create_inference_session(providers, provider_options, disabled_optimizers)\n    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/root/experiments/embeddinggemma2-ort-cuda/.ort-venv/lib/python3.14/site-packages/onnxruntime/capi/onnxruntime_inference_collection.py\", line 634, in _create_inference_session\n    sess.initialize_session(providers, provider_options, disabled_optimizers)\n    ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nonnxruntime.capi.onnxruntime_pybind11_state.Fail: [ONNXRuntimeError] : 1 : FAIL : This session cannot use the graph capture feature as requested by the user  as all compute graph nodes have not been partitioned to the CUDAExecutionProvider\n"
+  }
+}

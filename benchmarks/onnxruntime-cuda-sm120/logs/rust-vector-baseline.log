@@ -1,0 +1,3 @@
+   Compiling egemma-rust-vectors v0.1.0 (/root/experiments/embeddinggemma2-ort-cuda/scripts/rust-vectors)
+    Finished `release` profile [optimized] target(s) in 3.09s
+     Running `experiments/embeddinggemma2-ort-cuda/scripts/rust-vectors/target/release/egemma-rust-vectors /root/experiments/embeddinggemma2-ort-cuda/../embeddinggemma2-blackwell/model /root/experiments/embeddinggemma2-blackwell/embeddinggemma2-rust//testdata /root/experiments/embeddinggemma2-ort-cuda/results`

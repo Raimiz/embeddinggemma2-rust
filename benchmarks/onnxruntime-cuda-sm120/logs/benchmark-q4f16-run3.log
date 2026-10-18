@@ -1,0 +1,6 @@
+q4f16 short median 5.398 min 5.314 p95 5.854
+q4f16 long median 52.784 min 52.489 p95 53.045
+q4f16 batch64 median 35.915 min 35.78 p95 36.05
+q4f16 image median 204.428 min 200.026 p95 205.926
+q4f16 audio median 33.113 min 31.535 p95 34.461
+saved /root/experiments/embeddinggemma2-ort-cuda/results/benchmark-q4f16-run3.json session init ms 691.3
