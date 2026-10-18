@@ -1,0 +1,1 @@
+{"attention":"ordinary per-sequence path; no packed tile list","fused":false,"graph_shape":"exact rows and one sequence","lens":[2202],"rows":2202,"scenario":"long"}

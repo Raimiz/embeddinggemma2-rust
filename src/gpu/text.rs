@@ -17,16 +17,42 @@
 use anyhow::Result;
 use std::collections::HashMap;
 use std::collections::hash_map::Entry;
-use std::sync::atomic::{AtomicBool, Ordering};
+use std::sync::atomic::{AtomicBool, AtomicU8, Ordering};
 use std::sync::{Arc, Mutex};
+use std::time::Instant;
 
-use cudarc::driver::CudaSlice;
+use cudarc::driver::{CudaEvent, CudaSlice};
 
 use super::{Act, Buf, Gpu, GpuLinear, Graph};
 use crate::config::TextConfig;
 use crate::ops;
 use crate::text::{self, TextModel};
 use crate::weights::Weights;
+
+/// Narrow, benchmark-only execution modes for the large-input CUDA Graph experiment.
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+pub enum GraphPocMode { Normal = 0, Eager = 1, PersistentEager = 2, CudaGraph = 3 }
+
+/// One packed pass' diagnostic timing, collected only while a PoC mode is selected.
+#[derive(Clone, Debug, Default)]
+pub struct GraphPocPassMetrics {
+    pub rows: usize,
+    pub allocation_ms: f64,
+    pub capture_ms: f64,
+    pub h2d_submit_ms: f64,
+    pub host_dispatch_ms: f64,
+    pub gpu_h2d_ms: f64,
+    pub gpu_compute_ms: f64,
+    pub d2h_wall_ms: f64,
+    pub gpu_d2h_ms: f64,
+}
+
+struct GraphPocPending {
+    metrics: GraphPocPassMetrics,
+    h2d: Option<(CudaEvent, CudaEvent)>,
+    compute: Option<(CudaEvent, CudaEvent)>,
+    d2h: Option<(CudaEvent, CudaEvent)>,
+}
 
 struct Layer {
     head_dim: usize,
@@ -74,6 +100,10 @@ pub struct GpuText {
     graphs: Mutex<HashMap<(usize, bool), TextGraph>>,
     use_graphs: AtomicBool,
     packed_flash: PackedFlash,
+    graph_poc_mode: AtomicU8,
+    graph_poc_gpu_timing: AtomicBool,
+    graph_poc_work: Mutex<HashMap<(usize, bool, bool, usize), GraphPocWork>>,
+    graph_poc_metrics: Mutex<Vec<GraphPocPending>>,
 }
 
 /// Row counts the graphs are recorded for: an input is padded up to the next bucket with a dummy
@@ -169,6 +199,12 @@ struct TextGraph {
     graph: Graph,
 }
 
+/// The PoC's single persistent Work set, optionally with a graph captured over those same buffers.
+struct GraphPocWork {
+    work: Work,
+    graph: Option<Graph>,
+}
+
 // A graph and its buffers are only touched while holding the owning `Gpu`'s lock.
 unsafe impl Send for TextGraph {}
 
@@ -214,12 +250,34 @@ impl GpuText {
             graphs: Mutex::new(HashMap::new()),
             use_graphs: AtomicBool::new(std::env::var_os("EGEMMA2_NO_GRAPH").is_none() && !gpu.profiling()),
             packed_flash: PackedFlash::from_env(),
+            graph_poc_mode: AtomicU8::new(GraphPocMode::Normal as u8),
+            graph_poc_gpu_timing: AtomicBool::new(false),
+            graph_poc_work: Mutex::new(HashMap::new()),
+            graph_poc_metrics: Mutex::new(Vec::new()),
             gpu,
         })
     }
 
     pub fn embed_tokens(&self, ids: &[u32], out: &mut [f32]) -> Result<()> {
         text::embed_tokens(&self.weights, self.cfg.hidden_size, ids, out)
+    }
+
+    #[doc(hidden)]
+    pub fn set_graph_poc_mode(&self, mode: GraphPocMode) { self.graph_poc_mode.store(mode as u8, Ordering::Relaxed); }
+
+    #[doc(hidden)]
+    pub fn set_graph_poc_gpu_timing(&self, on: bool) { self.graph_poc_gpu_timing.store(on, Ordering::Relaxed); }
+
+    #[doc(hidden)]
+    pub fn take_graph_poc_metrics(&self) -> Vec<GraphPocPassMetrics> {
+        let pending = std::mem::take(&mut *self.graph_poc_metrics.lock().unwrap_or_else(|e| e.into_inner()));
+        pending.into_iter().map(|mut p| {
+            let elapsed = |pair: &Option<(CudaEvent, CudaEvent)>| pair.as_ref().and_then(|(a, b)| a.elapsed_ms(b).ok()).unwrap_or(0.0) as f64;
+            p.metrics.gpu_h2d_ms = elapsed(&p.h2d);
+            p.metrics.gpu_compute_ms = elapsed(&p.compute);
+            p.metrics.gpu_d2h_ms = elapsed(&p.d2h);
+            p.metrics
+        }).collect()
     }
 
     /// Make sure every (theta, head_dim) table used by the layers covers positions `0..max_len`.
@@ -409,6 +467,107 @@ impl GpuText {
         Ok(())
     }
 
+    fn poc_event_pair(&self) -> Result<Option<(CudaEvent, CudaEvent)>> {
+        if !self.graph_poc_gpu_timing.load(Ordering::Relaxed) { return Ok(None); }
+        let flags = Some(cudarc::driver::sys::CUevent_flags::CU_EVENT_DEFAULT);
+        let start = self.gpu.ctx.new_event(flags).map_err(|e| anyhow::anyhow!("{e:?}"))?;
+        let end = self.gpu.ctx.new_event(flags).map_err(|e| anyhow::anyhow!("{e:?}"))?;
+        start.record(&self.gpu.stream).map_err(|e| anyhow::anyhow!("{e:?}"))?;
+        Ok(Some((start, end)))
+    }
+
+    fn poc_event_end(&self, events: &Option<(CudaEvent, CudaEvent)>) -> Result<()> {
+        if let Some((_, end)) = events { end.record(&self.gpu.stream).map_err(|e| anyhow::anyhow!("{e:?}"))?; }
+        Ok(())
+    }
+
+    #[allow(unused_assignments)]
+    fn forward_packed_poc(&self, inputs_embeds: &[f32], lens: &[usize], rows: usize, fused: bool, rope: &HashMap<(u64, usize), RopeTable>, mode: GraphPocMode) -> Result<Vec<f32>> {
+        let g = &*self.gpu;
+        let flash = fused && self.packed_flash.enabled(lens) && self.has_flash_layers();
+        let tiles = if flash { Gpu::flash_packed_tiles(0, lens, 0) } else { Vec::new() };
+        let n_tiles = tiles.len() / 3;
+        let key = (rows, fused, flash, n_tiles);
+        let mut metrics = GraphPocPassMetrics { rows, ..Default::default() };
+        let mut h2d_events = None;
+        let mut compute_events = None;
+        let mut d2h_events = None;
+        let result;
+
+        match mode {
+            GraphPocMode::CudaGraph => {
+                let mut cache = self.graph_poc_work.lock().unwrap_or_else(|e| e.into_inner());
+                if let Entry::Vacant(slot) = cache.entry(key) {
+                    let alloc_start = Instant::now();
+                    let work = self.new_work(rows, false, fused, flash.then_some(n_tiles))?;
+                    metrics.allocation_ms = alloc_start.elapsed().as_secs_f64() * 1e3;
+                    slot.insert(GraphPocWork { work, graph: None });
+                }
+                let pw = cache.get_mut(&key).expect("PoC work inserted");
+                h2d_events = self.poc_event_pair()?;
+                let upload_start = Instant::now();
+                g.upload_into(inputs_embeds, &mut pw.work.hidden)?;
+                g.upload_i32_into(&Self::row_meta(lens, fused), &mut pw.work.meta)?;
+                if let Some(f) = &mut pw.work.flash { g.upload_i32_into(&tiles, &mut f.tiles)?; }
+                metrics.h2d_submit_ms = upload_start.elapsed().as_secs_f64() * 1e3;
+                self.poc_event_end(&h2d_events)?;
+                if pw.graph.is_none() {
+                    let capture_start = Instant::now();
+                    pw.graph = Some(g.capture(|| self.enqueue(&mut pw.work, lens, fused, rope))?);
+                    metrics.capture_ms = capture_start.elapsed().as_secs_f64() * 1e3;
+                }
+                compute_events = self.poc_event_pair()?;
+                let dispatch_start = Instant::now();
+                g.replay(pw.graph.as_ref().expect("graph captured"))?;
+                metrics.host_dispatch_ms = dispatch_start.elapsed().as_secs_f64() * 1e3;
+                self.poc_event_end(&compute_events)?;
+                d2h_events = self.poc_event_pair()?;
+                let download_start = Instant::now();
+                result = g.download(pw.work.out.f32()?)?;
+                metrics.d2h_wall_ms = download_start.elapsed().as_secs_f64() * 1e3;
+                self.poc_event_end(&d2h_events)?;
+            }
+            GraphPocMode::Eager | GraphPocMode::PersistentEager => {
+                let mut cache = if mode == GraphPocMode::PersistentEager { Some(self.graph_poc_work.lock().unwrap_or_else(|e| e.into_inner())) } else { None };
+                let mut owned;
+                let work: &mut Work;
+                if let Some(cache) = cache.as_mut() {
+                    if let Entry::Vacant(slot) = cache.entry(key) {
+                        let alloc_start = Instant::now();
+                        slot.insert(GraphPocWork { work: self.new_work(rows, false, fused, flash.then_some(n_tiles))?, graph: None });
+                        metrics.allocation_ms = alloc_start.elapsed().as_secs_f64() * 1e3;
+                    }
+                    work = &mut cache.get_mut(&key).expect("work inserted").work;
+                } else {
+                    let alloc_start = Instant::now();
+                    owned = self.new_work(rows, false, fused, flash.then_some(n_tiles))?;
+                    metrics.allocation_ms = alloc_start.elapsed().as_secs_f64() * 1e3;
+                    work = &mut owned;
+                }
+                h2d_events = self.poc_event_pair()?;
+                let upload_start = Instant::now();
+                g.upload_into(inputs_embeds, &mut work.hidden)?;
+                g.upload_i32_into(&Self::row_meta(lens, fused), &mut work.meta)?;
+                if let Some(f) = &mut work.flash { g.upload_i32_into(&tiles, &mut f.tiles)?; }
+                metrics.h2d_submit_ms = upload_start.elapsed().as_secs_f64() * 1e3;
+                self.poc_event_end(&h2d_events)?;
+                compute_events = self.poc_event_pair()?;
+                let dispatch_start = Instant::now();
+                self.enqueue(work, lens, fused, rope)?;
+                metrics.host_dispatch_ms = dispatch_start.elapsed().as_secs_f64() * 1e3;
+                self.poc_event_end(&compute_events)?;
+                d2h_events = self.poc_event_pair()?;
+                let download_start = Instant::now();
+                result = g.download(work.out.f32()?)?;
+                metrics.d2h_wall_ms = download_start.elapsed().as_secs_f64() * 1e3;
+                self.poc_event_end(&d2h_events)?;
+            }
+            GraphPocMode::Normal => unreachable!(),
+        }
+        self.graph_poc_metrics.lock().unwrap_or_else(|e| e.into_inner()).push(GraphPocPending { metrics, h2d: h2d_events, compute: compute_events, d2h: d2h_events });
+        Ok(result)
+    }
+
     /// Encode sequences packed back to back; returns `[rows, embedding_dim]` on the host.
     pub fn forward_packed(&self, inputs_embeds: &[f32], lens: &[usize]) -> Result<Vec<f32>> {
         let g = &*self.gpu;
@@ -434,6 +593,17 @@ impl GpuText {
         let mut graphs = self.graphs.lock().unwrap_or_else(|e| e.into_inner());
         if replaced {
             graphs.clear(); // they hold the replaced tables' addresses
+            for entry in self.graph_poc_work.lock().unwrap_or_else(|e| e.into_inner()).values_mut() { entry.graph = None; }
+        }
+
+        let poc_mode = match self.graph_poc_mode.load(Ordering::Relaxed) {
+            1 => GraphPocMode::Eager,
+            2 => GraphPocMode::PersistentEager,
+            3 => GraphPocMode::CudaGraph,
+            _ => GraphPocMode::Normal,
+        };
+        if rows > GRAPH_ROW_BUCKETS[GRAPH_ROW_BUCKETS.len() - 1] && poc_mode != GraphPocMode::Normal {
+            return self.forward_packed_poc(inputs_embeds, lens, rows, fused, &rope, poc_mode);
         }
 
         if let Some(bucket) = GRAPH_ROW_BUCKETS.iter().copied().find(|&b| b >= rows).filter(|_| fused && self.use_graphs.load(Ordering::Relaxed)) {

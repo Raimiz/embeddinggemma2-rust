@@ -1,0 +1,2 @@
+    Finished `release` profile [optimized] target(s) in 0.06s
+     Running `target/release/examples/graph_poc batch64 /root/experiments/embeddinggemma2-blackwell/model /root/experiments/embeddinggemma2-sm120-compile/data 20`

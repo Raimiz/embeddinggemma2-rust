@@ -228,6 +228,30 @@ impl EmbeddingGemma2 {
         self.gpu.as_deref()
     }
 
+    #[cfg(feature = "cuda")]
+    #[doc(hidden)]
+    pub fn set_graph_poc_mode(&self, mode: crate::gpu::text::GraphPocMode) -> Result<()> {
+        match &self.text {
+            TextBackend::Gpu(text) => { text.set_graph_poc_mode(mode); Ok(()) }
+            TextBackend::Cpu(_) => bail!("CUDA Graph PoC requires the CUDA text backend"),
+        }
+    }
+
+    #[cfg(feature = "cuda")]
+    #[doc(hidden)]
+    pub fn set_graph_poc_gpu_timing(&self, on: bool) -> Result<()> {
+        match &self.text {
+            TextBackend::Gpu(text) => { text.set_graph_poc_gpu_timing(on); Ok(()) }
+            TextBackend::Cpu(_) => bail!("CUDA Graph PoC requires the CUDA text backend"),
+        }
+    }
+
+    #[cfg(feature = "cuda")]
+    #[doc(hidden)]
+    pub fn take_graph_poc_metrics(&self) -> Vec<crate::gpu::text::GraphPocPassMetrics> {
+        match &self.text { TextBackend::Gpu(text) => text.take_graph_poc_metrics(), TextBackend::Cpu(_) => Vec::new() }
+    }
+
     /// Tokenise a plain string the way the reference does (`<bos> ... <eos>`).
     pub fn tokenize(&self, text: &str) -> Result<Vec<u32>> {
         let enc = self.tokenizer.encode(text, true).map_err(|e| anyhow!("tokenizing: {e}"))?;

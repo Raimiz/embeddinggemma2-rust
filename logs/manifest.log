@@ -1,0 +1,5 @@
+   Compiling embeddinggemma2 v0.2.0 (/root/experiments/embeddinggemma2-large-graphs/worktree)
+    Finished `release` profile [optimized] target(s) in 6.36s
+     Running `target/release/examples/graph_manifest /root/experiments/embeddinggemma2-blackwell/model /root/experiments/embeddinggemma2-sm120-compile/data batch64`
+    Finished `release` profile [optimized] target(s) in 0.06s
+     Running `target/release/examples/graph_manifest /root/experiments/embeddinggemma2-blackwell/model /root/experiments/embeddinggemma2-sm120-compile/data long`

@@ -1,0 +1,3 @@
+   Compiling embeddinggemma2 v0.2.0 (/root/experiments/embeddinggemma2-large-graphs/worktree)
+    Finished `release` profile [optimized] target(s) in 13.45s
+     Running `target/release/examples/graph_poc long /root/experiments/embeddinggemma2-blackwell/model /root/experiments/embeddinggemma2-sm120-compile/data 20`

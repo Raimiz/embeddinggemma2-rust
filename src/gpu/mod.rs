@@ -1691,6 +1691,19 @@ impl Gpu {
     pub fn synchronize(&self) -> Result<()> {
         self.stream.synchronize().map_err(|e| anyhow!("{e:?}"))
     }
+
+    #[doc(hidden)]
+    pub fn memory_pool_bytes(&self) -> Result<(u64, u64)> {
+        use cudarc::driver::{result, sys};
+        let pool = unsafe { result::device::get_default_mem_pool(self.ctx.cu_device()) }.map_err(|e| anyhow!("{e:?}"))?;
+        let mut used = 0u64;
+        let mut reserved = 0u64;
+        unsafe {
+            result::mem_pool::get_attribute(pool, sys::CUmemPool_attribute::CU_MEMPOOL_ATTR_USED_MEM_CURRENT, &mut used as *mut u64 as *mut std::ffi::c_void).map_err(|e| anyhow!("{e:?}"))?;
+            result::mem_pool::get_attribute(pool, sys::CUmemPool_attribute::CU_MEMPOOL_ATTR_RESERVED_MEM_CURRENT, &mut reserved as *mut u64 as *mut std::ffi::c_void).map_err(|e| anyhow!("{e:?}"))?;
+        }
+        Ok((used, reserved))
+    }
 }
 
 /// Weights of a [`GpuLinear`]: float32, or bfloat16 bits for the [`Precision::Bf16`] tensor-core path.
